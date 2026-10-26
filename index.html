@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Práctica 2do parcial · Análisis y Diseño de Sistemas II</title>
+<style>
+:root{
+  --bg:#f4f6fb; --card:#ffffff; --ink:#1b2233; --muted:#5d667d; --line:#e2e6ef; --soft:#eef1f7;
+  --ok:#047857; --okbg:#e3f7ee; --bad:#be123c; --badbg:#ffe8ee; --warn:#92400e; --warnbg:#fff4dc;
+  --accent:#4f46e5; --accent2:#7c3aed; --shadow:0 1px 2px rgba(20,30,60,.06),0 6px 18px rgba(20,30,60,.07);
+  --petri:#2563eb; --bi:#059669; --dm:#7c3aed; --bd:#e11d48;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#0e1220; --card:#171c2e; --ink:#e6e9f2; --muted:#9aa3ba; --line:#2a3148; --soft:#20263b;
+  --ok:#34d399; --okbg:#0f2f25; --bad:#fb7185; --badbg:#3a1520; --warn:#fbbf24; --warnbg:#33270c;
+  --accent:#818cf8; --accent2:#a78bfa; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.35);
+  --petri:#60a5fa; --bi:#34d399; --dm:#a78bfa; --bd:#fb7185; } }
+:root[data-theme="dark"]{
+  --bg:#0e1220; --card:#171c2e; --ink:#e6e9f2; --muted:#9aa3ba; --line:#2a3148; --soft:#20263b;
+  --ok:#34d399; --okbg:#0f2f25; --bad:#fb7185; --badbg:#3a1520; --warn:#fbbf24; --warnbg:#33270c;
+  --accent:#818cf8; --accent2:#a78bfa; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.35);
+  --petri:#60a5fa; --bi:#34d399; --dm:#a78bfa; --bd:#fb7185; }
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+button,input{font:inherit;color:inherit}
+.i{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.2em;flex:none}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+header{background:linear-gradient(115deg,#0f1b4d 0%,#3b2a8f 55%,#7a1f5c 100%);color:#fff}
+.hwrap{max-width:1180px;margin:0 auto;padding:18px 16px 0}
+.htop{display:flex;align-items:center;gap:12px}
+.htop h1{font-size:20px;margin:0;flex:1;line-height:1.2}
+.htop h1 small{display:block;font-size:12.5px;font-weight:500;opacity:.8}
+.hbtn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:10px;padding:8px 11px;cursor:pointer;text-decoration:none;font-size:14px;white-space:nowrap}
+.hbtn:hover{background:rgba(255,255,255,.24)}
+#menuBtn{display:none}
+#menuBtn .i-x{display:none}
+header.open #menuBtn .i-menu{display:none} header.open #menuBtn .i-x{display:inline}
+nav{position:relative;margin-top:14px;border-top:1px solid rgba(255,255,255,.18)}
+nav ul{list-style:none;margin:0;padding:0;display:flex;justify-content:space-between;gap:2px;overflow:hidden;white-space:nowrap}
+nav button{background:none;border:0;color:rgba(255,255,255,.72);padding:11px 8px 13px;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600}
+nav button:hover{color:#fff}
+nav button[aria-current="page"]{color:#fff}
+#bar{position:absolute;bottom:0;height:3px;background:#fff;border-radius:3px;transition:left .25s,width .25s}
+nav.noicons button .i{display:none}
+header.collapsed{position:sticky;top:0;z-index:20}
+header.collapsed .hwrap{padding:10px 16px}
+header.collapsed .htop h1 small{display:none}
+header.collapsed .htop h1{font-size:16px}
+header.collapsed .hbtn .lbl{display:none}
+header.collapsed #menuBtn{display:inline-flex}
+header.collapsed nav{display:none;margin-top:10px}
+header.collapsed.open nav{display:block}
+header.collapsed nav ul{flex-direction:column;overflow:visible}
+header.collapsed nav button{width:100%;padding:11px 6px}
+header.collapsed #bar{display:none}
+main{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:18px}
+.muted{color:var(--muted)}
+h2{font-size:21px;margin:0 0 6px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.tile{display:flex;gap:12px;align-items:flex-start;cursor:pointer;border:0;text-align:left;width:100%}
+.tile .sq{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex:none;background:var(--accent)}
+.tile b{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:20px;padding:5px 11px;cursor:pointer;font-size:13.5px;display:inline-flex;gap:5px;align-items:center}
+.chip[aria-pressed="true"]{background:var(--c,var(--accent));border-color:var(--c,var(--accent));color:#fff}
+.btn{border:0;border-radius:11px;padding:10px 16px;cursor:pointer;background:var(--accent);color:#fff;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.btn.sec{background:var(--soft);color:var(--ink)}
+.btn.ok{background:var(--ok)} .btn.bad{background:var(--bad)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.flip{min-height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;font-size:18px;padding:28px}
+.flip .side{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:11px 13px;text-align:left;cursor:pointer;display:flex;gap:10px}
+.opt .k{font-weight:700;color:var(--muted);min-width:16px}
+.opt.right{border-color:var(--ok);background:var(--okbg)} .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.fb{margin-top:12px;border-radius:12px;padding:11px 13px}
+.fb.ok{background:var(--okbg)} .fb.bad{background:var(--badbg)}
+.sig{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.prog{height:8px;background:var(--soft);border-radius:8px;overflow:hidden;margin:8px 0}
+.prog span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+input[type=text]{width:100%;border:1.5px solid var(--line);background:var(--card);border-radius:11px;padding:11px 13px}
+.ord li{list-style:none;display:flex;gap:8px;align-items:center;background:var(--soft);border-radius:11px;padding:8px 10px;margin:6px 0}
+.ord{padding:0;margin:10px 0}
+.ord li span{flex:1}
+.ord li.right{background:var(--okbg)} .ord li.wrong{background:var(--badbg)}
+.ib{border:0;background:var(--card);border-radius:8px;width:32px;height:32px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.mcols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.mi{border:1.5px solid var(--line);background:var(--card);border-radius:11px;padding:9px 11px;cursor:pointer;text-align:left;width:100%;margin-bottom:7px;font-size:14px}
+.mi.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.mi.done{opacity:.6} .mi.right{border-color:var(--ok);background:var(--okbg);opacity:1} .mi.wrong{border-color:var(--bad);background:var(--badbg);opacity:1}
+.pairn{font-size:11px;font-weight:700;color:var(--accent);margin-right:5px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+.big{font-size:44px;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--soft);border-radius:12px;padding:10px 12px}
+.stat b{font-size:20px;display:block}
+.warnline{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 13px;font-size:14px}
+.mt{margin-top:14px}
+@media (max-width:600px){ .mcols{grid-template-columns:1fr} .flip{font-size:16px} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2M16 7l3 3M14 9l2 2"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol><symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.8 2.8L16.5 9.5"/></symbol><symbol id="i-x-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.8 19.5h18.4z"/><path d="M12 10v4.2M12 17.2v.1"/></symbol><symbol id="i-alert-octagon" viewBox="0 0 24 24"><path d="M8 3h8l5 5v8l-5 5H8l-5-5V8z"/><path d="M12 8v5M12 16v.1"/></symbol><symbol id="i-help-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.8-2.5 2.2-2.5 3.8M12 17v.1"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol><symbol id="i-lightbulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.3-5.5 6.5-5.5s5.9 2.1 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .7 3.2 2.6 3.5 5.2"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 2.5 8 12 13l9.5-5z"/><path d="M2.5 12.5 12 17.5l9.5-5M2.5 16.5 12 21.5l9.5-5"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20l1-4.5L16 4.5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M14 6.5l3 3"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20v-3"/></symbol><symbol id="i-list-ordered" viewBox="0 0 24 24"><path d="M10 6h11M10 12h11M10 18h11M4 4.5h1.2V9M3.5 9H6M3.6 14.2c.3-.6.9-.9 1.5-.8.9.1 1.3 1 .8 1.7L3.5 18.5H6"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></symbol><symbol id="i-graduation-cap" viewBox="0 0 24 24"><path d="M2 9 12 4l10 5-10 5z"/><path d="M6 11v5c2 2 10 2 12 0v-5M22 9v6"/></symbol><symbol id="i-bar-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 16V10M12 16V5M17 16v-8"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 3.5 21 11"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></symbol><symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20.5h7M9.5 17h5v3.5h-5z"/></symbol><symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 21.5l5-2.5 5 2.5-1.5-7.5"/></symbol><symbol id="i-contrast" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h7M8.5 9h2"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></symbol><symbol id="i-git-branch" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M6 7v10M18 9c0 5-6 4-12 8"/></symbol><symbol id="i-trending-up" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol><symbol id="i-paperclip" viewBox="0 0 24 24"><path d="M20 11.5 12 19.5a5 5 0 0 1-7-7l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7L9.7 17.2a1.7 1.7 0 0 1-2.4-2.4L15 7"/></symbol><symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5z"/></symbol><symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M9 4h3a2 2 0 1 1 4 0h3v4.5a2 2 0 1 1 0 4V17h-4.5a2 2 0 1 0-4 0H5v-4.5a2 2 0 1 0 0-4V4z"/></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M4 7h16M7 7l-3 7a3 3 0 0 0 6 0zM17 7l-3 7a3 3 0 0 0 6 0z"/></symbol><symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol><symbol id="i-calculator" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8.5 6.5h7v3h-7zM8.5 13h.1M12 13h.1M15.5 13h.1M8.5 17h.1M12 17h.1M15.5 17h.1"/></symbol><symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-13M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol><symbol id="i-network" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7 7l3.8 9M17 7l-3.8 9M7.2 6h9.6"/></symbol><symbol id="i-pickaxe" viewBox="0 0 24 24"><path d="M14.5 9.5 4 20"/><path d="M5 6.5C9 3 15 3 19.5 5.5c-1 .2-2 .6-3 1.2M17.5 4.5c2.5 4.5 2.5 10.5-1 14.5-.2-1-.6-2-1.2-3"/></symbol><symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .5-8 6 6 0 0 0-11.5 1.5A3.3 3.3 0 0 0 7 18.5z"/></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H12l-1 8 8.5-11H12z"/></symbol><symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z"/><path d="M3.5 7 12 11.5 20.5 7M12 11.5v10"/></symbol><symbol id="i-filter" viewBox="0 0 24 24"><path d="M3.5 4.5h17l-6.5 8v6l-4 2v-8z"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol><symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.5c4 0 6 10 10.5 10H21M3 17h3.5c1.6 0 2.8-1.6 3.8-3.5M14 10c.9-1.7 2-3 3.5-3H21M18 4l3 3-3 3M18 14l3 3-3 3"/></symbol><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></symbol><symbol id="i-type" viewBox="0 0 24 24"><path d="M5 6V4.5h14V6M12 4.5v15M9 19.5h6"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></symbol><symbol id="i-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9.5 9.5h5v5h-5zM9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></symbol></svg>
+<header id="hdr">
+  <div class="hwrap">
+    <div class="htop">
+      <h1>Práctica 2do parcial<small>Análisis y Diseño de Sistemas II · Temas 6 a 10</small></h1>
+      <a class="hbtn" href="resumen.pdf" target="_blank" rel="noopener" title="Resumen PDF"><svg class='i'><use href='#i-file-text'/></svg><span class="lbl">Resumen PDF</span></a>
+      <button class="hbtn" id="themeBtn" title="Cambiar tema claro u oscuro"><svg class='i'><use href='#i-contrast'/></svg><span class="lbl">Tema</span></button>
+      <button class="hbtn" id="menuBtn" aria-expanded="false" aria-controls="navlist" title="Menú"><svg class='i i-menu'><use href='#i-menu'/></svg><svg class='i i-x'><use href='#i-x'/></svg></button>
+    </div>
+    <nav id="nav"><ul id="navlist"></ul><div id="bar"></div></nav>
+  </div>
+</header>
+<main id="main"></main>
+<script>
+const CARDS = [
+  ["petri", "¿Quién creó las Redes de Petri y para qué tipo de sistemas sirven?", "Carl Adam Petri. Para describir sistemas con concurrencia, sincronización, exclusión mutua y conflictos, típicos de los sistemas distribuidos."],
+  ["petri", "¿Cuál es el límite de las máquinas de estado que superan las Redes de Petri?", "No modelan bien acciones simultáneas: unir varias máquinas multiplica los estados. Las Redes de Petri tienen paralelismo inherente."],
+  ["petri", "¿Cuáles son los elementos de una Red de Petri y cómo se dibujan?", "Lugares (círculos), transiciones (barras), arcos dirigidos con peso y marcas (puntos negros en los lugares)."],
+  ["petri", "¿Qué representan los lugares y las transiciones al modelar?", "Los lugares, condiciones o estados; las transiciones, eventos o sucesos. Una marca indica que la condición se cumple."],
+  ["petri", "¿Por qué una Red de Petri es un multígrafo dirigido bipartito?", "Admite arcos múltiples, los arcos tienen dirección y los nodos se dividen en dos clases (lugares y transiciones) que solo se conectan entre sí."],
+  ["petri", "Definición formal de la estructura de una Red de Petri", "C = (P, T, I, O): conjunto finito de lugares, conjunto finito de transiciones, función de entrada y función de salida."],
+  ["petri", "¿Qué es el marcado de una red?", "Una función de los lugares en los enteros no negativos (o un vector) que indica cuántas marcas hay en cada lugar. Es el estado de la red."],
+  ["petri", "¿Qué es una red ordinaria, una generalizada y una pura?", "Ordinaria: todos los arcos pesan 1. Generalizada: arcos con cualquier peso entero. Pura: ningún lugar es entrada y salida de la misma transición."],
+  ["petri", "¿Cuándo está habilitada una transición?", "Cuando cada lugar de entrada tiene al menos tantas marcas como el peso del arco hacia la transición: M(p) ≥ I(p, t)."],
+  ["petri", "Ecuación del nuevo marcado al disparar t", "M'(p) = M(p) − Pre(p, t) + Post(t, p) para todo lugar p."],
+  ["petri", "¿Qué es una transición fuente y una transición sumidero?", "Fuente: sin lugares de entrada, siempre habilitada. Sumidero: sin lugares de salida, elimina marcas de la red."],
+  ["petri", "¿Por qué disparar una transición puede deshabilitar a otra?", "Porque las marcas son indivisibles: una marca la quita una sola transición, y si comparten lugar de entrada la otra se queda sin marca."],
+  ["petri", "¿Qué es un marcado alcanzable?", "Uno al que se llega desde otro mediante una secuencia de disparos. Si basta un disparo, es inmediatamente alcanzable."],
+  ["petri", "¿Qué representa el árbol de alcanzabilidad?", "Todos los marcados alcanzables desde M0: cada nodo es un marcado y cada arco, la transición disparada."],
+  ["petri", "¿Dónde se deja de expandir el árbol de alcanzabilidad?", "En los nodos frontera: marcados muertos, nodos duplicados y marcados que solo tienen más marcas en algún lugar (se escribe w)."],
+  ["petri", "¿Qué significa una w en el árbol de alcanzabilidad?", "Que un lugar puede tener una cantidad ilimitada de marcas: la red no es acotada."],
+  ["petri", "¿Qué contienen las matrices C⁻, C⁺ y C?", "C⁻ (incidencia previa) la función de entrada; C⁺ (incidencia posterior) la de salida; C = C⁺ − C⁻ es la matriz de incidencia."],
+  ["petri", "Según la lectura, ¿qué son las filas y las columnas de la matriz de incidencia?", "Filas = transiciones; columnas = lugares."],
+  ["petri", "Diferencia entre distribución y conjunción", "Distribución: una transición con varios lugares de salida (lanza procesos paralelos). Conjunción: una transición con varios lugares de entrada (sincroniza)."],
+  ["petri", "¿Qué es un conflicto en una Red de Petri?", "Dos transiciones habilitadas comparten un lugar de entrada y disparar una deshabilita a la otra."],
+  ["petri", "Propiedades estructurales frente a propiedades de comportamiento", "Las estructurales dependen solo de la topología; las de comportamiento dependen del marcado inicial."],
+  ["petri", "¿Cuándo una red es viva?", "Cuando, desde cualquier marcado alcanzable, todas sus transiciones pueden volver a dispararse. Garantiza que no hay bloqueo total (deadlock)."],
+  ["petri", "¿Qué es una red parcialmente viva?", "Siempre hay alguna transición disparable, pero alguna transición no es viva."],
+  ["petri", "¿Qué es una red k-acotada y una red segura?", "k-acotada: ningún lugar supera k marcas. Segura: 1-acotada, también llamada binaria."],
+  ["petri", "¿Qué es la ciclicidad o reversibilidad?", "Que desde cualquier marcado alcanzable se puede volver al marcado inicial M0."],
+  ["petri", "¿Qué es una red conservativa?", "Una red en la que la cantidad total de marcas se mantiene constante."],
+  ["petri", "¿Cómo se modela la exclusión mutua?", "Con un lugar 'recurso libre' con una marca (semáforo): el primer proceso la quita y los demás esperan. No tiene prioridades."],
+  ["petri", "Productor y consumidor con buffer finito", "Se usan lugares 'buffers llenos' y 'buffers vacíos' cuyas marcas siempre suman la capacidad del depósito."],
+  ["petri", "Lectores y escritores", "Semáforo con m marcas y arcos de peso m: leer toma una marca (lecturas concurrentes) y escribir toma las m (escritura excluyente)."],
+  ["petri", "Cinco filósofos: problema y solución", "Si todos toman primero el mismo tenedor, nadie come (estancamiento). Solución: tomar los dos tenedores a la vez o limitar a 4 los que intentan comer."],
+  ["petri", "Ventajas de las Redes de Petri", "Fáciles de interpretar, modelan procesos concurrentes y recursos compartidos, más exactas que un diagrama de estados, se construyen top-down o bottom-up."],
+  ["petri", "Desventajas de las Redes de Petri", "No modelan prioridades, el análisis se complica con sistemas complejos y a mayor modelo, mayor consumo."],
+  ["petri", "Verificación frente a validación de una Red de Petri", "Ejecutar la red simula el sistema y logra una verificación; una validación exige un lenguaje más formal."],
+  ["petri", "Ejemplo de 5 lugares de la lectura: ¿qué propiedades tiene?", "5 marcados alcanzables, ninguno muerto: viva, segura y cíclica. t2 y t3 son concurrentes; t4 y t5 están en conflicto."],
+  ["bi", "¿Cuál es el objetivo básico de BI? (Siglas: BI = Inteligencia de negocio.)", "Apoyar de forma sostenible y continuada a las organizaciones para mejorar su competitividad, facilitando información para tomar decisiones."],
+  ["bi", "¿Quién popularizó el término Business Intelligence?", "Howard Dresner, cuando era consultor de Gartner."],
+  ["bi", "Definición de BI de Gartner (Siglas: BI = Inteligencia de negocio.)", "Proceso interactivo para explorar y analizar información estructurada sobre un área (normalmente en un datawarehouse) para descubrir tendencias o patrones; incluye comunicar y efectuar cambios."],
+  ["bi", "¿Por qué BI es un 'proceso interactivo'? (Siglas: BI = Inteligencia de negocio.)", "Porque es un análisis continuado en el tiempo, no puntual: permite ver tendencias, cambios y variabilidad."],
+  ["bi", "¿Qué incluyen el back end y el front end de BI según el TDWI? (Siglas: BI = Inteligencia de negocio.)", "Back end ('trastienda'): datawarehousing. Front end ('mostrador'): consultas, informes, análisis y herramientas para mostrar información."],
+  ["bi", "Ventas en baja en el supermercado: ¿qué se analiza?", "Si bajó la cantidad de tickets (afluencia: promocionar el local) o el ticket medio (compran menos: que compren más), o ambos."],
+  ["bi", "Dato de los hospitales de Estados Unidos", "Los analistas dedican el 80 % del tiempo a preparar datos en Excel y solo el 20 % a analizar. Debería ser al revés."],
+  ["bi", "¿Qué porcentaje de directivos confía en sus informes, según IDC? (Siglas: IDC = International Data Corporation, consultora.)", "Solo el 15 %."],
+  ["bi", "Tipos de beneficios de BI (Siglas: BI = Inteligencia de negocio.)", "Tangibles (ingresos y costos), intangibles (satisfacción, información precisa) y estratégicos (formular la estrategia)."],
+  ["bi", "Los 6 componentes de un proyecto de BI", "Problemática, equipo, información interna, información externa, datawarehouse y aplicación de BI."],
+  ["bi", "¿Para qué necesitan información las organizaciones (nota técnica 1)?", "Para soportar transacciones, para tomar decisiones y controlar, y para nuevos negocios."],
+  ["bi", "Pregunta estructurada frente a no estructurada", "Estructurada: se responde con sí, no o un valor (¿entregamos a tiempo?). No estructurada: requiere criterio (¿lanzamos el producto Y en el mercado Z?)."],
+  ["bi", "Fórmulas del ROI", "Simple: valor para el negocio / costo del proyecto. Completa: NPV / inversión inicial × 100."],
+  ["bi", "¿Qué incluye el TCO? (Siglas: TCO = Costo total de propiedad.)", "Hardware, software, consultoría, personal, lanzamiento, mantenimiento y formación."],
+  ["bi", "Datos del ejemplo de ROI del libro", "Inversión 40.000 €, mantenimiento 15.000 € por año, tasa 15 %: NPV 87.656 € y ROI 219 %."],
+  ["bi", "Estudio IDC 1996 sobre datawarehousing (Siglas: IDC = International Data Corporation, consultora.)", "ROI medio a 3 años de 401 % y payback de 2,3 años."],
+  ["bi", "¿Qué es un modelo de negocio?", "Una simplificación de la realidad para documentar, probar y desarrollar teorías sobre el negocio y experimentar cómo afectan los cambios al resultado."],
+  ["bi", "¿Qué son los silos de información?", "Departamentos entre los que no fluye la información, por falta de integración o por razones políticas."],
+  ["bi", "Paquetería: ¿qué rutas conviene potenciar?", "Las de baja ocupación del camión, porque el resultado depende del precio y de la ocupación."],
+  ["bi", "Metodologías para crear un modelo de negocio", "Contabilidad analítica o de costos, EFQM, Six Sigma, análisis de procesos, modelos financieros y análisis de ratios."],
+  ["bi", "¿Para qué sirven los KPI? (Siglas: KPI = Indicador clave de desempeño.)", "Para evaluar si la organización alcanza sus objetivos y medir su progreso."],
+  ["bi", "Requisitos de un KPI (Siglas: KPI = Indicador clave de desempeño.)", "Reflejar los objetivos, ser críticos, ser cuantificables y comparables y permitir acciones correctivas."],
+  ["bi", "Ejemplo de KPI del libro (Siglas: KPI = Indicador clave de desempeño.)", "Repetición de ventas a clientes: objetivo mejorar 3 % por trimestre partiendo del 48 %."],
+  ["bi", "¿Quién creó el modelo relacional y cuándo?", "E. F. Codd, en 1970."],
+  ["bi", "Tabla de hechos frente a tabla de dimensiones", "Hechos: lo que se quiere medir. Dimensiones: cómo se quiere medir (contexto para agrupar y filtrar)."],
+  ["bi", "¿Qué preguntas responden las dimensiones?", "¿Qué? ¿Quién? ¿Por qué? ¿Dónde? ¿Cuándo?"],
+  ["bi", "¿Qué es una dimensión degenerada?", "Una dimensión que no necesita tabla propia, como el número de ticket o el identificador de caja."],
+  ["bi", "Esquema estrella", "Una tabla de hechos y una tabla desnormalizada por dimensión; solo hay relaciones hechos-dimensiones. Tiene redundancia."],
+  ["bi", "Esquema copo de nieve", "Dimensiones normalizadas con relaciones entre ellas (por ejemplo, Zona aparte de Centro). Sin redundancia, más complejo."],
+  ["bi", "¿Qué es una constelación de hechos?", "Varios esquemas estrella con distintas tablas de hechos que comparten dimensiones (también llamado galaxia)."],
+  ["bi", "¿Qué es la granularidad?", "El nivel de detalle. Analizar líneas de ticket es mayor granularidad que analizar tickets. Al agregar se pierde información."],
+  ["bi", "¿Qué es la multidimensionalidad?", "Analizar la información por varias dimensiones a la vez, por ejemplo ventas de un artículo por centro y por mes."],
+  ["bi", "¿Qué es la metadata o diccionario de datos?", "La descripción de atributos, origen, definiciones y transformaciones, para que todos usen la misma terminología."],
+  ["bi", "¿Qué hace el proceso ETL?", "Extrae, transforma y carga: antes de cargar el datawarehouse los datos se transforman, limpian, filtran y redefinen."],
+  ["bi", "Data Mart frente a datawarehouse", "El Data Mart es más chico: sirve a una comunidad de usuarios y a pocas áreas."],
+  ["bi", "Productores y consumidores de información", "Productores (alrededor del 20 %): estadísticos y autores de informes. Consumidores: la mayoría, directivos que usan cuadros de mando."],
+  ["dm", "¿Qué es la minería de datos?", "Métodos y algoritmos para la extracción automática de información que caracteriza relaciones escondidas en grandes volúmenes de datos, con capacidad predictiva."],
+  ["dm", "Minería de datos frente a monitoreo", "La minería trabaja con datos estáticos y descubre; el monitoreo trabaja con datos cambiantes en tiempo real y reconoce patrones."],
+  ["dm", "Definición de KDD", "Extracción no trivial de información implícita, previamente desconocida y potencialmente útil a partir de un conjunto de datos."],
+  ["dm", "¿Desde cuándo se usa el término KDD? (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", "Desde 1989."],
+  ["dm", "KDD frente a minería de datos", "El KDD es el proceso completo; la minería es solo la etapa de descubrimiento dentro de él."],
+  ["dm", "Las cuatro ideas que diferencian al KDD (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", "Lenguaje de alto nivel, precisión, interés y eficiencia."],
+  ["dm", "¿Por qué las redes neuronales quedan fuera del criterio de lenguaje de alto nivel?", "Porque su conocimiento queda en miles de pesos numéricos: es una caja negra que no se puede explicar."],
+  ["dm", "¿Cuál es el paso crítico del KDD?", "La transformación y reducción de los datos (paso 4): marca el éxito o fracaso de la minería."],
+  ["dm", "Tres factores que impulsaron el análisis de datos", "Mayor potencia de las computadoras, mayor ritmo de adquisición de datos y nuevos métodos de aprendizaje."],
+  ["dm", "Aprendizaje automático frente a minería", "El aprendizaje automático usa un conjunto chico y seleccionado; la minería, una base grande generada para otros propósitos."],
+  ["dm", "Picapedreros frente a exploradores", "Picapedreros o granjeros: informes periódicos y control de valores. Exploradores: buscan patrones nuevos con minería."],
+  ["dm", "Limpieza frente a criba", "Limpieza: elimina datos erróneos o inconsistentes. Criba: elimina datos irrelevantes."],
+  ["dm", "Minería dirigida frente a no dirigida", "Dirigida: se sabe qué se busca (predecir). No dirigida: no se sabe qué se busca."],
+  ["dm", "Las dos fases de evaluación y validación", "Primero, probar la precisión en un banco de ejemplos independiente; después, una experiencia piloto."],
+  ["dm", "¿Por qué filtrar filas con faltantes o atípicos es peligroso?", "Porque sesga los datos: las causas del dato raro suelen estar relacionadas con casos especiales."],
+  ["dm", "¿Qué hacer con atípicos sin perderlos?", "Discretizar (caen en 'muy alto' o 'muy bajo'), reemplazarlos o usar algoritmos robustos como los árboles."],
+  ["dm", "Tres razones de los datos faltantes", "Relevantes (no dar el teléfono), no existentes (cliente nuevo sin historial) e incompletos (unión de fuentes)."],
+  ["dm", "Minería de datos frente a estadística", "La minería es automática, exploratoria, usa inteligencia artificial y es menos restrictiva; la estadística es manual y confirmatoria."],
+  ["dm", "¿Por qué la minería no es OLAP?", "OLAP navega los datos de forma asistida pero no genera información nueva."],
+  ["dm", "MOLAP frente a ROLAP", "MOLAP: bases multidimensionales con datos precompilados, para soluciones chicas. ROLAP: sobre bases relacionales, traduce a SQL, más flexible."],
+  ["dm", "Segundo reto: el ejemplo de Florida", "Florida tiene la edad al fallecer más alta porque allí se jubilan los mayores: correlación no es causalidad."],
+  ["dm", "Tercer reto de la minería", "Tiempo, espacio y privacidad: variables que cambian, granularidad del tiempo y combinación de bases de datos personales."],
+  ["dm", "Las seis tareas de la minería", "Agrupamiento, clasificación, condensación, detección de desviaciones, modelado de dependencias y regresión."],
+  ["dm", "Predictivo frente a descriptivo", "Predictivo (supervisado): predice una etiqueta conocida, con entrenamiento y prueba. Descriptivo (no supervisado): descubre patrones sin etiquetas."],
+  ["dm", "Confianza y soporte de una regla", "Confianza: casos con antecedente y consecuente sobre casos con antecedente. Soporte: casos en que se aplica la regla."],
+  ["dm", "Las dos fases de Apriori", "A: buscar conjuntos frecuentes con soporte suficiente. B: partirlos en reglas y quedarse con las de confianza suficiente."],
+  ["dm", "Boosting frente a voting", "Boosting: el mismo algoritmo sobre distintas particiones. Voting: distintos algoritmos sobre todos los datos."],
+  ["dm", "CART frente a CHAID", "CART parte cada nodo en 2 (índice de Gini); CHAID parte en más de 2 (test Ji cuadrado)."],
+  ["dm", "¿Para qué se usan los algoritmos genéticos?", "Para optimizar; en minería, al principio, para elegir las variables."],
+  ["dm", "Tres medidas clave de una herramienta de minería", "Precisión, explicación e integración."],
+  ["dm", "¿Qué es la elevación (lift)?", "Cuánto mejora la respuesta respecto del azar. Ejemplo: 30 % con el modelo / 10 % al azar = 3."],
+  ["dm", "Fases de CRISP-DM", "Comprensión del negocio, comprensión de los datos, preparación, modelado, evaluación e implantación."],
+  ["dm", "Fases de SEMMA", "Sample, Explore, Modify, Model, Assess (muestrear, explorar, modificar, modelar, evaluar)."],
+  ["dm", "¿Cuál metodología es la más orientada al negocio?", "CRISP-DM."],
+  ["dm", "Características de una bodega de datos", "Consolidada, consistente, orientada a un tema, histórica y de solo lectura."],
+  ["bd", "Las 3 V del Big Data", "Volumen, velocidad y variedad."],
+  ["bd", "¿De qué nuevas necesidades nace el Big Data?", "Personalización máxima del cliente, el paso de la transacción a la interacción y nuevos dispositivos con sensores."],
+  ["bd", "¿Qué es Big Analytics?", "El análisis que permite predicción y clusterización de clientes con datos en crudo al mayor detalle; lo operan Data Scientist y Data Analyst."],
+  ["bd", "Limitaciones del BI tradicional según el TP9 (Siglas: BI = Inteligencia de negocio.)", "Modelos rígidos, poco ágiles y sin tiempo real."],
+  ["bd", "¿Qué es el modelo híbrido?", "La convivencia del data warehouse tradicional con el Analytic Data Warehouse."],
+  ["bd", "Metodología MAD", "Magnética (capta todo tipo de datos), Ágil (ingiere y se adapta rápido) y Detallada (análisis estadístico fino)."],
+  ["bd", "Componentes de Hadoop", "HDFS (archivos distribuidos) y MapReduce (procesamiento paralelo); código abierto y commodity hardware."],
+  ["bd", "Las 4 megatendencias", "Movilidad, Cloud, Social Media y Analytics."],
+  ["bd", "Data Stream frente a CEP", "Data Stream analiza datos en movimiento; CEP detecta eventos predefinidos, como operaciones sospechosas con tarjetas."],
+  ["bd", "Claves de implementación de Big Data", "Medir el valor para el negocio, que las metas determinen la tecnología y tener perfiles y herramientas adecuados."],
+  ["bd", "Desafío principal del Big Data", "Seguridad y privacidad: equilibrio entre los datos analizados y lo que tolera el cliente."],
+  ["bd", "Cadena Big Data, minería y BI según la clase", "Big Data captura y procesa; la minería descubre patrones; BI los convierte en decisiones."],
+  ["bd", "Perfil profesional de cada enfoque (clase)", "Big Data: ingeniero de datos. Minería: científico de datos. BI: analista de BI o consultor."],
+  ["bd", "Foco temporal de cada enfoque (clase)", "Big Data: presente continuo. Minería: futuro predictivo. BI: pasado y presente."],
+  ["petri", "¿Cuándo surgieron las Redes de Petri?", "En 1962, con la tesis doctoral de Carl Adam Petri, Kommunikation mit Automaten, en Alemania."],
+  ["petri", "¿Qué aportaron Holt y Commoner?", "En 1970 ('Events and Conditions') mostraron cómo aplicar las Redes de Petri a sistemas con componentes concurrentes."],
+  ["petri", "¿Qué es la máquina de testigos?", "Una versión compacta del árbol de alcanzabilidad: cada estado se escribe con los nombres de los lugares marcados. Conviene con muchos lugares y pocas marcas."],
+  ["petri", "Conflicto estructural frente a conflicto efectivo", "Estructural: un lugar tiene más de una transición de salida. Efectivo: un marcado alcanzable habilita a las dos y disparar una deshabilita a la otra."],
+  ["petri", "¿Qué es el vector de disparo f(σ)?", "El vector que cuenta cuántas veces se dispara cada transición en la secuencia σ. Se usa en M' = M + f(σ)·C."],
+  ["petri", "Las cuatro subclases de Redes de Petri", "Grafo de estados o máquina de estados, grafo marcado, red de libre elección y red simple."],
+  ["petri", "Grafo de estados frente a grafo marcado", "Grafo de estados: cada transición tiene una entrada y una salida (modela conflictos, no paralelismo). Grafo marcado: cada lugar tiene una entrada y una salida (modela paralelismo, no conflictos)."],
+  ["petri", "Limitaciones del análisis matricial", "C no refleja toda la estructura, el vector de disparo no da el orden y la solución de la ecuación es necesaria pero no suficiente para la alcanzabilidad."],
+  ["bi", "Los 5 subprocesos del ETL", "Extracción, limpieza, transformación, integración y actualización."],
+  ["bi", "¿Cuánto tiempo consume el ETL en un proyecto de BI? (Siglas: BI = Inteligencia de negocio; ETL = Extracción, transformación y carga.)", "Entre el 60 % y el 80 % del tiempo."],
+  ["bi", "Las 4 características de un datawarehouse según Inmon", "Orientado a un área, integrado, indexado en el tiempo y no volátil."],
+  ["bi", "Estrategia de Inmon frente a la de Kimball", "Inmon: datawarehouse corporativo primero y de él los Data Marts. Kimball: Data Marts por área sin datawarehouse central."],
+  ["bi", "Data Mart dependiente frente a independiente", "Dependiente: se alimenta del datawarehouse corporativo. Independiente: se alimenta directo de las fuentes y puede perpetuar los silos."],
+  ["bi", "¿Qué es un ODS?", "Un almacén de datos operacional: consolida fuentes para decisiones operativas, con datos volátiles, en tiempo real y de hasta dos o tres meses."],
+  ["bi", "¿Qué significa FASMI?", "Fast, Analysis, Shared, Multidimensional, Information: lo que deben cumplir los productos OLAP."],
+  ["bi", "Operaciones sobre un cubo OLAP (Siglas: OLAP = Procesamiento analítico en línea.)", "Rotar (slicing), seleccionar (dicing), agregar (roll-up) y bajar al detalle (drill-down)."],
+  ["bi", "ROLAP, MOLAP y HOLAP", "ROLAP: sobre base relacional, sin límite de tamaño pero más lento. MOLAP: base multidimensional, muy rápido pero hay que recargar el cubo si cambian las dimensiones. HOLAP: combina ambos."],
+  ["bi", "Características de datos de calidad", "Precisión, integridad, coherencia, totalidad, validez, disponibilidad y accesibilidad."],
+  ["bi", "Dashboard frente a scorecard", "Dashboard: indicadores operativos o tácticos de un área. Scorecard: nivel estratégico, indicadores relacionados, toda la organización."],
+  ["bi", "Experiencia de Grupo Codorníu", "Sistema de información corporativa sobre SAP para tener una única versión de la verdad entre Planificación y Finanzas."],
+  ["bi", "Experiencia de Cavas Castillo de Perelada", "Dashboard sobre un datawarehouse para pasar de crecer en facturación a crecer en margen."],
+  ["dm", "¿Quiénes crearon CRISP-DM? (Siglas: CRISP-DM = Proceso estándar intersectorial para minería de datos.)", "Un consorcio inicial de DaimlerChrysler, SPSS y NCR; está ligado al software SPSS Clementine."],
+  ["dm", "Las 5 etapas núcleo del KDD según Fayyad", "Selección, preprocesamiento, transformación, minería de datos e interpretación/evaluación."],
+  ["dm", "Conclusión del artículo de Azevedo y Santos", "SEMMA y CRISP-DM son implementaciones del proceso KDD; SEMMA incluye implícitamente el negocio y la consolidación."],
+  ["bd", "¿Es el volumen la clave del Big Data según PowerData?", "No: 'Big' no es la clave; el volumen es solo una parte. Importan la velocidad, la variedad y saber qué va a pasar."],
+  ["bd", "¿Cómo nace Hadoop?", "De Google, que no podía indexar la web: 'divide y vencerás'. En 2006 la comunidad de código abierto lo desarrolla; lo impulsa Yahoo."],
+  ["bd", "¿Reemplaza el Analytic Data Warehouse al data warehouse tradicional?", "No: cubren necesidades distintas y conviven en un modelo híbrido."],
+  ["petri", "¿Qué entra de Redes de Petri en el parcial además de la teoría?", "Árbol de alcanzabilidad, características y propiedades, y resolver una red con máquina de testigos y método matricial."],
+  ["petri", "Receta para resolver una red en el examen", "1) Leer P, T, pesos y M0. 2) Armar C⁻, C⁺ y C = C⁺ − C⁻. 3) Árbol de alcanzabilidad. 4) Máquina de testigos. 5) Comprobar secuencias con M' = M + f(σ)·C. 6) Leer las propiedades."],
+  ["petri", "¿Cómo se pasa del árbol de alcanzabilidad a la máquina de testigos?", "Se juntan los nodos duplicados y queda el grafo de marcados; cada estado (óvalo) lleva los nombres de los lugares marcados, repetidos tantas veces como marcas tengan."],
+  ["petri", "¿Cuándo se escribe ω en el árbol y qué indica?", "Cuando un marcado nuevo cubre a un antecesor del mismo camino (igual o más marcas en todos los lugares y más en alguno). En esos lugares va ω; indica que la red no es acotada. ω + 1 = ω y ω − 1 = ω."],
+  ["petri", "¿Cómo se verifica con el método matricial que tj está habilitada?", "M ≥ ej·C⁻: el marcado tiene que tener al menos la fila de tj de la matriz de entradas."],
+  ["petri", "¿Cómo se lee en el grafo de marcados si la red es viva y si es cíclica?", "Viva: no hay marcados muertos y desde cualquier estado se puede volver a disparar cada transición. Cíclica: desde todos los estados se puede volver a M0."],
+  ["petri", "Ejemplo de la lectura (5 lugares): resultado", "5 marcados; viva, segura, cíclica y pura; conflicto en p5 entre t4 y t5; t2 y t3 concurrentes; σ = t1 t3 t2 t5 vuelve a M0."],
+  ["petri", "Red t1: p1 → p2; t2: p2 → p1, p3; t3: p3 → nada, con M0 = (1,0,0). ¿Qué propiedades tiene? (Siglas: M0 = Marcado inicial.)", "No acotada (p3 llega a ω), viva, cíclica, no conservativa, sin conflicto; p1 y p2 en exclusión mutua."],
+  ["petri", "Semáforo con dos procesos: propiedades", "Viva, segura, cíclica, pura; conflicto estructural y efectivo en el lugar del recurso; los lugares 'usando' de cada proceso están en exclusión mutua."],
+];
+const MCQ = [
+  ["petri", "¿Qué representa una barra en una Red de Petri?", ["Una transición", "Un lugar", "Una marca", "Un arco"], "Las transiciones se dibujan como barras; los lugares como círculos."],
+  ["petri", "¿Qué une un arco en una Red de Petri?", ["Un lugar con una transición", "Dos lugares entre sí", "Dos transiciones entre sí", "Una marca con un lugar"], "La red es bipartita: los arcos solo unen nodos de clases distintas."],
+  ["petri", "La estructura C = (P, T, I, O) tiene:", ["Lugares, transiciones, función de entrada y función de salida", "Procesos, tareas, índices y operaciones", "Plazas, tokens, interfaces y objetos", "Pesos, tiempos, iteraciones y órdenes"], "Es la definición formal de la lectura."],
+  ["petri", "Una red en la que ningún lugar es entrada y salida de la misma transición es:", ["Pura", "Ordinaria", "Generalizada", "Segura"], "Pura o no reflexiva."],
+  ["petri", "¿Cuándo está habilitada una transición?", ["Cuando cada lugar de entrada tiene al menos tantas marcas como el peso del arco", "Cuando al menos un lugar de entrada tiene marca", "Cuando todos sus lugares de salida están vacíos", "Cuando la red está en el marcado inicial"], "M(p) ≥ I(p, t) para todos los lugares de entrada."],
+  ["petri", "Una transición sin lugares de entrada se llama:", ["Transición fuente", "Transición sumidero", "Transición muerta", "Transición pura"], "La fuente está siempre habilitada; la sumidero no tiene salidas."],
+  ["petri", "¿Cuál es la ecuación de disparo?", ["M'(p) = M(p) − Pre(p, t) + Post(t, p)", "M'(p) = M(p) + Pre(p, t) − Post(t, p)", "M'(p) = Pre(p, t) × Post(t, p)", "M'(p) = M(p) − Post(t, p)"], "Se quitan las marcas de entrada y se agregan las de salida."],
+  ["petri", "La matriz de incidencia C se calcula como:", ["C⁺ − C⁻", "C⁻ − C⁺", "C⁺ + C⁻", "C⁻ × C⁺"], "Posterior menos previa."],
+  ["petri", "Según la lectura, en la matriz de incidencia las filas son:", ["Las transiciones", "Los lugares", "Los marcados", "Los arcos"], "Filas = transiciones, columnas = lugares."],
+  ["petri", "¿Cuál NO es un nodo frontera del árbol de alcanzabilidad?", ["Un marcado con una sola transición habilitada", "Un marcado muerto", "Un nodo duplicado", "Un marcado con más marcas que otro y que habilita lo mismo"], "Un marcado con transiciones habilitadas se sigue expandiendo."],
+  ["petri", "La aparición de w en el árbol de alcanzabilidad indica que la red:", ["No es acotada", "Es segura", "Está bloqueada", "Es pura"], "w representa una cantidad ilimitada de marcas."],
+  ["petri", "Una transición con varios lugares de entrada que sincroniza procesos paralelos es:", ["Conjunción", "Distribución", "Selección", "Atribución"], "La distribución es la inversa: varios lugares de salida."],
+  ["petri", "Dos transiciones habilitadas comparten un lugar de entrada y disparar una deshabilita la otra. Es:", ["Un conflicto", "Una concurrencia", "Una sincronización", "Una conservación"], "En la concurrencia las dos se disparan independientemente."],
+  ["petri", "La vivacidad garantiza:", ["La ausencia de bloqueo total (deadlock)", "Que la red vuelve siempre a M0", "Que ningún lugar tiene más de una marca", "Que la cantidad de marcas es constante"], "Volver a M0 es ciclicidad; una marca máxima es seguridad; marcas constantes es conservación. (Siglas: M0 = Marcado inicial.)"],
+  ["petri", "Una red segura es una red:", ["1-acotada", "Viva", "Cíclica", "Conservativa"], "Segura = 1-acotada = binaria."],
+  ["petri", "¿Qué propiedad asegura volver al marcado inicial desde cualquier marcado alcanzable?", ["Ciclicidad o reversibilidad", "Vivacidad", "Acotamiento", "Alcanzabilidad"], "También se llama reversibilidad."],
+  ["petri", "Una propiedad estructural:", ["No depende del marcado inicial", "Depende del marcado inicial", "Solo se estudia con el árbol de alcanzabilidad", "Solo existe en redes generalizadas"], "Depende solo de la topología de la red."],
+  ["petri", "En el productor y consumidor con buffer finito, los lugares 'llenos' y 'vacíos':", ["Siempre suman la capacidad del depósito", "Siempre tienen la misma cantidad de marcas", "Nunca tienen marcas a la vez", "Suman el doble de la capacidad"], "Es lo que garantiza que el buffer no crezca sin límite."],
+  ["petri", "En lectores y escritores con semáforo de m marcas, escribir toma:", ["Las m marcas", "Una marca", "Ninguna marca", "La mitad de las marcas"], "Por eso la escritura es excluyente y las lecturas son concurrentes."],
+  ["petri", "¿Cuál es una desventaja de las Redes de Petri según el apunte de clase?", ["No modelan prioridades", "No modelan concurrencia", "No permiten recursos compartidos", "No tienen representación gráfica"], "Las otras son ventajas, no desventajas."],
+  ["petri", "Ejecutar una Red de Petri para simular el sistema permite:", ["Una verificación del modelo", "Una validación formal completa", "Eliminar los conflictos", "Asignar prioridades"], "La validación exige un lenguaje más formal."],
+  ["petri", "En el ejemplo de 5 lugares de la lectura, ¿cuántos marcados alcanzables hay?", ["5", "3", "8", "Infinitos"], "Verificado: 5 marcados, ninguno muerto, red viva, segura y cíclica."],
+  ["bi", "¿Quién popularizó el término Business Intelligence?", ["Howard Dresner", "E. F. Codd", "Paul Westerman", "Bill Whittemore"], "Dresner, consultor de Gartner. Codd creó el modelo relacional."],
+  ["bi", "Según Gartner, BI es un proceso: (Siglas: BI = Inteligencia de negocio.)", ["Interactivo para explorar y analizar información estructurada", "Puntual para generar informes contables", "Automático para reemplazar a los sistemas transaccionales", "Manual para cargar datos en hojas de cálculo"], "El análisis es continuo en el tiempo."],
+  ["bi", "Si bajan las ventas porque los clientes compran menos cada vez que vienen, bajó:", ["El ticket medio", "La cantidad de tickets", "La afluencia", "El número de cajeros"], "Si bajara la cantidad de tickets, sería un problema de afluencia."],
+  ["bi", "En los hospitales de Estados Unidos, ¿qué porcentaje del tiempo se dedica a preparar datos?", ["80 %", "20 %", "50 %", "15 %"], "Y solo el 20 % a analizar."],
+  ["bi", "¿Qué tipo de beneficio es 'formular a qué clientes y mercados dirigirse'?", ["Estratégico", "Tangible", "Intangible", "Operativo"], "Los estratégicos ayudan a formular la estrategia."],
+  ["bi", "'Aumentar la satisfacción de los clientes' es un beneficio:", ["Intangible", "Tangible de ingresos", "Tangible de costos", "Estratégico"], "Es difícil de cuantificar directamente."],
+  ["bi", "¿Cuál NO es un componente básico de un proyecto de BI? (Siglas: BI = Inteligencia de negocio.)", ["Un sistema de facturación nuevo", "Una problemática empresarial", "Información externa", "Un datawarehouse"], "Los 6 son problemática, equipo, información interna y externa, datawarehouse y aplicación de BI. (Siglas: BI = Inteligencia de negocio.)"],
+  ["bi", "¿Por qué se copian los datos a un datawarehouse?", ["Para trabajar sin afectar a los sistemas transaccionales", "Para borrarlos de los sistemas originales", "Para que los usuarios carguen datos nuevos", "Para reemplazar al ERP"], "Es una copia para el análisis."],
+  ["bi", "El ROI completo se calcula como:", ["NPV / inversión inicial × 100", "Inversión inicial / NPV", "Beneficios − costos", "TCO / NPV × 100"], "NPV = valor actual neto de los flujos de caja."],
+  ["bi", "En el ejemplo del libro, ¿cuánto da el ROI? (Siglas: ROI = Retorno de la inversión.)", ["219 %", "401 %", "87 %", "15 %"], "401 % es el ROI medio del estudio de IDC de 1996. (Siglas: ROI = Retorno de la inversión; IDC = International Data Corporation, consultora.)"],
+  ["bi", "¿Qué mide el payback?", ["El tiempo para recuperar la inversión", "El beneficio total del proyecto", "La tasa de descuento", "El costo de mantenimiento"], "En el estudio IDC 1996 fue de 2,3 años. (Siglas: IDC = International Data Corporation, consultora.)"],
+  ["bi", "¿Qué incluye el TCO?", ["Hardware, software, consultoría, personal, mantenimiento y formación", "Solo el precio de las licencias", "Solo los beneficios esperados", "Solo el costo del hardware"], "Costo total de propiedad."],
+  ["bi", "En el ejemplo de paquetería, ¿qué rutas conviene potenciar?", ["Las de baja ocupación del camión", "Las de mayor precio", "Las subcontratadas", "Las más largas"], "El resultado depende del precio y la ocupación."],
+  ["bi", "Cuando entre departamentos no fluye la información se habla de:", ["Silos de información", "Data Marts", "Dimensiones degeneradas", "Constelaciones"], "Pueden deberse a falta de integración o a razones políticas."],
+  ["bi", "¿Cuál NO es un requisito de un KPI? (Siglas: KPI = Indicador clave de desempeño.)", ["Ser numerosos para cubrir todo", "Reflejar los objetivos", "Ser cuantificables", "Permitir acciones correctivas"], "Hay que elegir pocos KPI. (Siglas: KPI = Indicador clave de desempeño.)"],
+  ["bi", "El KPI 'repetición de ventas' del libro busca mejorar: (Siglas: KPI = Indicador clave de desempeño.)", ["3 % por trimestre desde el 48 %", "48 % por año", "10 % por mes", "20 % por semestre"], "Ejemplo del capítulo 2."],
+  ["bi", "En un modelo relacional, la clave que relaciona una tabla con otra es la:", ["Clave externa", "Clave primaria", "Dimensión", "Granularidad"], "La clave externa actúa como clave primaria en su propia tabla."],
+  ["bi", "En el esquema estrella, lo que se quiere medir está en:", ["La tabla de hechos", "La tabla de dimensiones", "La metadata", "El data staging"], "Las dimensiones dicen cómo se mide."],
+  ["bi", "El número de ticket en la tabla de hechos es una dimensión:", ["Degenerada", "Normalizada", "Jerárquica", "Temporal"], "No necesita tabla propia."],
+  ["bi", "¿Qué esquema tiene dimensiones normalizadas relacionadas entre sí?", ["Copo de nieve", "Estrella", "Constelación", "Relacional transaccional"], "La estrella tiene una tabla desnormalizada por dimensión."],
+  ["bi", "Analizar líneas de ticket en lugar de tickets implica:", ["Mayor granularidad", "Menor granularidad", "Menos dimensiones", "Un esquema copo de nieve"], "Más detalle = mayor granularidad."],
+  ["bi", "Analizar las ventas de un artículo por centro y por mes a la vez es:", ["Multidimensionalidad", "Granularidad", "Normalización", "Conservación"], "Varias dimensiones simultáneas."],
+  ["bi", "¿Por qué el fabricante va en una dimensión distinta del artículo?", ["Para poder cruzar artículos y fabricantes", "Para reducir la granularidad", "Para normalizar la tabla de hechos", "Porque no tiene clave primaria"], "Si están en la misma dimensión no se pueden analizar a la vez."],
+  ["bi", "¿Cuántas franjas horarias tiene la dimensión hora del ejemplo?", ["4", "3", "6", "24"], "9 a 11:59, 12 a 14:59, 15 a 17:59 y 18 a 21."],
+  ["bi", "¿Qué entorno nunca usan los usuarios finales?", ["El almacén intermedio (data staging)", "El Data Mart", "El cubo OLAP", "El cuadro de mando"], "Es un paso intermedio mientras se limpian los datos."],
+  ["bi", "Un Data Mart, comparado con un datawarehouse:", ["Es más chico y sirve a una comunidad de usuarios", "Es más grande y sirve a toda la empresa", "Es lo mismo con otro nombre", "Solo guarda datos externos"], "Tiene menos datos, menos modelos y menos usuarios."],
+  ["dm", "El término KDD comenzó a usarse en: (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", ["1989", "1970", "1996", "2005"], "1970 es el modelo relacional de Codd."],
+  ["dm", "¿Cuál es la relación entre KDD y minería de datos?", ["La minería es una etapa del KDD", "El KDD es una técnica de minería", "Son sinónimos exactos", "No tienen relación"], "El KDD es el proceso completo. (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)"],
+  ["dm", "¿Qué idea del KDD excluye a las redes neuronales? (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", ["Lenguaje de alto nivel", "Eficiencia", "Precisión", "Interés"], "Su conocimiento no es inteligible para un humano."],
+  ["dm", "¿Cuál es el paso crítico del proceso KDD? (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", ["Transformación y reducción", "Consolidación", "Elección del algoritmo", "Comprensión del dominio"], "Marca el éxito o fracaso de la minería."],
+  ["dm", "La información almacenada en el mundo se duplica cada:", ["20 meses", "10 años", "2 meses", "5 años"], "Dato de la lectura."],
+  ["dm", "Los usuarios que hacen informes periódicos y controlan valores son:", ["Picapedreros o granjeros", "Exploradores", "Científicos de datos", "Productores"], "Los exploradores buscan patrones nuevos."],
+  ["dm", "Eliminar datos irrelevantes se llama:", ["Criba", "Limpieza", "Consolidación", "Discretización"], "La limpieza elimina datos erróneos o inconsistentes."],
+  ["dm", "¿Qué acción ante faltantes 'claramente sesga los datos'?", ["Filtrar la fila", "Reemplazar por la media", "Segmentar", "Usar algoritmos robustos"], "Las causas del faltante suelen estar ligadas a casos especiales."],
+  ["dm", "La falta de teléfono de un cliente que no quiere ser molestado es un faltante:", ["Relevante", "No existente", "Incompleto", "Atípico"], "Expresa una característica del cliente."],
+  ["dm", "Transformar un valor continuo en muy alto, alto, medio, bajo o muy bajo es:", ["Discretizar", "Segmentar", "Filtrar", "Normalizar"], "Así los atípicos caen en los extremos."],
+  ["dm", "¿Qué etapa histórica es prospectiva y proactiva?", ["Minería de datos", "Acceso a los datos", "Recolección de datos", "Datawarehouse y OLAP"], "Las anteriores eran retrospectivas."],
+  ["dm", "La estadística clásica tiene un enfoque principalmente:", ["Confirmatorio", "Exploratorio", "Proactivo", "Automático"], "La minería es exploratoria."],
+  ["dm", "OLAP se diferencia de la minería porque: (Siglas: OLAP = Procesamiento analítico en línea.)", ["Navega los datos sin generar información nueva", "Descubre patrones automáticamente", "Trabaja solo con datos en tiempo real", "No usa bases de datos"], "La minería sí genera información nueva."],
+  ["dm", "La arquitectura OLAP que traduce las consultas a SQL sobre bases relacionales es: (Siglas: OLAP = Procesamiento analítico en línea; SQL = Lenguaje de consulta estructurado.)", ["ROLAP", "MOLAP", "OLTP", "ODBC"], "MOLAP usa bases multidimensionales precompiladas. (Siglas: MOLAP = OLAP multidimensional.)"],
+  ["dm", "El ejemplo de Florida ilustra que:", ["Correlación no es causalidad", "La minería es confirmatoria", "Hay que eliminar los atípicos", "Los datos faltantes son relevantes"], "Allí se jubilan los mayores: efecto de selección."],
+  ["dm", "'Con datos mensuales no se puede predecir por semana' es un problema de:", ["Granularidad del tiempo", "Privacidad", "Falsa interpretación", "Eficiencia"], "Pertenece al tercer reto."],
+  ["dm", "¿Qué tarea predice un valor real continuo?", ["Regresión", "Clasificación", "Agrupamiento", "Condensación"], "La clasificación asigna clases discretas."],
+  ["dm", "¿Qué tarea es descriptiva o no supervisada?", ["Detección de desviaciones", "Clasificación", "Regresión", "Estimación"], "Clasificación, regresión y estimación son supervisadas."],
+  ["dm", "El aprendizaje supervisado tiene dos fases:", ["Entrenamiento y prueba", "Selección y criba", "Recolección y difusión", "Muestreo y despliegue"], "Se entrena con datos de etiqueta conocida y se prueba con el resto."],
+  ["dm", "En el ejemplo de los empleados, K-means formó:", ["3 grupos", "2 grupos", "5 grupos", "15 grupos"], "Uno por perfil: alquiler sin hijos, sindicados con auto, casados propietarios."],
+  ["dm", "La confianza de una regla de asociación es:", ["Casos con antecedente y consecuente / casos con antecedente", "Casos con el consecuente / total de casos", "Total de casos / casos con antecedente", "Cantidad de reglas encontradas"], "El soporte es la cantidad de casos donde se aplica."],
+  ["dm", "Usar el mismo algoritmo sobre distintas particiones de los datos es:", ["Boosting", "Voting", "Stacking", "Clustering"], "Voting usa distintos algoritmos sobre todos los datos."],
+  ["dm", "¿Qué árbol de decisión divide cada nodo en más de 2 ramas?", ["CHAID", "CART", "k-NN", "Apriori"], "CART es binario. (Siglas: CART = Árboles de clasificación y regresión.)"],
+  ["dm", "¿Cuál es el principal inconveniente de las redes neuronales?", ["No generan una ecuación que explique el modelo", "No manejan datos continuos", "No pueden predecir", "Solo son supervisadas"], "Funcionan como una caja negra."],
+  ["dm", "Si un modelo logra 30 % de respuesta frente a 10 % al azar, la elevación es:", ["3", "20", "0,3", "40"], "30 / 10 = 3."],
+  ["dm", "¿Qué metodología es la más orientada al negocio?", ["CRISP-DM", "SEMMA", "KDD", "MAD"], "SEMMA supone los objetivos de negocio ya definidos. (Siglas: SEMMA = Muestrear, Explorar, Modificar, Modelar, Evaluar.)"],
+  ["dm", "¿Qué metodología fue desarrollada por SAS Institute?", ["SEMMA", "CRISP-DM", "KDD", "CEP"], "CRISP-DM viene de un consorcio de empresas; KDD es académico. (Siglas: KDD = Descubrimiento de conocimiento en bases de datos; CRISP-DM = Proceso estándar intersectorial para minería de datos.)"],
+  ["dm", "Las tres medidas clave para evaluar una herramienta de minería son:", ["Precisión, explicación e integración", "Volumen, velocidad y variedad", "Soporte, confianza y elevación", "Selección, limpieza y transformación"], "Volumen, velocidad y variedad son las 3 V del Big Data."],
+  ["bd", "¿Cuáles son las 3 V del Big Data?", ["Volumen, velocidad y variedad", "Valor, veracidad y visualización", "Volumen, valor y velocidad", "Variedad, validez y versión"], "Son las del mapa conceptual del TP9."],
+  ["bd", "¿Qué significa la A de MAD?", ["Ágil", "Analítica", "Automática", "Acotada"], "Magnética, Ágil, Detallada."],
+  ["bd", "¿Qué componente de Hadoop hace el procesamiento paralelo?", ["MapReduce", "HDFS", "CEP", "ADW"], "HDFS es el sistema de archivos distribuido. (Siglas: HDFS = Sistema de archivos distribuido de Hadoop.)"],
+  ["bd", "¿Cuál NO es una de las 4 megatendencias?", ["Blockchain", "Movilidad", "Cloud", "Social Media"], "Las 4 son Movilidad, Cloud, Social Media y Analytics."],
+  ["bd", "La técnica que detecta eventos predefinidos en tiempo real es:", ["CEP", "Data Stream", "MapReduce", "OLAP"], "Data Stream analiza datos en movimiento."],
+  ["bd", "¿Qué limitación del BI tradicional supera Big Data? (Siglas: BI = Inteligencia de negocio.)", ["Modelos rígidos, poco ágiles y sin tiempo real", "La falta de datos estructurados", "El exceso de agilidad", "La falta de usuarios"], "Por eso Big Analytics evoluciona desde BI. (Siglas: BI = Inteligencia de negocio.)"],
+  ["bd", "Que el data warehouse tradicional conviva con el Analytic Data Warehouse se llama:", ["Modelo híbrido", "Constelación de hechos", "Esquema copo de nieve", "Data Mart"], "No son excluyentes."],
+  ["bd", "Según la clase, el perfil profesional del Big Data es:", ["Ingeniero de datos", "Científico de datos", "Analista de BI", "Consultor de negocios"], "Minería: científico de datos; BI: analista de BI. (Siglas: BI = Inteligencia de negocio.)"],
+  ["bd", "¿Qué tipo de datos incorpora Big Data que BI no maneja? (Siglas: BI = Inteligencia de negocio.)", ["No estructurados", "Estructurados", "Internos", "Agregados"], "Redes sociales, sensores, logs."],
+  ["bd", "Según el TP9, en la implementación de Big Data:", ["Las metas del negocio determinan la tecnología", "La tecnología determina las metas", "Primero se compra Hadoop", "Se reemplaza el datawarehouse"], "Hay que medir el valor para el negocio."],
+  ["petri", "¿En qué año surgieron las Redes de Petri?", ["1962", "1970", "1989", "2006"], "Con la tesis doctoral de Carl Adam Petri; 1970 es el trabajo de Holt y Commoner."],
+  ["petri", "Hay conflicto estructural cuando:", ["Un lugar tiene más de una transición de salida", "Una transición tiene más de un lugar de salida", "Dos lugares nunca están marcados a la vez", "La red no vuelve a M0"], "Definición de la presentación de la cátedra."],
+  ["petri", "¿Qué subclase no puede modelar conflictos?", ["Grafo marcado", "Grafo de estados", "Red de libre elección", "Red general"], "En el grafo marcado cada lugar tiene una entrada y una salida."],
+  ["petri", "Que la ecuación M' = M + f(σ)·C tenga solución es, para que M' sea alcanzable:", ["Condición necesaria pero no suficiente", "Condición suficiente", "Condición necesaria y suficiente", "Irrelevante"], "La solución puede no corresponder a una secuencia de disparos permitida."],
+  ["bi", "¿Qué subproceso del ETL ajusta la granularidad y calcula agregados?", ["Transformación", "Extracción", "Limpieza", "Actualización"], "La transformación estructura y sumariza los datos limpios."],
+  ["bi", "¿Qué porcentaje del tiempo de un proyecto de BI consume el ETL? (Siglas: BI = Inteligencia de negocio; ETL = Extracción, transformación y carga.)", ["Entre 60 % y 80 %", "Entre 10 % y 20 %", "Alrededor del 40 %", "Más del 95 %"], "Dato del capítulo 4 del libro."],
+  ["bi", "¿Cuál NO es una característica de un datawarehouse según Inmon?", ["Volátil", "Orientado a un área", "Integrado", "Indexado en el tiempo"], "Es no volátil: se actualiza periódicamente, no lo mantienen los usuarios."],
+  ["bi", "La estrategia de construir Data Marts por área sin datawarehouse central es la de:", ["Kimball", "Inmon", "Codd", "Watson"], "Inmon propone el datawarehouse corporativo primero."],
+  ["bi", "¿Qué operación OLAP baja por una jerarquía hacia más detalle? (Siglas: OLAP = Procesamiento analítico en línea.)", ["Drill-down", "Roll-up", "Slicing", "Dicing"], "Roll-up sube al total; slicing rota; dicing selecciona celdas."],
+  ["bi", "¿Qué tipo de OLAP es muy rápido pero obliga a recargar el cubo si cambian las dimensiones? (Siglas: OLAP = Procesamiento analítico en línea.)", ["MOLAP", "ROLAP", "HOLAP", "DOLAP"], "ROLAP no tiene límite de tamaño pero es más lento. (Siglas: ROLAP = OLAP relacional.)"],
+  ["bi", "Un ODS se diferencia del datawarehouse porque sus datos son: (Siglas: ODS = Almacén de datos operacional.)", ["Volátiles y en tiempo real", "Históricos y no volátiles", "Solo externos", "Solo agregados"], "El ODS sirve a decisiones operativas y suele alimentar al datawarehouse. (Siglas: ODS = Almacén de datos operacional.)"],
+  ["bi", "¿Qué empresa buscaba una 'única versión de la verdad' sobre SAP?", ["Grupo Codorníu", "Contifarma", "Embega", "Sage SP"], "Planificación y Finanzas obtenían distintos valores del mismo dato."],
+  ["dm", "¿Qué empresas formaron el consorcio inicial de CRISP-DM? (Siglas: CRISP-DM = Proceso estándar intersectorial para minería de datos.)", ["DaimlerChrysler, SPSS y NCR", "SAS, IBM y Oracle", "Google, Yahoo y Facebook", "Microsoft, Cognos y Teradata"], "SEMMA es de SAS Institute. (Siglas: SEMMA = Muestrear, Explorar, Modificar, Modelar, Evaluar.)"],
+  ["dm", "Según Azevedo y Santos, el preprocesamiento del KDD corresponde en CRISP-DM a:", ["Comprensión de los datos", "Preparación de los datos", "Modelado", "Comprensión del negocio"], "La transformación corresponde a la preparación de los datos."],
+  ["bd", "¿En qué año la comunidad de código abierto desarrolló Hadoop?", ["2006", "1989", "1996", "2012"], "Basándose en lo aprendido de Google; luego lo impulsó Yahoo."],
+  ["bd", "Según PowerData, para un análisis predictivo sobre todo el histórico hacen falta:", ["Bases con procesamiento MPP", "Tecnología CEP", "Hojas de cálculo", "Data Marts independientes"], "Para eventos en tiempo real, en cambio, hace falta CEP. (Siglas: CEP = Procesamiento de eventos complejos.)"],
+  ["petri", "En el árbol de alcanzabilidad, un nodo duplicado:", ["Se marca y no se sigue expandiendo", "Se expande igual que los demás", "Indica que la red no es acotada", "Indica un marcado muerto"], "Es uno de los tres tipos de nodo frontera."],
+  ["petri", "Si aparece ω en un lugar del árbol, la red es:", ["No acotada", "Segura", "No viva", "Cíclica"], "ω indica que ese lugar puede acumular marcas sin límite."],
+  ["petri", "Con la red de la lectura y σ = t1 t3 t2 t5 desde M0 = (1,0,0,0,0), M' es: (Siglas: M0 = Marcado inicial.)", ["(1,0,0,0,0)", "(0,0,0,1,1)", "(0,1,1,0,0)", "(0,1,0,1,0)"], "f(σ)·C suma las filas t1, t2, t3 y t5 y da cero: vuelve a M0. (Siglas: M0 = Marcado inicial.)"],
+  ["petri", "Red t1: p1 → p2; t2: p2 → p1, p3; t3: p3 → nada. Con M0 = (1,0,0) y σ = t1 t2 t1 t2 t3, M' es: (Siglas: M0 = Marcado inicial.)", ["(1,0,1)", "(1,0,2)", "(0,1,1)", "(1,0,0)"], "f(σ) = (2 2 1): (1 0 0) + 2·(−1 1 0) + 2·(1 −1 1) + (0 0 −1)."],
+  ["petri", "En la máquina de testigos, un lugar con dos marcas se escribe:", ["Repitiendo su nombre dos veces", "Con un 2 en la matriz", "Con ω", "No se escribe"], "Cada estado lleva los nombres de los lugares marcados, tantas veces como marcas tengan."],
+  ["petri", "Para que la ecuación M' = M + f(σ)·C asegure que σ se puede disparar:", ["No alcanza: hay que verificar la habilitación paso a paso", "Alcanza siempre", "Alcanza si la red es pura", "Alcanza si f(σ) no tiene ceros"], "Es condición necesaria pero no suficiente: f(σ) no dice el orden."],
+];
+const TF = [
+  ["petri", "Un arco puede unir directamente dos lugares.", false, "Siempre une un lugar con una transición: el grafo es bipartito."],
+  ["petri", "Si un arco no tiene número, su peso es 1.", true, "Es la convención de la lectura."],
+  ["petri", "Una transición fuente está siempre habilitada.", true, "No tiene lugares de entrada que cumplir."],
+  ["petri", "Cuál transición habilitada se dispara primero se decide por prioridad.", false, "Es arbitrario; las Redes de Petri no modelan prioridades."],
+  ["petri", "Una red viva siempre es cíclica.", false, "Vivacidad y ciclicidad son independientes; el apunte de clase lo dice mal."],
+  ["petri", "Una red segura es una red 1-acotada.", true, "Segura = 1-acotada = binaria."],
+  ["petri", "La matriz de incidencia es C = C⁻ − C⁺. (Siglas: C⁻ = Matriz de incidencia previa; C⁺ = Matriz de incidencia posterior.)", false, "Es C = C⁺ − C⁻ (posterior menos previa). (Siglas: C⁻ = Matriz de incidencia previa; C⁺ = Matriz de incidencia posterior.)"],
+  ["petri", "Las propiedades estructurales dependen del marcado inicial.", false, "Las que dependen del marcado inicial son las de comportamiento."],
+  ["petri", "El árbol de alcanzabilidad se deja de expandir en los nodos duplicados.", true, "También en los marcados muertos y en los que llevan w."],
+  ["petri", "La representación gráfica y la matricial de una red son equivalentes.", true, "De una se obtiene la otra y es única."],
+  ["petri", "El semáforo de exclusión mutua asigna prioridades a los procesos.", false, "No hay prioridades: el primero que toma la marca usa el recurso."],
+  ["petri", "En lectores y escritores, varias lecturas pueden ser concurrentes.", true, "La escritura es la que es excluyente."],
+  ["bi", "BI es un análisis que se hace una sola vez cuando hay un problema. (Siglas: BI = Inteligencia de negocio.)", false, "Es un proceso continuo e interactivo."],
+  ["bi", "Los sistemas transaccionales están pensados principalmente para soportar transacciones, no para analizar.", true, "Por eso se copian los datos a un datawarehouse."],
+  ["bi", "Solo el 15 % de los directivos confía en que sus informes llegan a tiempo a quien corresponde.", true, "Dato de IDC. (Siglas: IDC = International Data Corporation, consultora.)"],
+  ["bi", "Evaluar el costo de un proyecto de BI es más difícil que evaluar su valor para el negocio. (Siglas: BI = Inteligencia de negocio.)", false, "Es al revés: el costo es fácil; el valor, difícil."],
+  ["bi", "Según Westerman, el estudio del ROI es opcional en proyectos de datawarehousing. (Siglas: ROI = Retorno de la inversión.)", false, "Dice que no es una opción, es una necesidad."],
+  ["bi", "Lo mejor para un departamento siempre es lo mejor para toda la organización.", false, "No siempre; por eso hay que construir modelos de negocio."],
+  ["bi", "Conviene elegir muchos KPI para cubrir todas las actividades. (Siglas: KPI = Indicador clave de desempeño.)", false, "Hay que elegir un número reducido."],
+  ["bi", "Empresas del mismo sector pueden tener KPI distintos. (Siglas: KPI = Indicador clave de desempeño.)", true, "Dependen de su modelo de negocio, objetivos e idiosincrasia."],
+  ["bi", "El esquema estrella está totalmente normalizado.", false, "La estrella es desnormalizada; el copo de nieve, normalizado."],
+  ["bi", "Cada vez que se agrega información se pierde parte de lo que aportan los datos.", true, "Por eso conviene el máximo detalle si el volumen lo permite."],
+  ["bi", "Un mismo modelo de datos responde todas las preguntas posibles del negocio.", false, "Cada modelo responde un número limitado de preguntas."],
+  ["bi", "Los datos de feriados suelen estar en el sistema transaccional de tickets.", false, "Hay que agregarlos al modelo."],
+  ["dm", "La minería de datos trabaja con datos estáticos.", true, "El monitoreo es el que trabaja con datos en tiempo real."],
+  ["dm", "KDD y minería de datos son exactamente lo mismo. (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", false, "La minería es una etapa del KDD. (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)"],
+  ["dm", "Para el KDD, un patrón solo es conocimiento si es nuevo, útil y no trivial. (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", true, "Es el criterio de interés."],
+  ["dm", "El aprendizaje automático clásico parte de bases grandes generadas para otros propósitos.", false, "Esa es la minería; el aprendizaje automático usa conjuntos chicos y seleccionados."],
+  ["dm", "Filtrar las filas con datos faltantes no produce ningún sesgo.", false, "Claramente sesga los datos."],
+  ["dm", "Los árboles de decisión son robustos a datos anómalos.", true, "Por eso una opción es ignorar el atípico."],
+  ["dm", "La minería de datos es explicativa: sus hipótesis son relaciones causa-efecto.", false, "Es explorativa: sugiere hipótesis que hay que validar."],
+  ["dm", "Se estima que el 80 % de los datos se puede georreferenciar.", true, "Y el 100 % ubicar en el tiempo."],
+  ["dm", "La regresión es una tarea supervisada.", true, "Predice un valor real a partir de datos con etiqueta."],
+  ["dm", "Las redes bayesianas no manejan datos incompletos.", false, "Una de sus ventajas es que pueden manejar bases incompletas."],
+  ["dm", "La tasa de error es útil cuando la precisión es muy alta.", true, "Pasar de 99 % a 99,5 % reduce el error a la mitad."],
+  ["dm", "SEMMA incluye una fase de comprensión del negocio. (Siglas: SEMMA = Muestrear, Explorar, Modificar, Modelar, Evaluar.)", false, "La supone resuelta; empieza por el muestreo."],
+  ["bd", "Big Data reemplaza por completo al data warehouse tradicional.", false, "Pueden convivir en un modelo híbrido."],
+  ["bd", "HDFS es el sistema de archivos distribuido de Hadoop.", true, "MapReduce es el procesamiento paralelo."],
+  ["bd", "Hadoop se basa en hardware especializado y caro.", false, "Usa commodity hardware: equipos comunes y baratos."],
+  ["bd", "Big Data trabaja también con datos no estructurados.", true, "Redes sociales, sensores, logs."],
+  ["bd", "Según la clase, BI tiene foco en el futuro predictivo. (Siglas: BI = Inteligencia de negocio.)", false, "BI mira el pasado y presente; la minería, el futuro predictivo. (Siglas: BI = Inteligencia de negocio.)"],
+  ["bd", "La privacidad es uno de los desafíos del Big Data.", true, "Equilibrio entre los datos analizados y lo que tolera el cliente."],
+  ["petri", "La máquina de testigos es más compacta que el árbol de alcanzabilidad.", true, "Solo nombra los lugares marcados."],
+  ["petri", "Un grafo de estados puede modelar paralelismo y sincronización.", false, "Solo conflictos y alternativas; el paralelismo lo modela el grafo marcado."],
+  ["bi", "Corregir los errores de datos solo en el ETL es la mejor opción a largo plazo. (Siglas: ETL = Extracción, transformación y carga.)", false, "Es más rápido al inicio pero más costoso; conviene corregir en las aplicaciones de origen."],
+  ["bi", "Según Watson, las estrategias de Inmon y de Kimball son válidas si se desarrollan correctamente.", true, "Las dos apuntan a una sola versión de la verdad."],
+  ["bi", "Los usuarios finales acceden al almacén intermedio (data staging).", false, "Nunca acceden a ese entorno."],
+  ["dm", "Según el artículo de la cátedra, en SEMMA la etapa Sample es opcional. (Siglas: SEMMA = Muestrear, Explorar, Modificar, Modelar, Evaluar.)", true, "El SAS Institute la señala como opcional."],
+  ["bd", "Según PowerData, el volumen es la clave para definir Big Data.", false, "'Big' no es la clave; el volumen es solo una parte del rompecabezas."],
+  ["bd", "El Analytic Data Warehouse obliga a sustituir los data warehouse actuales.", false, "Conviven en un modelo híbrido."],
+  ["petri", "En el árbol de alcanzabilidad se sigue expandiendo un nodo duplicado.", false, "Se corta: es un nodo frontera."],
+  ["petri", "Si en el árbol no aparece ω ni marcados muertos, la red es acotada y no tiene bloqueo total.", true, "Sin ω es acotada; sin muertos no hay bloqueo total."],
+  ["petri", "Una red con un lugar que tiene dos transiciones de salida tiene conflicto estructural.", true, "Definición de la presentación 'Redes_de_petri'."],
+  ["petri", "En el método matricial, tj está habilitada si M ≥ ej·C⁺. (Siglas: C⁺ = Matriz de incidencia posterior.)", false, "Es con C⁻ (la matriz de entradas): M ≥ ej·C⁻. (Siglas: C⁻ = Matriz de incidencia previa.)"],
+];
+const CLOZE = [
+  ["petri", "La estructura de una Red de Petri es C = (P, T, I, ___).", ["O"]],
+  ["petri", "La matriz de incidencia es C = C⁺ − ___. (Siglas: C⁺ = Matriz de incidencia posterior.)", ["C⁻", "C-", "c-"]],
+  ["petri", "Una red ___ es 1-acotada.", ["segura", "binaria"]],
+  ["petri", "Cuando el árbol de alcanzabilidad muestra un lugar ilimitado se escribe la letra ___.", ["w", "omega"]],
+  ["petri", "Las Redes de Petri fueron creadas por Carl Adam ___.", ["Petri"]],
+  ["petri", "Una transición sin lugares de salida se llama transición ___.", ["sumidero"]],
+  ["petri", "La ausencia de bloqueo total se garantiza con la propiedad de ___.", ["vivacidad"]],
+  ["bi", "El término Business Intelligence lo popularizó Howard ___.", ["Dresner"]],
+  ["bi", "Los analistas de hospitales dedican el ___ % del tiempo a preparar datos.", ["80"]],
+  ["bi", "En el ejemplo del libro, el ROI del proyecto es del ___ %. (Siglas: ROI = Retorno de la inversión.)", ["219"]],
+  ["bi", "El modelo relacional fue creado por Codd en el año ___.", ["1970"]],
+  ["bi", "El nivel de detalle de los datos se llama ___.", ["granularidad"]],
+  ["bi", "El esquema con dimensiones normalizadas se llama copo de ___.", ["nieve"]],
+  ["bi", "Los departamentos entre los que no fluye la información forman silos de ___.", ["información", "informacion"]],
+  ["bi", "En el estudio de IDC de 1996, el payback fue de ___ años. (Siglas: IDC = International Data Corporation, consultora.)", ["2,3", "2.3"]],
+  ["dm", "El término KDD empezó a usarse en ___. (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", ["1989"]],
+  ["dm", "El proceso KDD tiene ___ pasos. (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", ["9", "nueve"]],
+  ["dm", "La información almacenada en el mundo se duplica cada ___ meses.", ["20", "veinte"]],
+  ["dm", "Eliminar datos irrelevantes se llama ___.", ["criba"]],
+  ["dm", "El árbol de decisión que divide en dos se llama ___.", ["CART"]],
+  ["dm", "CRISP-DM tiene ___ fases. (Siglas: CRISP-DM = Proceso estándar intersectorial para minería de datos.)", ["6", "seis"]],
+  ["dm", "Si el modelo da 30 % de respuesta y el azar 10 %, la elevación es ___.", ["3", "tres"]],
+  ["bd", "Las 3 V del Big Data son volumen, velocidad y ___.", ["variedad"]],
+  ["bd", "La metodología MAD es Magnética, Ágil y ___.", ["Detallada"]],
+  ["bd", "El procesamiento paralelo de Hadoop se llama ___.", ["MapReduce", "Map Reduce"]],
+  ["bd", "Las megatendencias son Movilidad, Cloud, Social Media y ___.", ["Analytics"]],
+  ["petri", "Las Redes de Petri surgen en el año ___ con la tesis de Carl Adam Petri.", ["1962"]],
+  ["bi", "El proceso ETL consume entre el 60 % y el ___ % del tiempo de un proyecto de BI. (Siglas: BI = Inteligencia de negocio; ETL = Extracción, transformación y carga.)", ["80"]],
+  ["bi", "Un ODS es un almacén de datos ___ (Operational Data Store).", ["operacional"]],
+  ["bd", "Hadoop se desarrolló como código abierto en el año ___.", ["2006"]],
+  ["petri", "Un lugar que puede acumular marcas sin límite se marca en el árbol con ___.", ["ω", "w", "omega"]],
+  ["petri", "Para una secuencia σ, M' = M + ___·C.", ["f(σ)", "f(sigma)", "f"]],
+  ["petri", "El ejemplo de la lectura tiene ___ marcados alcanzables.", ["5", "cinco"]],
+];
+const ORDER = [
+  ["petri", "Reglas de ejecución de una transición", ["Verificar que cada lugar de entrada tenga marcas suficientes", "Disparar la transición", "Quitar marcas de los lugares de entrada", "Agregar marcas en los lugares de salida"]],
+  ["bi", "Pasos de Bill Whittemore para calcular el ROI", ["Definir el problema y los objetivos", "Recoger los requerimientos", "Construir el proyecto", "Identificar y cuantificar los beneficios", "Establecer el punto de partida", "Calcular el TCO", "Calcular el ROI", "Hacer seguimiento"]],
+  ["bi", "Flujo de los componentes de BI (Siglas: BI = Inteligencia de negocio.)", ["Fuentes de información", "Proceso ETL", "Datawarehouse", "Data Marts", "Motor OLAP", "Herramientas de visualización"]],
+  ["dm", "Los 9 pasos del proceso KDD", ["Comprensión del dominio", "Creación del conjunto de datos objetivo", "Preprocesado", "Transformación y reducción", "Elección del tipo de sistema", "Elección del algoritmo", "Minería de datos", "Interpretación", "Consolidación"]],
+  ["dm", "Las 6 fases del KDD según la lectura", ["Recolección de datos", "Selección, limpieza y transformación", "Minería de datos", "Evaluación y validación", "Interpretación y difusión", "Actualización y monitorización"]],
+  ["dm", "Fases de CRISP-DM", ["Comprensión del negocio", "Comprensión de los datos", "Preparación de los datos", "Modelado", "Evaluación", "Implantación"]],
+  ["dm", "Fases de SEMMA", ["Sample (muestrear)", "Explore (explorar)", "Modify (modificar)", "Model (modelar)", "Assess (evaluar)"]],
+  ["dm", "Evolución histórica del análisis de datos", ["Recolección de datos (años 60)", "Acceso a los datos (años 80)", "Datawarehouse y OLAP (años 90)", "Minería de datos"]],
+  ["bd", "Cadena de valor de los datos según la clase", ["Big Data captura y procesa", "La minería descubre patrones", "BI convierte en decisiones"]],
+  ["bi", "Subprocesos del ETL", ["Extracción", "Limpieza", "Transformación", "Integración", "Actualización"]],
+  ["bi", "Etapas de la limpieza de datos", ["Depurar (parsing)", "Corregir (correcting)", "Estandarizar (standardizing)", "Relacionar (matching)", "Consolidar (consolidating)"]],
+  ["petri", "Pasos para resolver una red en el examen", ["Leer la red y el marcado inicial", "Armar C⁻, C⁺ y C", "Dibujar el árbol de alcanzabilidad", "Pasar a la máquina de testigos", "Comprobar secuencias con el método matricial", "Concluir las propiedades"]],
+];
+const MATCH = [
+  ["petri", "Elemento ↔ dibujo", [["Lugar", "Círculo"], ["Transición", "Barra"], ["Marca", "Punto negro"], ["Arco", "Flecha con peso"]]],
+  ["petri", "Propiedad ↔ qué garantiza", [["Vivacidad", "Sin bloqueo total"], ["Seguridad", "Como máximo una marca por lugar"], ["Ciclicidad", "Volver siempre a M0"], ["Conservación", "Marcas totales constantes"], ["Acotamiento", "Número finito de estados"]]],
+  ["petri", "Estructura ↔ forma", [["Distribución", "Una transición con varias salidas"], ["Conjunción", "Una transición con varias entradas"], ["Selección", "Un lugar con varias transiciones de salida"], ["Secuencial", "t2 solo después de t1"]]],
+  ["petri", "Modelo clásico ↔ recurso clave", [["Exclusión mutua", "Lugar recurso libre con una marca"], ["Productor y consumidor", "Lugares llenos y vacíos"], ["Lectores y escritores", "Semáforo con m marcas"], ["Cinco filósofos", "Tomar los dos tenedores a la vez"]]],
+  ["bi", "Beneficio ↔ tipo", [["Detectar fraude", "Tangible de costos"], ["Segmentar clientes", "Tangible de ingresos"], ["Información más precisa", "Intangible"], ["Elegir mercados", "Estratégico"]]],
+  ["bi", "Sigla ↔ significado", [["ROI", "Retorno de la inversión"], ["NPV", "Valor actual neto"], ["TCO", "Costo total de propiedad"], ["KPI", "Indicador clave de desempeño"], ["ETL", "Extracción, transformación y carga"]]],
+  ["bi", "Concepto ↔ definición", [["Granularidad", "Nivel de detalle"], ["Multidimensionalidad", "Varias dimensiones a la vez"], ["Dimensión degenerada", "Sin tabla propia"], ["Constelación", "Estrellas que comparten dimensiones"], ["Metadata", "Diccionario de datos"]]],
+  ["bi", "Sector ↔ hecho que se mide", [["Distribución", "Unidades vendidas"], ["Telecomunicaciones", "Duración de llamadas"], ["Banca", "Saldo medio"], ["Seguros", "Importe de reclamaciones"]]],
+  ["dm", "Idea del KDD ↔ qué exige (Siglas: KDD = Descubrimiento de conocimiento en bases de datos.)", [["Lenguaje de alto nivel", "Inteligible para un humano"], ["Precisión", "Grado de certidumbre"], ["Interés", "Nuevo, útil y no trivial"], ["Eficiencia", "Crecimiento polinomial"]]],
+  ["dm", "Tarea ↔ qué hace", [["Clasificación", "Asigna a clases predefinidas (supervisada)"], ["Regresión", "Predice un valor real (supervisada)"], ["Agrupamiento", "Forma grupos sin etiquetas"], ["Detección de desviaciones", "Encuentra cambios respecto de lo normal"], ["Condensación", "Describe en forma compacta"]]],
+  ["dm", "Técnica ↔ característica", [["CART", "Divide en 2"], ["CHAID", "Divide en más de 2"], ["Algoritmos genéticos", "Mutación y cruce"], ["Redes neuronales", "Caja negra"], ["Redes bayesianas", "Manejan datos incompletos"]]],
+  ["dm", "Metodología ↔ origen", [["KDD", "Académico"], ["CRISP-DM", "Consorcio de empresas"], ["SEMMA", "SAS Institute"]]],
+  ["dm", "Reto ↔ ejemplo", [["Falsa interpretación", "Resultados de grupos aplicados a individuos"], ["Correlación no es causalidad", "Florida y la edad al fallecer"], ["Tiempo y privacidad", "Combinar bases del banco y el supermercado"]]],
+  ["bd", "Concepto ↔ significado", [["HDFS", "Archivos distribuidos"], ["MapReduce", "Procesamiento paralelo"], ["Data Stream", "Datos en movimiento"], ["CEP", "Eventos predefinidos"], ["ADW", "Almacén de datos analítico"]]],
+  ["bd", "Enfoque ↔ fin principal (clase)", [["Big Data", "Almacenar y procesar a escala masiva"], ["Minería de datos", "Descubrir patrones"], ["BI", "Optimizar decisiones"]]],
+  ["petri", "Subclase ↔ regla", [["Grafo de estados", "Cada transición: una entrada y una salida"], ["Grafo marcado", "Cada lugar: una entrada y una salida"], ["Red de libre elección", "Lugar compartido: única entrada de esas transiciones"], ["Red simple", "Como máximo un lugar de entrada compartido"]]],
+  ["bi", "Operación OLAP ↔ qué hace (Siglas: OLAP = Procesamiento analítico en línea.)", [["Slicing", "Rotar las dimensiones"], ["Dicing", "Seleccionar algunas celdas"], ["Roll-up", "Subir al total"], ["Drill-down", "Bajar al detalle"]]],
+  ["bi", "Empresa ↔ objetivo del proyecto de BI (Siglas: BI = Inteligencia de negocio.)", [["Cavas Castillo de Perelada", "Crecer en margen"], ["Grupo Codorníu", "Única versión de la verdad"], ["Contifarma", "Dejar el análisis artesanal"], ["Sage SP", "Calidad de los datos"], ["Grupo Cortefiel", "Predicción de abandono y venta cruzada"]]],
+];
+// ===== GLOSARIO (generado por siglas.py) =====
+const GLOSARIO = [["RdP", "Red de Petri", null, "Redes de Petri"], ["M0", "Marcado inicial", null, "Redes de Petri"], ["C⁻", "Matriz de incidencia previa", null, "Redes de Petri"], ["C⁺", "Matriz de incidencia posterior", null, "Redes de Petri"], ["MT", "Máquina de testigos", null, "Redes de Petri"], ["GE", "Grafo de estados", null, "Redes de Petri"], ["ME", "Máquina de estados", null, "Redes de Petri"], ["GM", "Grafo marcado", null, "Redes de Petri"], ["RLE", "Red de libre elección", null, "Redes de Petri"], ["RS", "Red simple", null, "Redes de Petri"], ["DFD", "Diagrama de flujo de datos", null, "Redes de Petri"], ["BI", "Inteligencia de negocio", "Business Intelligence", "Business Intelligence"], ["KPI", "Indicador clave de desempeño", "Key Performance Indicator", "Business Intelligence"], ["ROI", "Retorno de la inversión", "Return on Investment", "Business Intelligence"], ["NPV", "Valor actual neto", "Net Present Value", "Business Intelligence"], ["TCO", "Costo total de propiedad", "Total Cost of Ownership", "Business Intelligence"], ["CF", "Flujo de caja", "Cash Flow", "Business Intelligence"], ["ETL", "Extracción, transformación y carga", "Extract, Transform, Load", "Business Intelligence"], ["OLAP", "Procesamiento analítico en línea", "On-Line Analytical Processing", "Business Intelligence"], ["OLTP", "Procesamiento de transacciones en línea", "On-Line Transaction Processing", "Business Intelligence"], ["MOLAP", "OLAP multidimensional", "Multidimensional OLAP", "Business Intelligence"], ["ROLAP", "OLAP relacional", "Relational OLAP", "Business Intelligence"], ["HOLAP", "OLAP híbrido", "Hybrid OLAP", "Business Intelligence"], ["DOLAP", "OLAP de escritorio", "Desktop OLAP", "Business Intelligence"], ["FASMI", "Rápido, análisis, compartido, multidimensional, información", "Fast, Analysis, Shared, Multidimensional, Information", "Business Intelligence"], ["ODS", "Almacén de datos operacional", "Operational Data Store", "Business Intelligence"], ["CRM", "Gestión de la relación con clientes", "Customer Relationship Management", "Business Intelligence"], ["SCM", "Gestión de la cadena de suministro", "Supply Chain Management", "Business Intelligence"], ["GIS", "Sistemas de información geográfica", "Geographic Information Systems", "Business Intelligence"], ["DWH", "Almacén de datos", "Data Warehouse", "Business Intelligence"], ["ERP", "Planificación de recursos empresariales", "Enterprise Resources Planning", "Business Intelligence"], ["PK", "Clave primaria", "Primary Key", "Business Intelligence"], ["FK", "Clave externa", "Foreign Key", "Business Intelligence"], ["SQL", "Lenguaje de consulta estructurado", "Structured Query Language", "Business Intelligence"], ["ODBC", "Conectividad abierta de bases de datos", "Open Database Connectivity", "Business Intelligence"], ["DAX", "Expresiones de análisis de datos", "Data Analysis Expressions", "Business Intelligence"], ["IDC", "International Data Corporation, consultora", null, "Business Intelligence"], ["TDWI", "The Data Warehousing Institute", null, "Business Intelligence"], ["EFQM", "Fundación Europea para la Gestión de la Calidad", "European Foundation for Quality Management", "Business Intelligence"], ["DM", "Minería de datos", "Data Mining", "Minería de datos"], ["KDD", "Descubrimiento de conocimiento en bases de datos", "Knowledge Discovery in Databases", "Minería de datos"], ["CRISP-DM", "Proceso estándar intersectorial para minería de datos", "Cross-Industry Standard Process for Data Mining", "Minería de datos"], ["SEMMA", "Muestrear, Explorar, Modificar, Modelar, Evaluar", "Sample, Explore, Modify, Model, Assess", "Minería de datos"], ["ML", "Aprendizaje automático", "Machine Learning", "Minería de datos"], ["IA", "Inteligencia artificial", null, "Minería de datos"], ["ANOVA", "Análisis de la varianza", "Analysis of Variance", "Minería de datos"], ["CART", "Árboles de clasificación y regresión", "Classification And Regression Trees", "Minería de datos"], ["CHAID", "Detector automático de interacciones por Ji cuadrado", "Chi Squared Automatic Interaction Detector", "Minería de datos"], ["k-NN", "k vecinos más cercanos", "k Nearest Neighbors", "Minería de datos"], ["IQR", "Rango intercuartílico", "Interquartile Range", "Minería de datos"], ["PII", "Información de identificación personal", "Personally Identifiable Information", "Minería de datos"], ["GDPR", "Reglamento General de Protección de Datos, de la Unión Europea", "General Data Protection Regulation", "Minería de datos"], ["CAD-CAM", "Diseño y fabricación asistidos por computadora", "Computer-Aided Design / Manufacturing", "Minería de datos"], ["ADW", "Almacén de datos analítico", "Analytic Data Warehouse", "Big Data"], ["MAD", "Magnética, Ágil, Detallada", null, "Big Data"], ["HDFS", "Sistema de archivos distribuido de Hadoop", "Hadoop Distributed File System", "Big Data"], ["CEP", "Procesamiento de eventos complejos", "Complex Event Processing", "Big Data"], ["MPP", "Procesamiento masivamente paralelo", "Massively Parallel Processing", "Big Data"], ["TP", "Trabajo Práctico", null, "Otras siglas y reglas para recordar"], ["N°", "Número", null, "Otras siglas y reglas para recordar"], ["Lu-Tra-Ar-Ma", "Elementos de una Red de Petri: Lugares, Transiciones, Arcos, Marcas", null, "Otras siglas y reglas para recordar"], ["Mu-Du-W", "Dónde se corta el árbol de alcanzabilidad: Muertos, Duplicados, con W", null, "Otras siglas y reglas para recordar"], ["VACCa", "Propiedades de comportamiento: Vivacidad, Acotamiento, Ciclicidad, Conservación, alcanzabilidad", null, "Otras siglas y reglas para recordar"], ["Tan-In-Es", "Beneficios de BI: Tangibles, Intangibles, Estratégicos", null, "Otras siglas y reglas para recordar"], ["Re-Crí-Cuan-Co", "Requisitos de un KPI: Reflejar objetivos, Críticos, Cuantificables, Correctivos", null, "Otras siglas y reglas para recordar"], ["Le-Pre-In-E", "Ideas del KDD: Lenguaje de alto nivel, Precisión, Interés, Eficiencia", null, "Otras siglas y reglas para recordar"], ["MoCSA", "Megatendencias del Big Data: Movilidad, Cloud, Social Media, Analytics", null, "Otras siglas y reglas para recordar"]];
+// ===== FIN GLOSARIO =====
+
+</script>
+<script>
+(function(){
+"use strict";
+var TOP={
+  petri:{n:"Redes de Petri",c:"var(--petri)",i:"network"},
+  bi:{n:"Business Intelligence",c:"var(--bi)",i:"bar-chart"},
+  dm:{n:"Minería de datos",c:"var(--dm)",i:"pickaxe"},
+  bd:{n:"Big Data",c:"var(--bd)",i:"cloud"}
+};
+var VIEWS=[
+  ["inicio","Inicio","home"],["tarjetas","Tarjetas","layers"],["mcq","Cuestionario","list-ordered"],["vf","Verdadero/Falso","check-circle"],
+  ["completar","Completar","pencil"],["ordenar","Ordenar","shuffle"],["relacionar","Relacionar","link"],["simulacro","Simulacro","award"],
+  ["siglas","Siglas","book"],["progreso","Progreso","trending-up"]
+];
+var PFX="ads2p_", MEM={};
+function load(k,d){try{var v=localStorage.getItem(PFX+k);if(v!==null)return JSON.parse(v);}catch(e){} return (k in MEM)?MEM[k]:d;}
+function save(k,v){MEM[k]=v;try{localStorage.setItem(PFX+k,JSON.stringify(v));}catch(e){}}
+var st={known:load("known",{}),stats:load("stats",{}),best:load("best",null)};
+function rec(t,ok){var s=st.stats[t]||{a:0,c:0};s.a++;if(ok)s.c++;st.stats[t]=s;save("stats",st.stats);}
+function ic(n){return "<svg class='i'><use href='#i-"+n+"'/></svg>";}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function fmt(s){s=String(s);var sig="",k=s.indexOf(" (Siglas: ");if(k>=0){sig=s.slice(k+2,-1);s=s.slice(0,k);}
+  var h=esc(s).replace(/⚠️/g,"<span title='No verificado' style='color:var(--warn)'>"+ic("alert")+"</span>");
+  return h+(sig?"<span class='sig'>"+esc(sig)+"</span>":"");}
+function tag(t){var o=TOP[t];return "<span class='tag' style='--c:"+o.c+"'>"+ic(o.i)+esc(o.n)+"</span>";}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+function norm(s){return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]/g,"");}
+function glos(s){for(var i=0;i<GLOSARIO.length;i++)if(GLOSARIO[i][0]===s)return GLOSARIO[i][1];return null;}
+var main=document.getElementById("main"), hdr=document.getElementById("hdr"), nav=document.getElementById("nav"), list=document.getElementById("navlist"), bar=document.getElementById("bar"), menuBtn=document.getElementById("menuBtn");
+var cur="inicio", timer=null;
+var filt={};
+function selTopics(){var k=Object.keys(TOP).filter(function(t){return filt[t];});return k.length?k:Object.keys(TOP);}
+function chips(onch){var h="<div class='chips' role='group' aria-label='Filtrar por tema'><button class='chip' data-t='*' aria-pressed='"+(!Object.keys(TOP).some(function(t){return filt[t];}))+"'>Todos</button>";
+  Object.keys(TOP).forEach(function(t){h+="<button class='chip' style='--c:"+TOP[t].c+"' data-t='"+t+"' aria-pressed='"+(!!filt[t])+"'>"+ic(TOP[t].i)+esc(TOP[t].n)+"</button>";});
+  return h+"</div>";}
+function bindChips(onch){main.querySelectorAll(".chip[data-t]").forEach(function(b){b.onclick=function(){var t=b.dataset.t;if(t==="*")filt={};else{filt[t]=!filt[t];}onch();};});}
+
+/* navegación */
+VIEWS.forEach(function(v){var li=document.createElement("li");li.innerHTML="<button data-v='"+v[0]+"'>"+ic(v[2])+"<span>"+v[1]+"</span></button>";list.appendChild(li);});
+list.addEventListener("click",function(e){var b=e.target.closest("button[data-v]");if(!b)return;go(b.dataset.v);closeMenu();});
+function moveBar(){var b=list.querySelector("button[aria-current='page']");if(!b||hdr.classList.contains("collapsed"))return;var r=b.getBoundingClientRect(),n=nav.getBoundingClientRect();bar.style.left=(r.left-n.left+6)+"px";bar.style.width=(r.width-12)+"px";}
+function fitNav(){hdr.classList.remove("collapsed");nav.classList.remove("noicons");
+  if(window.innerWidth<720){hdr.classList.add("collapsed");return;}
+  if(list.scrollWidth>list.clientWidth+1){nav.classList.add("noicons");if(list.scrollWidth>list.clientWidth+1){hdr.classList.add("collapsed");}}
+  if(!hdr.classList.contains("collapsed")){closeMenu();}moveBar();}
+function closeMenu(){hdr.classList.remove("open");menuBtn.setAttribute("aria-expanded","false");}
+menuBtn.addEventListener("click",function(e){e.stopPropagation();var o=!hdr.classList.contains("open");hdr.classList.toggle("open",o);menuBtn.setAttribute("aria-expanded",String(o));});
+document.addEventListener("click",function(e){if(hdr.classList.contains("open")&&!hdr.contains(e.target))closeMenu();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&hdr.classList.contains("open")){closeMenu();menuBtn.focus();}});
+window.addEventListener("resize",fitNav);
+document.getElementById("themeBtn").onclick=function(){var r=document.documentElement;var dark=r.getAttribute("data-theme")?r.getAttribute("data-theme")==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;r.setAttribute("data-theme",dark?"light":"dark");save("theme",r.getAttribute("data-theme"));};
+(function(){var t=load("theme",null);if(t)document.documentElement.setAttribute("data-theme",t);})();
+
+function go(v){if(timer){clearInterval(timer);timer=null;}cur=v;list.querySelectorAll("button").forEach(function(b){if(b.dataset.v===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
+  moveBar();window.scrollTo(0,0);R[v]();}
+
+var R={};
+/* inicio */
+R.inicio=function(){var tot=0,ok=0;Object.keys(st.stats).forEach(function(t){tot+=st.stats[t].a;ok+=st.stats[t].c;});
+  var kn=Object.keys(st.known).filter(function(k){return st.known[k];}).length;
+  var tiles=[["tarjetas","Tarjetas de memoria",CARDS.length+" tarjetas","layers"],["mcq","Cuestionario",MCQ.length+" preguntas","list-ordered"],["vf","Verdadero o falso",TF.length+" afirmaciones","check-circle"],["completar","Completar",CLOZE.length+" frases","pencil"],["ordenar","Ordenar",ORDER.length+" procesos","shuffle"],["relacionar","Relacionar",MATCH.length+" ejercicios","link"],["simulacro","Simulacro","25 preguntas con nota","award"],["siglas","Siglas",GLOSARIO.length+" siglas","book"]];
+  var h="<div class='card'><h2>¡Hola! A practicar para el 2do parcial</h2><p class='muted'>Elegí un método. Tu avance se guarda en este navegador.</p><div class='stats mt'>"+
+  "<div class='stat'><b>"+tot+"</b><span class='muted'>respuestas</span></div><div class='stat'><b>"+(tot?Math.round(ok*100/tot):0)+" %</b><span class='muted'>aciertos</span></div><div class='stat'><b>"+kn+" / "+CARDS.length+"</b><span class='muted'>tarjetas sabidas</span></div><div class='stat'><b>"+(st.best===null?"—":st.best.toFixed(1))+"</b><span class='muted'>mejor simulacro</span></div></div></div>";
+  h+="<div class='grid mt'>";tiles.forEach(function(t){h+="<button class='card tile' data-go='"+t[0]+"'><span class='sq'>"+ic(t[3])+"</span><span><b>"+t[1]+"</b><span class='muted'>"+t[2]+"</span></span></button>";});
+  h+="</div><div class='warnline mt'><b>Qué entra:</b> Temas 6 y 7 (Redes de Petri), 8 (Business Intelligence), 9 (Minería de datos) y 10 (Big Data) de la cátedra. Entra solo la teoría, salvo en Redes de Petri: árbol de alcanzabilidad, propiedades, máquina de testigos y método matricial. "+ic("alert")+" = contenido no verificado con la fuente original.</div>";
+  main.innerHTML=h;main.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){go(b.dataset.go);};});};
+
+/* tarjetas */
+var tc={i:0,flip:false,deck:[],only:false};
+function buildDeck(){var ts=selTopics();tc.deck=shuf(CARDS.map(function(c,i){return i;}).filter(function(i){return ts.indexOf(CARDS[i][0])>=0&&(!tc.only||!st.known[i]);}));tc.i=0;tc.flip=false;}
+R.tarjetas=function(){buildDeck();drawCard();};
+function drawCard(){var h="<h2>Tarjetas de memoria</h2>"+chips()+"<label class='row muted'><input type='checkbox' id='only' "+(tc.only?"checked":"")+"> Solo las que me faltan</label>";
+  if(!tc.deck.length){main.innerHTML=h+"<div class='card mt'>No hay tarjetas para mostrar. ¡Las sabés todas!</div>";bindCardCtl();return;}
+  var c=CARDS[tc.deck[tc.i]];
+  h+="<p class='muted'>"+(tc.i+1)+" de "+tc.deck.length+"</p><div class='card flip' id='fl' role='button' tabindex='0' aria-label='Dar vuelta la tarjeta'><div>"+tag(c[0])+"</div><div class='side mt'>"+(tc.flip?"Respuesta":"Pregunta")+"</div><div>"+fmt(tc.flip?c[2]:c[1])+"</div></div>";
+  h+="<div class='row mt'><button class='btn sec' id='prev'>"+ic("arrow-right").replace("class='i'","class='i' style='transform:scaleX(-1)'")+"Anterior</button><button class='btn ok' id='yes'>"+ic("check")+"La sé</button><button class='btn bad' id='no'>"+ic("refresh")+"Repasar</button><button class='btn sec' id='next'>Siguiente"+ic("arrow-right")+"</button></div>";
+  main.innerHTML=h;bindCardCtl();
+  var fl=document.getElementById("fl");function flip(){tc.flip=!tc.flip;drawCard();var f=document.getElementById("fl");if(f)f.focus();}
+  fl.onclick=flip;fl.onkeydown=function(e){if(e.key===" "||e.key==="Enter"){e.preventDefault();flip();}};
+  document.getElementById("prev").onclick=function(){tc.i=(tc.i-1+tc.deck.length)%tc.deck.length;tc.flip=false;drawCard();};
+  document.getElementById("next").onclick=function(){tc.i=(tc.i+1)%tc.deck.length;tc.flip=false;drawCard();};
+  document.getElementById("yes").onclick=function(){st.known[tc.deck[tc.i]]=true;save("known",st.known);tc.i=(tc.i+1)%tc.deck.length;tc.flip=false;drawCard();};
+  document.getElementById("no").onclick=function(){st.known[tc.deck[tc.i]]=false;save("known",st.known);tc.i=(tc.i+1)%tc.deck.length;tc.flip=false;drawCard();};}
+function bindCardCtl(){bindChips(function(){buildDeck();drawCard();});var o=document.getElementById("only");if(o)o.onchange=function(){tc.only=o.checked;buildDeck();drawCard();};}
+
+/* cuestionario y verdadero/falso */
+function quiz(kind){var src=kind==="mcq"?MCQ:TF,title=kind==="mcq"?"Cuestionario":"Verdadero o falso";
+  var q={list:[],i:0,ok:0,by:{},ans:false};
+  function build(){var ts=selTopics();q.list=shuf(src.filter(function(x){return ts.indexOf(x[0])>=0;}));q.i=0;q.ok=0;q.by={};draw();}
+  function draw(){var h="<h2>"+title+"</h2>"+chips();
+    if(q.i>=q.list.length){h+="<div class='card'><p>Terminaste: <b>"+q.ok+" de "+q.list.length+"</b> correctas.</p><table><tr><th>Tema</th><th>Aciertos</th></tr>";
+      Object.keys(q.by).forEach(function(t){h+="<tr><td>"+tag(t)+"</td><td>"+q.by[t].c+" / "+q.by[t].a+"</td></tr>";});
+      h+="</table><div class='row mt'><button class='btn' id='again'>"+ic("refresh")+"Otra vez</button></div></div>";main.innerHTML=h;bindChips(build);document.getElementById("again").onclick=build;return;}
+    var it=q.list[q.i];q.ans=false;
+    var opts=kind==="mcq"?shuf(it[2].map(function(o,k){return {t:o,ok:k===0};})):[{t:"Verdadero",ok:it[2]===true},{t:"Falso",ok:it[2]===false}];
+    h+="<div class='prog'><span style='width:"+(q.i*100/q.list.length)+"%'></span></div><div class='card'><div>"+tag(it[0])+" <span class='muted'>"+(q.i+1)+" / "+q.list.length+"</span></div><p style='font-size:17px'>"+fmt(it[1])+"</p><div class='opts'>";
+    opts.forEach(function(o,k){h+="<button class='opt' data-k='"+k+"'><span class='k'>"+(k+1)+"</span><span>"+fmt(o.t)+"</span></button>";});
+    h+="</div><div id='fb'></div></div>";main.innerHTML=h;bindChips(build);
+    var bs=main.querySelectorAll(".opt");
+    function pick(k){if(q.ans)return;q.ans=true;var good=opts[k].ok;bs.forEach(function(b,j){if(opts[j].ok)b.classList.add("right");else if(j===k)b.classList.add("wrong");});
+      if(good)q.ok++;var b2=q.by[it[0]]||{a:0,c:0};b2.a++;if(good)b2.c++;q.by[it[0]]=b2;rec(it[0],good);
+      var corr=opts.filter(function(o){return o.ok;})[0].t,g=glos(corr);
+      document.getElementById("fb").innerHTML="<div class='fb "+(good?"ok":"bad")+"'><b>"+(good?"¡Correcto!":"Incorrecto. Era: "+esc(corr))+"</b>"+(g?" <span class='muted'>("+esc(g)+")</span>":"")+"<div>"+fmt(it[3])+"</div></div><div class='row mt'><button class='btn' id='nx'>Siguiente"+ic("arrow-right")+"</button></div>";
+      var nx=document.getElementById("nx");nx.focus();nx.onclick=function(){q.i++;draw();};}
+    bs.forEach(function(b,k){b.onclick=function(){pick(k);};});
+    document.onkeydown=function(e){if(cur!==kind)return;var n=parseInt(e.key,10);if(n>=1&&n<=opts.length&&!q.ans)pick(n-1);};}
+  build();}
+R.mcq=function(){quiz("mcq");};
+R.vf=function(){quiz("vf");};
+
+/* completar */
+R.completar=function(){var q={list:[],i:0};
+  function build(){var ts=selTopics();q.list=shuf(CLOZE.filter(function(x){return ts.indexOf(x[0])>=0;}));q.i=0;draw();}
+  function draw(){var h="<h2>Completar</h2>"+chips();if(q.i>=q.list.length){main.innerHTML=h+"<div class='card'>¡Listo! <button class='btn' id='again'>"+ic("refresh")+"Otra vez</button></div>";bindChips(build);document.getElementById("again").onclick=build;return;}
+    var it=q.list[q.i];h+="<div class='card'><div>"+tag(it[0])+" <span class='muted'>"+(q.i+1)+" / "+q.list.length+"</span></div><p style='font-size:17px'>"+fmt(it[1]).replace("___","<b>____</b>")+"</p><input type='text' id='inp' autocomplete='off' placeholder='Escribí la respuesta y apretá Enter'><div id='fb'></div></div>";
+    main.innerHTML=h;bindChips(build);var inp=document.getElementById("inp"),done=false;inp.focus();
+    inp.onkeydown=function(e){if(e.key!=="Enter")return;if(done){q.i++;draw();return;}done=true;var v=norm(inp.value),good=it[2].some(function(a){return norm(a)===v;});rec(it[0],good);
+      document.getElementById("fb").innerHTML="<div class='fb "+(good?"ok":"bad")+"'><b>"+(good?"¡Correcto!":"Respuesta esperada: "+esc(it[2][0]))+"</b></div><p class='muted'>Enter para seguir.</p>";};}
+  build();};
+
+/* ordenar */
+R.ordenar=function(){var q={list:[],i:0,cur:[]};
+  function build(){var ts=selTopics();q.list=shuf(ORDER.filter(function(x){return ts.indexOf(x[0])>=0;}));q.i=0;start();}
+  function start(){if(q.i<q.list.length){var it=q.list[q.i],s;do{s=shuf(it[2]);}while(it[2].length>1&&s.join()===it[2].join());q.cur=s;}draw(false);}
+  function draw(chk){var h="<h2>Ordenar</h2>"+chips();if(q.i>=q.list.length){main.innerHTML=h+"<div class='card'>¡Listo! <button class='btn' id='again'>"+ic("refresh")+"Otra vez</button></div>";bindChips(build);document.getElementById("again").onclick=build;return;}
+    var it=q.list[q.i];h+="<div class='card'><div>"+tag(it[0])+"</div><p><b>"+fmt(it[1])+"</b></p><p class='muted'>Usá las flechas para mover cada paso.</p><ul class='ord'>";
+    q.cur.forEach(function(s,k){var cls=chk?(s===it[2][k]?"right":"wrong"):"";h+="<li class='"+cls+"'><span>"+(k+1)+". "+fmt(s)+"</span><button class='ib' data-u='"+k+"' aria-label='Subir'>"+ic("arrow-right").replace("class='i'","class='i' style='transform:rotate(-90deg)'")+"</button><button class='ib' data-d='"+k+"' aria-label='Bajar'>"+ic("arrow-right").replace("class='i'","class='i' style='transform:rotate(90deg)'")+"</button></li>";});
+    h+="</ul>";if(chk){var ok=q.cur.join("|")===it[2].join("|");h+="<div class='fb "+(ok?"ok":"bad")+"'><b>"+(ok?"¡Orden correcto!":"Orden correcto:")+"</b>"+(ok?"":"<ol>"+it[2].map(function(s){return "<li>"+fmt(s)+"</li>";}).join("")+"</ol>")+"</div><div class='row mt'><button class='btn' id='nx'>Siguiente"+ic("arrow-right")+"</button></div>";}
+    else h+="<div class='row'><button class='btn' id='chk'>"+ic("check")+"Corregir</button></div>";
+    main.innerHTML=h+"</div>";bindChips(build);
+    main.querySelectorAll("[data-u]").forEach(function(b){b.onclick=function(){var k=+b.dataset.u;if(k>0){var x=q.cur[k];q.cur[k]=q.cur[k-1];q.cur[k-1]=x;}draw(false);};});
+    main.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){var k=+b.dataset.d;if(k<q.cur.length-1){var x=q.cur[k];q.cur[k]=q.cur[k+1];q.cur[k+1]=x;}draw(false);};});
+    var c=document.getElementById("chk");if(c)c.onclick=function(){rec(it[0],q.cur.join("|")===it[2].join("|"));draw(true);};
+    var n=document.getElementById("nx");if(n)n.onclick=function(){q.i++;start();};}
+  build();};
+
+/* relacionar */
+R.relacionar=function(){var q={list:[],i:0};
+  function build(){var ts=selTopics();q.list=shuf(MATCH.filter(function(x){return ts.indexOf(x[0])>=0;}));q.i=0;start();}
+  function start(){if(q.i<q.list.length){var p=q.list[q.i][2];q.L=shuf(p.map(function(x){return x[0];}));q.R=shuf(p.map(function(x){return x[1];}));q.pairs={};q.sel=null;q.chk=false;}draw();}
+  function draw(){var h="<h2>Relacionar</h2>"+chips();if(q.i>=q.list.length){main.innerHTML=h+"<div class='card'>¡Listo! <button class='btn' id='again'>"+ic("refresh")+"Otra vez</button></div>";bindChips(build);document.getElementById("again").onclick=build;return;}
+    var it=q.list[q.i],ans={};it[2].forEach(function(x){ans[x[0]]=x[1];});var Ls=Object.keys(q.pairs);
+    h+="<div class='card'><div>"+tag(it[0])+"</div><p><b>"+fmt(it[1])+"</b></p><p class='muted'>Tocá un elemento de la izquierda y después su par. Tocá uno ya unido para deshacerlo.</p><div class='mcols'><div>";
+    q.L.forEach(function(l){var n=Ls.indexOf(l),cls=q.sel===l?"sel":(n>=0?"done":"");if(q.chk&&n>=0)cls=(ans[l]===q.pairs[l])?"right":"wrong";h+="<button class='mi "+cls+"' data-l='"+esc(l)+"'>"+(n>=0?"<span class='pairn'>"+(n+1)+"</span>":"")+fmt(l)+"</button>";});
+    h+="</div><div>";q.R.forEach(function(r){var l=Ls.filter(function(x){return q.pairs[x]===r;})[0],n=Ls.indexOf(l),cls=n>=0?"done":"";if(q.chk&&n>=0)cls=(ans[l]===r)?"right":"wrong";h+="<button class='mi "+cls+"' data-r='"+esc(r)+"'>"+(n>=0?"<span class='pairn'>"+(n+1)+"</span>":"")+fmt(r)+"</button>";});
+    h+="</div></div>";
+    if(q.chk){var good=it[2].every(function(x){return q.pairs[x[0]]===x[1];});h+="<div class='fb "+(good?"ok":"bad")+"'><b>"+(good?"¡Todo correcto!":"Pares correctos:")+"</b>"+(good?"":"<table>"+it[2].map(function(x){return "<tr><td>"+fmt(x[0])+"</td><td>"+fmt(x[1])+"</td></tr>";}).join("")+"</table>")+"</div><div class='row mt'><button class='btn' id='nx'>Siguiente"+ic("arrow-right")+"</button></div>";}
+    else h+="<div class='row mt'><button class='btn' id='chk' "+(Ls.length<it[2].length?"disabled style='opacity:.5'":"")+">"+ic("check")+"Corregir</button></div>";
+    main.innerHTML=h+"</div>";bindChips(build);
+    if(!q.chk){main.querySelectorAll("[data-l]").forEach(function(b){b.onclick=function(){var l=b.dataset.l;if(q.pairs[l]!==undefined){delete q.pairs[l];q.sel=null;}else q.sel=(q.sel===l?null:l);draw();};});
+      main.querySelectorAll("[data-r]").forEach(function(b){b.onclick=function(){var r=b.dataset.r;var owner=Object.keys(q.pairs).filter(function(x){return q.pairs[x]===r;})[0];if(owner!==undefined){delete q.pairs[owner];draw();return;}if(q.sel){q.pairs[q.sel]=r;q.sel=null;draw();}};});
+      var c=document.getElementById("chk");if(c)c.onclick=function(){if(Object.keys(q.pairs).length<it[2].length)return;q.chk=true;rec(it[0],it[2].every(function(x){return q.pairs[x[0]]===x[1];}));draw();};}
+    else document.getElementById("nx").onclick=function(){q.i++;start();};}
+  build();};
+
+/* simulacro */
+R.simulacro=function(){var qs=shuf(MCQ).slice(0,18).map(function(x){return {k:"m",it:x,opts:shuf(x[2].map(function(o,j){return {t:o,ok:j===0};}))};}).concat(shuf(TF).slice(0,7).map(function(x){return {k:"t",it:x,opts:[{t:"Verdadero",ok:x[2]===true},{t:"Falso",ok:x[2]===false}]};}));
+  qs=shuf(qs);var an={},t0=Date.now();
+  var h="<h2>Simulacro</h2><p class='muted'>25 preguntas (18 de opción múltiple y 7 de verdadero o falso), sin ayudas hasta el final. Tiempo: <b id='tm'>0:00</b></p>";
+  qs.forEach(function(q,i){h+="<div class='card mt'><div>"+tag(q.it[0])+" <span class='muted'>"+(i+1)+" / 25</span></div><p>"+fmt(q.it[1])+"</p><div class='opts'>";q.opts.forEach(function(o,j){h+="<button class='opt' data-q='"+i+"' data-j='"+j+"'><span class='k'>"+(j+1)+"</span><span>"+fmt(o.t)+"</span></button>";});h+="</div><div id='e"+i+"'></div></div>";});
+  h+="<div class='row mt'><button class='btn' id='fin'>"+ic("flag")+"Terminar y corregir</button></div><div id='res'></div>";main.innerHTML=h;
+  timer=setInterval(function(){var s=Math.floor((Date.now()-t0)/1000),e=document.getElementById("tm");if(e)e.textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");},1000);
+  var fin=false;main.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){if(fin)return;var i=+b.dataset.q;an[i]=+b.dataset.j;main.querySelectorAll(".opt[data-q='"+i+"']").forEach(function(x){x.classList.toggle("sel",x===b);x.style.borderColor=x===b?"var(--accent)":"";});};});
+  document.getElementById("fin").onclick=function(){if(fin)return;fin=true;if(timer){clearInterval(timer);timer=null;}var ok=0;
+    qs.forEach(function(q,i){var j=an[i],good=j!==undefined&&q.opts[j].ok;if(good)ok++;rec(q.it[0],good);main.querySelectorAll(".opt[data-q='"+i+"']").forEach(function(x,k){x.style.borderColor="";if(q.opts[k].ok)x.classList.add("right");else if(k===j)x.classList.add("wrong");});
+      document.getElementById("e"+i).innerHTML="<div class='fb "+(good?"ok":"bad")+"'>"+fmt(q.it[3])+"</div>";});
+    var n=ok*10/25;if(st.best===null||n>st.best){st.best=n;save("best",n);}
+    document.getElementById("res").innerHTML="<div class='card mt' style='text-align:center'><div class='big'>"+n.toFixed(1)+"</div><p>"+ok+" de 25 correctas · Mejor nota: "+st.best.toFixed(1)+"</p><button class='btn' id='again'>"+ic("refresh")+"Otro simulacro</button></div>";
+    document.getElementById("again").onclick=function(){go("simulacro");};document.getElementById("res").scrollIntoView({behavior:"smooth"});};};
+
+/* siglas */
+R.siglas=function(){var g={};GLOSARIO.forEach(function(s){(g[s[3]]=g[s[3]]||[]).push(s);});var h="<h2>Glosario de siglas</h2>";
+  Object.keys(g).forEach(function(k){h+="<div class='card mt'><h3 style='margin:0 0 6px'>"+esc(k)+"</h3><table>";g[k].forEach(function(s){h+="<tr><td style='width:28%'><b>"+esc(s[0])+"</b></td><td>"+esc(s[1])+(s[2]?"<span class='sig'><i>"+esc(s[2])+"</i></span>":"")+"</td></tr>";});h+="</table></div>";});
+  main.innerHTML=h;};
+
+/* progreso */
+R.progreso=function(){var h="<h2>Progreso</h2><div class='card'><table><tr><th>Tema</th><th>Aciertos</th><th>%</th><th>Tarjetas sabidas</th></tr>";
+  Object.keys(TOP).forEach(function(t){var s=st.stats[t]||{a:0,c:0},tot=0,kn=0;CARDS.forEach(function(c,i){if(c[0]===t){tot++;if(st.known[i])kn++;}});
+    h+="<tr><td>"+tag(t)+"</td><td>"+s.c+" / "+s.a+"</td><td>"+(s.a?Math.round(s.c*100/s.a):0)+" %</td><td>"+kn+" / "+tot+"</td></tr>";});
+  h+="</table><p class='muted mt'>Mejor nota del simulacro: <b>"+(st.best===null?"—":st.best.toFixed(1))+"</b></p><button class='btn bad' id='rst'>"+ic("refresh")+"Reiniciar progreso</button></div>";
+  main.innerHTML=h;document.getElementById("rst").onclick=function(){if(!confirm("¿Borrar todo el progreso?"))return;st.known={};st.stats={};st.best=null;save("known",{});save("stats",{});save("best",null);R.progreso();};};
+
+fitNav();go("inicio");
+})();
+</script>
+</body>
+</html>
