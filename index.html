@@ -93,7 +93,7 @@ p{max-width:68ch}
 .tag .i{display:none}
 .tag::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--c);border:2px solid var(--dp-color-outline)}
 /* tarjeta de memoria */
-.flip{min-height:250px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;font-size:20px;line-height:1.5;padding:40px 28px 32px;margin-top:22px}
+.flip{backface-visibility:hidden;will-change:transform;min-height:250px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;font-size:20px;line-height:1.5;padding:40px 28px 32px;margin-top:22px}
 .flip .side{position:absolute;top:-17px;left:22px;font:700 var(--dp-typography-label)/1 var(--dp-typography-reading);background:var(--dp-color-accent-warm);color:#2a2410;border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:10px 10px 4px 4px;padding:7px 12px}
 /* opciones */
 .opts{display:grid;gap:10px;margin-top:16px}
@@ -662,7 +662,7 @@ R.inicio=function(){var tot=0,ok=0;Object.keys(st.stats).forEach(function(t){tot
   main.innerHTML=h;main.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){go(b.dataset.go);};});};
 
 /* tarjetas */
-var tc={i:0,flip:false,deck:[],only:false};
+var tc={i:0,flip:false,deck:[],only:false,anim:false};
 function buildDeck(){var ts=selTopics();tc.deck=shuf(CARDS.map(function(c,i){return i;}).filter(function(i){return ts.indexOf(CARDS[i][0])>=0&&(!tc.only||!st.known[i]);}));tc.i=0;tc.flip=false;}
 R.tarjetas=function(){buildDeck();drawCard();};
 function drawCard(){var h="<h2>Tarjetas de memoria</h2>"+chips()+"<label class='row muted'><input type='checkbox' id='only' "+(tc.only?"checked":"")+"> Solo las que me faltan</label>";
@@ -671,7 +671,12 @@ function drawCard(){var h="<h2>Tarjetas de memoria</h2>"+chips()+"<label class='
   h+="<p class='muted'>"+(tc.i+1)+" de "+tc.deck.length+"</p><div class='card flip' id='fl' role='button' tabindex='0' aria-label='Dar vuelta la tarjeta'><div>"+tag(c[0])+"</div><div class='side'"+(tc.flip?" style='background:var(--dp-color-accent-fresh);color:#1b2a22'":"")+">"+(tc.flip?"Respuesta":"Pregunta")+"</div><div>"+fmt(tc.flip?c[2]:c[1])+"</div></div>";
   h+="<div class='row mt'><button class='btn sec' id='prev'>"+ic("arrow-right").replace("class='i'","class='i' style='transform:scaleX(-1)'")+"Anterior</button><button class='btn ok' id='yes'>"+ic("check")+"La sé</button><button class='btn bad' id='no'>"+ic("refresh")+"Repasar</button><button class='btn sec' id='next'>Siguiente"+ic("arrow-right")+"</button></div>";
   main.innerHTML=h;bindCardCtl();
-  var fl=document.getElementById("fl");function flip(){tc.flip=!tc.flip;drawCard();var f=document.getElementById("fl");if(f)f.focus();}
+  var fl=document.getElementById("fl");
+  function flip(){if(tc.anim)return;var still=!fl.animate||window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function swap(){tc.flip=!tc.flip;drawCard();var f=document.getElementById("fl");if(f){f.focus();if(!still)f.animate([{transform:"perspective(1800px) rotateY(-90deg)"},{transform:"perspective(1800px) rotateY(0deg)"}],{duration:220,easing:"cubic-bezier(.2,.8,.3,1.15)"});}}
+    if(still){swap();return;}
+    tc.anim=true;var a=fl.animate([{transform:"perspective(1800px) rotateY(0deg)"},{transform:"perspective(1800px) rotateY(90deg)"}],{duration:170,easing:"cubic-bezier(.5,0,.9,.6)",fill:"forwards"});
+    a.onfinish=function(){tc.anim=false;swap();};}
   fl.onclick=flip;fl.onkeydown=function(e){if(e.key===" "||e.key==="Enter"){e.preventDefault();flip();}};
   document.getElementById("prev").onclick=function(){tc.i=(tc.i-1+tc.deck.length)%tc.deck.length;tc.flip=false;drawCard();};
   document.getElementById("next").onclick=function(){tc.i=(tc.i+1)%tc.deck.length;tc.flip=false;drawCard();};
