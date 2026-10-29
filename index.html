@@ -640,30 +640,30 @@ var R={};
 /* inicio */
 R.inicio=function(){var tot=0,ok=0;Object.keys(st.stats).forEach(function(t){tot+=st.stats[t].a;ok+=st.stats[t].c;});
   var short={petri:"Petri",bi:"BI",dm:"Minería",bd:"Big Data"},ys=[48,120,192,264],pos=[[],[[0,0]],[[-8,0],[8,0]],[[0,-8],[-8,6],[8,6]],[[-7,-7],[7,-7],[-7,7],[7,7]],[[-8,-8],[8,-8],[0,0],[-8,8],[8,8]]];
-  var marks=0,full={},svg="<svg class='net' viewBox='0 0 600 320' role='img' aria-labelledby='netT'><title id='netT'>Red de estudio: marcas por tema según las tarjetas que te sabés. Petri, BI y Minería habilitan el parcial; Big Data entra en el final</title><defs><marker id='ar' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto'><path d='M0 0L10 5L0 10z' style='fill:var(--dp-color-outline)'/></marker></defs>";
+  var kt=0,nt=0,svg="<svg class='net' viewBox='0 0 600 320' role='img' aria-labelledby='netT'><title id='netT'>Red de Petri del curso. Marcado inicial: una marca en Petri, BI y Minería, que habilitan el parcial; Big Data entra en el final</title><defs><marker id='ar' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto'><path d='M0 0L10 5L0 10z' style='fill:var(--dp-color-outline)'/></marker></defs>";
   Object.keys(TOP).forEach(function(t,k){var n=0,kn=0;CARDS.forEach(function(c,ix){if(c[0]===t){n++;if(st.known[ix])kn++;}});
-    var m=n?Math.floor(kn*5/n):0,y=ys[k];marks+=m;full[t]=(m===5);
+    var m=t==='bd'?0:1,y=ys[k];kt+=kn;nt+=n;
     var d=(t==="bd")?"M180 "+y+" C 320 "+y+", 380 212, 447 212":"M180 "+y+" C 240 "+y+", 250 120, 298 120";
     svg+="<path class='arc' d='"+d+"' marker-end='url(#ar)'/>";
     svg+="<text class='lab' x='114' y='"+(y-2)+"' text-anchor='end'>"+short[t]+"</text><text class='sub' x='114' y='"+(y+18)+"' text-anchor='end'>"+kn+" de "+n+"</text>";
     svg+="<circle class='shd' cx='154' cy='"+(y+4)+"' r='25'/><circle class='pl' cx='150' cy='"+y+"' r='25' style='fill:color-mix(in srgb,"+TOP[t].c+" 45%,var(--dp-color-panel))'/>";
     pos[m].forEach(function(o){svg+="<circle class='tok' cx='"+(150+o[0])+"' cy='"+(y+o[1])+"' r='4.8'/>";});});
-  var enP=full.petri&&full.bi&&full.dm,enF=enP&&full.bd;
+  var enP=false,enF=false;
   function tk(x,y,on){return on?"<circle class='tok' cx='"+x+"' cy='"+y+"' r='5'/>":"";}
   function pl(x,y,l1,l2,ly,on){return "<circle class='shd' cx='"+(x+4)+"' cy='"+(y+4)+"' r='23'/><circle class='pl' cx='"+x+"' cy='"+y+"' r='23' style='fill:var(--dp-color-accent-fresh)'/>"+tk(x,y,on)+"<text class='lab' x='"+x+"' y='"+ly+"' text-anchor='middle'>"+l1+"</text>"+(l2?"<text class='lab' x='"+x+"' y='"+(ly+19)+"' text-anchor='middle'>"+l2+"</text>":"");}
   function trn(x,y,l,ly){return "<rect class='shd' x='"+(x+4)+"' y='"+(y+4)+"' width='14' height='92' rx='3'/><rect class='tr' x='"+x+"' y='"+y+"' width='14' height='92' rx='3'/><text class='lab' x='"+(x+7)+"' y='"+ly+"' text-anchor='middle'>"+l+"</text>";}
   /* Parcial: Petri + BI + Minería (peso 5) */
-  svg+=trn(300,74,"Parcial",192)+"<text class='sub' x='307' y='210' text-anchor='middle'>peso 5</text>";
+  svg+=trn(300,74,"Parcial",192);
   svg+="<path class='arc' d='M317 120 L 334 120' marker-end='url(#ar)'/>"+pl(360,120,"Parcial","aprobado",46,enP);
   /* Final: Parcial aprobado + Big Data (peso 5) */
   svg+="<path class='arc' d='M373 139 C 410 165, 424 172, 446 172' marker-end='url(#ar)'/>";
-  svg+=trn(450,145,"Final",131)+"<text class='sub' x='382' y='254' text-anchor='middle'>peso 5</text>";
+  svg+=trn(450,145,"Final",131);
   svg+="<path class='arc' d='M468 191 L 521 191' marker-end='url(#ar)'/>";
   svg+=pl(548,191,"Materia","aprobada",233,enF)+"</svg>";
-  var h="<section class='hero'><div><h2>Llená la red antes del parcial</h2><p>Cada tema es un lugar. Por cada quinta parte de sus tarjetas que ya te sabés, cae una marca. Con 5 marcas en Petri, BI y Minería se habilita la transición <b>Parcial</b>. Big Data entra en el final: con Parcial aprobado y 5 marcas en Big Data se habilita <b>Final</b>.</p>";
-  h+=marks?"":"<p class='muted'>Todavía no hay marcas. Empezá por las tarjetas y marcá las que ya sabés.</p><div class='row' style='margin-top:20px'><button class='btn' data-go='tarjetas'>"+ic("layers")+"Empezar con tarjetas</button></div>";
+  var h="<section class='hero'><div><h2>La red del parcial</h2><p>Cada tema es un lugar. La red arranca con una marca en Petri, BI y Minería, que habilitan la transición <b>Parcial</b>. Big Data entra en el final: con Parcial aprobado y una marca en Big Data se habilita <b>Final</b>.</p>";
+  h+=kt?"":"<p class='muted'>Todavía no marcaste tarjetas como sabidas. Empezá por las tarjetas.</p><div class='row' style='margin-top:20px'><button class='btn' data-go='tarjetas'>"+ic("layers")+"Empezar con tarjetas</button></div>";
   h+="</div><div>"+svg+"</div></section>";
-  h+="<div class='facts'><div><b>"+marks+" de 20</b>marcas en la red</div><div><b>"+(tot?Math.round(ok*100/tot):0)+" %</b>aciertos en "+tot+" respuestas</div><div><b>"+(st.best===null?"Sin nota":st.best.toFixed(1))+"</b>mejor simulacro</div></div>";
+  h+="<div class='facts'><div><b>"+kt+" de "+nt+"</b>tarjetas que ya sabés</div><div><b>"+(tot?Math.round(ok*100/tot):0)+" %</b>aciertos en "+tot+" respuestas</div><div><b>"+(st.best===null?"Sin nota":st.best.toFixed(1))+"</b>mejor simulacro</div></div>";
   var G=[["Aprender","Para leer y fijar conceptos.",[["tarjetas","Tarjetas",CARDS.length,"layers"],["siglas","Siglas",GLOSARIO.length,"book"]]],
     ["Practicar","Con corrección al instante.",[["mcq","Cuestionario",MCQ.length,"list-ordered"],["vf","Verdadero o falso",TF.length,"check-circle"],["completar","Completar",CLOZE.length,"pencil"],["ordenar","Ordenar pasos",ORDER.length,"shuffle"],["relacionar","Relacionar",MATCH.length,"link"]]],
     ["Medirte","Sin ayudas, como en el examen.",[["simulacro","Simulacro con nota","25","award"],["progreso","Progreso por tema","","trending-up"]]]];
