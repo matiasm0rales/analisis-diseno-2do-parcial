@@ -658,8 +658,8 @@ R.inicio=function(){var tot=0,ok=0;Object.keys(st.stats).forEach(function(t){tot
   /* Final: Parcial aprobado + Big Data (peso 5) */
   svg+="<path class='arc' d='M373 139 C 410 165, 424 172, 446 172' marker-end='url(#ar)'/>";
   svg+=trn(450,145,"Final",131)+"<text class='sub' x='382' y='254' text-anchor='middle'>peso 5</text>";
-  svg+="<path class='arc' d='M468 178 C 495 178, 505 130, 521 130' marker-end='url(#ar)'/><path class='arc' d='M468 205 C 495 205, 505 245, 521 245' marker-end='url(#ar)'/>";
-  svg+=pl(548,130,"Final","aprobado",172,enF)+pl(548,245,"Materia","aprobada",287,enF)+"</svg>";
+  svg+="<path class='arc' d='M468 191 L 521 191' marker-end='url(#ar)'/>";
+  svg+=pl(548,191,"Materia","aprobada",233,enF)+"</svg>";
   var h="<section class='hero'><div><h2>Llená la red antes del parcial</h2><p>Cada tema es un lugar. Por cada quinta parte de sus tarjetas que ya te sabés, cae una marca. Con 5 marcas en Petri, BI y Minería se habilita la transición <b>Parcial</b>. Big Data entra en el final: con Parcial aprobado y 5 marcas en Big Data se habilita <b>Final</b>.</p>";
   h+=marks?"":"<p class='muted'>Todavía no hay marcas. Empezá por las tarjetas y marcá las que ya sabés.</p><div class='row' style='margin-top:20px'><button class='btn' data-go='tarjetas'>"+ic("layers")+"Empezar con tarjetas</button></div>";
   h+="</div><div>"+svg+"</div></section>";
