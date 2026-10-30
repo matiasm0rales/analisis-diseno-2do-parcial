@@ -400,7 +400,6 @@ Propiedades: **viva**, **segura**, **cíclica**, **pura**; conservativa respecto
 
 ### 2.5 Componentes básicos
 
-
 Componentes de todo proyecto de BI:
 
 1. **Problemática empresarial** a responder.
@@ -422,7 +421,7 @@ Componentes de todo proyecto de BI:
 
 - "Aquello que no se mide, no se puede gestionar". Primero se define **qué** medir y **cómo**: el **modelo de negocio** y sus métricas.
 - **Modelo de negocio**: simplificación de la realidad que permite **documentar, probar y desarrollar teorías** sobre cómo funciona el negocio y **experimentar** cómo afectan los cambios al resultado. Debe estar **vivo** como el negocio.
-- **Silos de información**: departamentos entre los que no fluye la información (por falta de integración o por razones políticas). Lo mejor para un departamento no siempre es lo mejor para la organización (atención al cliente entrega todo a tiempo y subutiliza los camiones).
+- **Silos de información**: departamentos entre los que no fluye la información (por falta de integración o por razones políticas). Lo mejor para un departamento no siempre es lo mejor para la organización.
 - **Cómo se crea**: con metodologías como **contabilidad analítica o de costos, EFQM** (*European Foundation for Quality Management*), **Six Sigma, análisis de procesos, modelos financieros, análisis de ratios**; identificando áreas críticas, factores que influyen en el resultado y la estructura organizativa.
 
 ### 2.8 Indicadores clave (KPI)
@@ -433,10 +432,10 @@ Componentes de todo proyecto de BI:
 
 ### 2.9 Modelo de datos
 
-- **Modelo relacional** (E. F. **Codd**, **1970**): tablas y relaciones. **PK** (*Primary Key*, clave primaria) identifica cada registro; **FK** (*Foreign Key*, clave externa) relaciona tablas. Se consulta con **SQL** (*Structured Query Language*; ver aviso 9). El **modelo entidad-relación** muestra las tablas y sus relaciones.
+- **Modelo relacional** (E. F. **Codd**, **1970**): tablas y relaciones. **PK** (*Primary Key*, clave primaria) identifica cada registro; **FK** (*Foreign Key*, clave externa) relaciona tablas. Se consulta con **SQL** (*Structured Query Language*; ver aviso 6). El **modelo entidad-relación** muestra las tablas y sus relaciones.
 - Primero se define el modelo de negocio; después, qué se quiere **medir (hechos)** y **cómo (dimensiones)**. Las dimensiones responden **qué, quién, por qué, dónde y cuándo**.
 - **Tabla de hechos** (*fact table*): lo que se mide (por ejemplo, el total del ticket) más las claves de las dimensiones. **Tablas de dimensiones**: el contexto para agrupar y filtrar (tiempo, centro, empleado, forma de pago). **Dimensiones degeneradas**: no necesitan tabla propia (número de ticket, identificador de caja).
-- **Dimensión tiempo**: la fecha se descompone en día de la semana, del mes, del año, mes, trimestre, año, vacaciones y fin de semana. Esos datos (y los feriados) **no están** en el sistema transaccional: hay que agregarlos. **Dimensión hora**: 4 franjas (9 a 11:59, 12 a 14:59, 15 a 17:59, 18 a 21).
+- **Dimensión tiempo**: la fecha se descompone en día de la semana, del mes, del año, mes, trimestre, año, vacaciones y fin de semana. Esos datos (y los feriados) **no están** en el sistema transaccional: hay que agregarlos.
 
 | | **Esquema estrella** | **Esquema copo de nieve** (*snowflake*) |
 |---|---|---|
@@ -657,7 +656,6 @@ Apunte de clase: la estadística toma **muestras** e infiere a la población; la
 1. **Falsa interpretación**: es fácil engañarse con la estadística (los resultados valen para grupos, no individuos); con software de minería es aún más fácil "hacer creíble una falsedad".
 2. **Correlación no es causalidad — Florida**: Florida tiene la edad promedio al fallecer más alta de Estados Unidos, pero no porque vivir allí alargue la vida: allí se jubilan y mudan los mayores (**efecto de selección**). La minería **genera hipótesis desde los datos** (es **explorativa, no explicativa**): hay que validarlas con datos nuevos. Además no puede ser experimental.
 3. **Tiempo, espacio y privacidad**: variables que cambian en el período, **granularidad del tiempo** (con datos mensuales no se predice por semana) y **privacidad** (combinar las bases del teléfono, el banco y el supermercado arma un perfil completo de una persona; el marco jurídico no acompañó).
-
 
 ### 3.8 Tareas de la minería de datos
 
