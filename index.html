@@ -107,6 +107,8 @@ p{max-width:68ch}
 .fb{margin-top:16px;border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:14px;padding:12px 16px}
 .fb.ok{background:var(--dp-color-field-soft)} .fb.bad{background:var(--bad-soft)}
 .sig{display:block;font-size:var(--dp-typography-metadata);color:var(--muted);margin-top:4px}
+.btn.sm{padding:4px 14px;font-size:14px;box-shadow:3px 3px 0 var(--shadow-ink)}
+.score .btn{margin-left:auto}
 .score{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 10px}
 .sc{display:inline-flex;align-items:center;gap:7px;border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:999px;padding:5px 14px;font-size:15px;background:var(--dp-color-panel)}
 .sc b{font-size:18px;font-weight:800}
@@ -622,8 +624,9 @@ R.inicio=function(){var tot=0,ok=0;Object.keys(st.stats).forEach(function(t){tot
   main.innerHTML=h;main.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){go(b.dataset.go);};});};
 
 /* barra de conteo y progreso (compartida) */
-function scoreBar(ok,bad,total,okL,badL){var done=ok+bad,p=total?Math.round(done*100/total):0;
-  return "<div class='score' role='status' aria-live='polite'><span class='sc ok'>"+ic("check-circle")+"<b>"+ok+"</b> "+okL+"</span><span class='sc bad'>"+ic("x-circle")+"<b>"+bad+"</b> "+badL+"</span><span class='sc'>Progreso <b>"+p+" %</b> · "+done+" de "+total+"</span></div><div class='prog'><span style='width:"+p+"%'></span></div>";}
+function shufBtn(id){return "<button class='btn sec sm' id='"+(id||'shuf')+"' title='Mezclar el orden y empezar de nuevo'>"+ic("shuffle")+"Mezclar</button>";}
+function scoreBar(ok,bad,total,okL,badL,extra){var done=ok+bad,p=total?Math.round(done*100/total):0;
+  return "<div class='score' role='status' aria-live='polite'><span class='sc ok'>"+ic("check-circle")+"<b>"+ok+"</b> "+okL+"</span><span class='sc bad'>"+ic("x-circle")+"<b>"+bad+"</b> "+badL+"</span><span class='sc'>Progreso <b>"+p+" %</b> · "+done+" de "+total+"</span>"+(extra||"")+"</div><div class='prog'><span style='width:"+p+"%'></span></div>";}
 function backIc(){return ic("arrow-right").replace("class='i'","class='i' style='transform:scaleX(-1)'");}
 
 /* tarjetas */
@@ -633,7 +636,7 @@ R.tarjetas=function(){buildDeck();drawCard();};
 function tcCount(){var k=0,n=0;tc.deck.forEach(function(ix){if(tc.mark[ix]==="k")k++;else if(tc.mark[ix]==="n")n++;});return [k,n];}
 function drawCard(){var h="<h2>Tarjetas de memoria</h2>"+chips()+"<label class='row muted'><input type='checkbox' id='only' "+(tc.only?"checked":"")+"> Solo las que me faltan</label>";
   if(!tc.deck.length){main.innerHTML=h+"<div class='card mt'>No hay tarjetas para mostrar. ¡Las sabés todas!</div>";bindCardCtl();return;}
-  var kn=tcCount(),len=tc.deck.length;h+=scoreBar(kn[0],kn[1],len,"ya las sé","no las sé");
+  var kn=tcCount(),len=tc.deck.length;h+=scoreBar(kn[0],kn[1],len,"ya las sé","no las sé",shufBtn());
   function prev(){if(tc.i>0){tc.i--;tc.flip=false;drawCard();}}
   function next(){if(tc.i<len){tc.i++;tc.flip=false;drawCard();}}
   document.onkeydown=function(e){if(cur!=="tarjetas")return;var t=e.target;if(t&&t.tagName==="INPUT")return;if(e.key==="ArrowLeft")prev();else if(e.key==="ArrowRight")next();};
@@ -658,7 +661,7 @@ function drawCard(){var h="<h2>Tarjetas de memoria</h2>"+chips()+"<label class='
   document.getElementById("prev").onclick=prev;document.getElementById("next").onclick=next;
   document.getElementById("yes").onclick=function(){decide("k");};
   document.getElementById("no").onclick=function(){decide("n");};}
-function bindCardCtl(){bindChips(function(){buildDeck();drawCard();});var o=document.getElementById("only");if(o)o.onchange=function(){tc.only=o.checked;buildDeck();drawCard();};}
+function bindCardCtl(){bindChips(function(){buildDeck();drawCard();});var sh=document.getElementById("shuf");if(sh)sh.onclick=function(){var n=tcCount();if(n[0]+n[1]>0&&!confirm("Se mezclan las tarjetas y se empieza de nuevo. ¿Seguir?"))return;tc.deck=shuf(tc.deck);tc.i=0;tc.mark={};tc.flip=false;drawCard();};var o=document.getElementById("only");if(o)o.onchange=function(){tc.only=o.checked;buildDeck();drawCard();};}
 
 /* motor común de práctica: anterior/siguiente, conteo y resumen */
 function stepper(cfg){var q={list:[],i:0,S:[]};
@@ -667,10 +670,11 @@ function stepper(cfg){var q={list:[],i:0,S:[]};
     q.list=shuf(base);q.i=0;q.S=[];draw();}
   function cnt(){var ok=0,bad=0;q.S.forEach(function(s){if(s&&s.done){if(s.ok)ok++;else bad++;}});return [ok,bad];}
   var A={redraw:function(){draw();},finish:function(good){var s=q.S[q.i];if(!s||s.done)return;s.done=true;s.ok=!!good;rec(q.list[q.i][0],s.ok);draw();}};
+  function bindShuf(){var b=document.getElementById("shuf");if(b)b.onclick=function(){var n=cnt();if(n[0]+n[1]>0&&!confirm("Se mezclan las preguntas y se empieza de nuevo. ¿Seguir?"))return;q.list=shuf(q.list);q.i=0;q.S=[];draw();};}
   function move(d){q.i=Math.max(0,Math.min(q.list.length,q.i+d));draw();}
   function draw(){var h="<h2>"+cfg.title+"</h2>"+chips();
     if(!q.list.length){main.innerHTML=h+"<div class='card'>No hay preguntas para los temas elegidos.</div>";bindChips(build);return;}
-    var c=cnt(),total=q.list.length;h+=scoreBar(c[0],c[1],total,"correctas","incorrectas");
+    var c=cnt(),total=q.list.length;h+=scoreBar(c[0],c[1],total,"correctas","incorrectas",shufBtn());
     document.onkeydown=function(e){if(cur!==cfg.view)return;var t=e.target,typing=!!t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA");
       if(!typing&&e.key==="ArrowLeft")move(-1);else if(!typing&&e.key==="ArrowRight")move(1);else if(cfg.key&&q.i<total)cfg.key(e,q.list[q.i],q.S[q.i],A,typing);};
     if(q.i>=total){var left=total-c[0]-c[1],by={};
@@ -678,12 +682,12 @@ function stepper(cfg){var q={list:[],i:0,S:[]};
       h+="<div class='card'><p>Terminaste: <b>"+c[0]+" de "+total+"</b> correctas, <b>"+c[1]+"</b> incorrectas"+(left?" y <b>"+left+"</b> sin responder":"")+".</p><table><tr><th>Tema</th><th>Correctas</th><th>Incorrectas</th></tr>";
       Object.keys(by).forEach(function(t){h+="<tr><td>"+tag(t)+"</td><td>"+by[t].c+"</td><td>"+by[t].m+"</td></tr>";});
       h+="</table><div class='row mt'>"+(c[1]?"<button class='btn bad' id='retry'>"+ic("refresh")+"Repasar las incorrectas ("+c[1]+")</button>":"")+"<button class='btn' id='again'>"+ic("shuffle")+"Otra vez</button><button class='btn sec' id='review'>"+backIc()+"Revisar mis respuestas</button></div></div>";
-      main.innerHTML=h;bindChips(build);var rt=document.getElementById("retry");if(rt)rt.onclick=function(){build(true);};
+      main.innerHTML=h;bindChips(build);bindShuf();var rt=document.getElementById("retry");if(rt)rt.onclick=function(){build(true);};
       document.getElementById("again").onclick=function(){build();};document.getElementById("review").onclick=function(){q.i=0;draw();};return;}
     var it=q.list[q.i],s=q.S[q.i];if(!s)s=q.S[q.i]=cfg.mk(it);
     h+="<div class='card'><div>"+tag(it[0])+" <span class='muted'>"+(q.i+1)+" / "+total+"</span></div>"+cfg.body(it,s)+"</div>";
     h+="<div class='row mt'><button class='btn sec' id='pv'"+(q.i?"":" disabled style='opacity:.5'")+">"+backIc()+"Anterior</button><button class='btn"+(s.done?"":" sec")+"' id='nx'>"+(q.i===total-1?"Ver resultado":"Siguiente")+ic("arrow-right")+"</button></div>";
-    main.innerHTML=h;bindChips(build);
+    main.innerHTML=h;bindChips(build);bindShuf();
     document.getElementById("pv").onclick=function(){move(-1);};document.getElementById("nx").onclick=function(){move(1);};
     cfg.bind(it,s,A);
     if(s.done){document.getElementById("nx").focus({preventScroll:true});}}
@@ -752,7 +756,7 @@ R.simulacro=function(){var qs=shuf(MCQ).slice(0,18).map(function(x){return {k:"m
   var h="<h2>Simulacro</h2><p class='muted'>25 preguntas (18 de opción múltiple y 7 de verdadero o falso), sin ayudas hasta el final. Tiempo: <b id='tm'>0:00</b></p><div id='sbar'></div>";
   qs.forEach(function(q,i){h+="<div class='card mt'><div>"+tag(q.it[0])+" <span class='muted'>"+(i+1)+" / 25</span></div><p>"+fmt(q.it[1])+"</p><div class='opts'>";q.opts.forEach(function(o,j){h+="<button class='opt' data-q='"+i+"' data-j='"+j+"'><span class='k'>"+(j+1)+"</span><span>"+fmt(o.t)+"</span></button>";});h+="</div><div id='e"+i+"'></div></div>";});
   h+="<div class='row mt'><button class='btn' id='fin'>"+ic("flag")+"Terminar y corregir</button><span class='muted' id='cnt2'></span></div><div id='res'></div>";main.innerHTML=h;
-  function upd(){var n=Object.keys(an).length,pc=Math.round(n*100/25);document.getElementById("sbar").innerHTML="<div class='score' role='status' aria-live='polite'><span class='sc'>Respondidas <b>"+n+" de 25</b></span><span class='sc'>Progreso <b>"+pc+" %</b></span></div><div class='prog'><span style='width:"+pc+"%'></span></div>";document.getElementById("cnt2").textContent=n+" de 25 respondidas";}upd();
+  function upd(){var n=Object.keys(an).length,pc=Math.round(n*100/25);document.getElementById("sbar").innerHTML="<div class='score' role='status' aria-live='polite'><span class='sc'>Respondidas <b>"+n+" de 25</b></span><span class='sc'>Progreso <b>"+pc+" %</b></span>"+shufBtn('shuf2')+"</div><div class='prog'><span style='width:"+pc+"%'></span></div>";document.getElementById("cnt2").textContent=n+" de 25 respondidas";var sb=document.getElementById("shuf2");if(sb){sb.title="Armar otro simulacro con preguntas mezcladas";sb.lastChild.textContent="Mezclar";sb.onclick=function(){if(!fin&&n>0&&!confirm("Se arma otro simulacro y se pierden las respuestas. ¿Seguir?"))return;go("simulacro");};}}upd();
   timer=setInterval(function(){var s=Math.floor((Date.now()-t0)/1000),e=document.getElementById("tm");if(e)e.textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");},1000);
   var fin=false;main.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){if(fin)return;var i=+b.dataset.q;an[i]=+b.dataset.j;upd();main.querySelectorAll(".opt[data-q='"+i+"']").forEach(function(x){x.classList.toggle("sel",x===b);x.style.borderColor=x===b?"var(--dp-color-accent)":"";});};});
   document.getElementById("fin").onclick=function(){if(fin)return;fin=true;if(timer){clearInterval(timer);timer=null;}var ok=0;
