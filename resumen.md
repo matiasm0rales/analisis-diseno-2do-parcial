@@ -7,13 +7,14 @@
 | Bloque | Qué entra | Fuente principal |
 |---|---|---|
 | Temas 6 y 7 | Teoría completa y práctica de árbol de alcanzabilidad, propiedades, máquina de testigos y método matricial. Redes de Petri: definición, historia, representación gráfica y matricial, ejecución, árbol de alcanzabilidad y máquina de testigos, estructuras básicas, propiedades, subclases, métodos de análisis, modelos clásicos | TP6; presentaciones de la cátedra "Redes_de_petri" y "Formalización Redes de Petri"; lectura de Jorge Castro Monge; apunte de clase |
-| Tema 8 | *Business Intelligence* (BI): definición, beneficios, componentes (fuentes, calidad de datos, ETL, *datawarehouse*, Data Mart, OLAP, herramientas, usuarios), retorno de la inversión, modelo de negocio, indicadores clave, modelo de datos, experiencias. Solo teoría | TP7; capítulos 1 a 4 del libro *Business Intelligence: competir con información* ("Introducción al BI", "BI_modelos", "Componentes de BI"); "experiencias BI_detalle" |
+| Tema 8 | *Business Intelligence* (BI): definición, beneficios, componentes (fuentes, calidad de datos, ETL, *datawarehouse*, Data Mart, OLAP, herramientas, usuarios), retorno de la inversión, modelo de negocio, indicadores clave y modelo de datos. Solo teoría | TP7; capítulos 1 a 4 del libro *Business Intelligence: competir con información* ("Introducción al BI", "BI_modelos", "Componentes de BI") |
 | Tema 9 | Minería de datos y proceso KDD (descubrimiento de conocimiento en bases de datos): fases, limpieza, tareas, técnicas, evaluación, metodologías KDD, CRISP-DM y SEMMA. Solo teoría | TP8; lectura "Minería de Datos" (Beatriz Beltrán Martínez, Benemérita Universidad Autónoma de Puebla); artículo "KDD, SEMMA and CRISP-DM: a parallel overview" (Azevedo y Santos); apuntes del 14/9 |
-| Tema 10 | Big Data: las 3 V, nuevas necesidades, Big Analytics, metodología MAD, Hadoop, megatendencias, tiempo real, implementación, comparación con BI y minería. Solo teoría | TP9; guía *Del bit… al Big Data* (PowerData); apunte de clase "Ingeniería de datos" |
+| Tema 10 (entra en el final, no en el parcial) | Big Data: las 3 V, nuevas necesidades, Big Analytics, metodología MAD, Hadoop, megatendencias, tiempo real, implementación, comparación con BI y minería. Solo teoría | TP9; guía *Del bit… al Big Data* (PowerData); apunte de clase "Ingeniería de datos" |
 
 **Aclaraciones de la docente (vigentes)**
 
 - **De todos los temas entra solo la teoría.**
+- **Big Data (tema 10) entra en el final**, no en el 2do parcial. Queda en el resumen como material para el final.
 - **Excepción, Redes de Petri**: además de la teoría entran el **árbol de alcanzabilidad**, las **características y propiedades**, y **resolver una red con máquina de testigos y método matricial** (ver 1.12).
 - **No entra**: la práctica de los TP (caso CoffeeTime, TP integrador de fútbol, aplicación en comercio minorista, caso de abandono de compra, modelado de las 7 tareas y demás ejercicios de modelado del TP6). Se sacaron de los tres entregables.
 
@@ -29,8 +30,8 @@ Toda sigla se desarrolla la primera vez que aparece en cada sección. TP = Traba
 
 **Avisos antes de estudiar**
 
-1. **Alcance.** Solo teoría de los cuatro temas, más la práctica de Redes de Petri indicada arriba. El resumen ya está recortado a eso.
-2. **Numeración.** La cátedra numera así: Temas 6 y 7 = Redes de Petri, Tema 8 = BI, Tema 9 = Minería de datos, Tema 10 = Big Data. El resumen usa esa numeración e incluye Big Data.
+1. **Alcance.** Para el **2do parcial**: solo teoría de los temas 6 a 9 (Redes de Petri, BI y Minería de datos), más la práctica de Redes de Petri indicada arriba. **Big Data (tema 10) entra en el final.** El resumen ya está recortado a eso: no incluye ejemplos puntuales, casos de empresas ni datos sueltos de un autor o de un estudio.
+2. **Numeración.** La cátedra numera así: Temas 6 y 7 = Redes de Petri, Tema 8 = BI, Tema 9 = Minería de datos, Tema 10 = Big Data. El resumen usa esa numeración; Big Data queda como material para el final.
 3. **Redes de Petri, apunte de clase con errores.** El apunte dice "una red viva es cíclica": no es correcto, vivacidad y ciclicidad son propiedades independientes y ninguna presentación de la cátedra lo dice. Las definiciones de conflicto estructural y efectivo se toman de la presentación "Redes_de_petri" (ver 1.8 y "Errores frecuentes").
 4. **Mapeo KDD, SEMMA y CRISP-DM.** El cuadro del TP8 del grupo difiere un poco del artículo de la cátedra (Azevedo y Santos). Se corrigió según el artículo (ver 3.13).
 5. **Videos.** Los videos de los temas 8 y 10 no se pudieron revisar (solo se procesó texto). La guía de PowerData sí está cotejada.
@@ -55,30 +56,19 @@ Toda sigla se desarrolla la primera vez que aparece en cada sección. TP = Traba
 | Subclases de RdP | 4: grafo de estados o máquina de estados, grafo marcado, red de libre elección, red simple |
 | Primero en usar "Business Intelligence" | Howard Dresner (consultor de Gartner) |
 | BI según Gartner | Proceso **interactivo** para **explorar** y **analizar** información **estructurada** de un **área**, normalmente en un *datawarehouse* |
-| Hospitales de Estados Unidos | 80 % del tiempo preparando datos en Excel, 20 % analizando |
-| Directivos que confían en sus informes (IDC) | 15 % |
-| Encuesta Gartner 2005 | 43 % definió BI como el uso de información para dirigir, decidir, medir, gestionar y optimizar |
 | ROI (fórmula simple) | Valor para el negocio / costo del proyecto |
 | ROI (fórmula completa) | NPV / inversión inicial × 100 |
-| Ejemplo ROI del libro | Inversión 40.000 €, mantenimiento 15.000 €/año, tasa 15 %, NPV 87.656 €, ROI 219 % |
-| Estudio IDC 1996 | ROI medio a 3 años 401 %, *payback* 2,3 años |
 | Proceso ETL | Consume entre el 60 % y el 80 % del tiempo de un proyecto de BI; 5 subprocesos |
 | Características de un *datawarehouse* (Inmon) | Orientado a un área, integrado, indexado en el tiempo, no volátil |
-| Calidad de datos (TDWI 2001) | 48 % de las organizaciones no tenía plan de calidad de datos |
 | Concepto FASMI de OLAP | *Fast, Analysis, Shared, Multidimensional, Information* |
-| Aprobación de proyectos de *datawarehousing* (Watson) | Prototipo 42,9 % |
 | Modelo relacional | E. F. Codd, 1970 |
-| Franjas horarias del ejemplo del supermercado | 4: 9 a 11:59, 12 a 14:59, 15 a 17:59, 18 a 21 |
 | Las dimensiones responden | ¿Qué? ¿Quién? ¿Por qué? ¿Dónde? ¿Cuándo? |
 | Término KDD | Empieza a usarse en 1989 |
 | Pasos del proceso KDD | 9 |
 | Fases (estados) del KDD según la lectura | 6 |
-| Información almacenada en el mundo | Se duplica cada 20 meses |
-| Datos georreferenciables / con fecha | 80 % / 100 % |
 | CRISP-DM | 6 fases; consorcio DaimlerChrysler, SPSS y NCR |
 | SEMMA | 5 fases: *Sample, Explore, Modify, Model, Assess*; SAS Institute |
 | KDD según Fayyad | 5 etapas núcleo: selección, preprocesamiento, transformación, minería, interpretación/evaluación |
-| Ejemplo de elevación (*lift*) | 30 % / 10 % = 3 |
 | Big Data | 3 V: volumen, velocidad, variedad |
 | Metodología MAD | Magnética, Ágil, Detallada |
 | Megatendencias del Big Data | 4: Movilidad, Cloud, Social Media, Analytics |
@@ -389,22 +379,15 @@ Propiedades: **viva**, **segura**, **cíclica**, **pura**; conservativa respecto
 | Comunicar y efectuar cambios | Lo descubierto tiene que llegar a quien hace los cambios |
 
 - **Definición del The Data Warehousing Institute (TDWI)**: término paraguas que abarca procesos, herramientas y tecnologías para convertir datos en información, información en conocimiento y planes para conducir los negocios. Incluye el ***back end*** (la "trastienda": *datawarehousing*) y el ***front end*** (el "mostrador": consultas, informes, análisis y visualización).
-- **Encuesta Gartner 2005** (150 asistentes): 43 % lo definió como el uso de información para dirigir, decidir, medir, gestionar y optimizar; 16 % como la habilidad de mostrar un hecho que origina una acción; 16 % como el acceso al análisis de información cuantitativa para alinear personas y procesos con los objetivos; menos de 5 % como herramientas (*reporting* y minería). Conclusión: el valor de BI va **más allá de distribuir información** y está ligado a los **objetivos de negocio**.
-- Las tres preguntas del autor a los directivos: ¿tienen más información y menos tiempo para analizarla? (sí, unánime); ¿sus sistemas los ayudan a decidir rápido? (depende de la madurez; a veces se le pregunta a sistemas **transaccionales**, que solo sirven para soportar transacciones); ¿quienes generan información directiva están desbordados? (sí, unánime). Hay que **"industrializar"** los sistemas de información para decidir, no depender de procesos **"artesanales"**.
 
-### 2.2 Ejemplo del ticket de supermercado
+### 2.2 De los datos a las decisiones
 
-- Datos del ticket: número, fecha, hora, cajero, supermercado, artículos, unidades, precio, total, forma de pago.
-- **Información operativa**: ventas del día, tickets por hora, tickets por cajero, ventas por artículo, ticket medio, cobros en efectivo o tarjeta.
-- **Decisiones**: reponer existencias, asignar turnos de cajeros según tickets por hora, ver los productos más vendidos, ver los medios de pago.
-- Si **bajan las ventas**, se analiza si bajó la **cantidad de tickets** (problema de afluencia → promocionar el local), el **ticket medio** (los clientes compran menos → hacer que compren más) o ambos. Esto ya es una **decisión estratégica**.
-- Con el tiempo: días de más venta (sábados) y de menos (miércoles); relaciones entre productos (espaguetis y tomate) para promociones o ubicación en góndola; comparar dos supermercados.
+- Los **datos** de las transacciones (qué se vendió, cuándo, quién, cómo se pagó) se convierten en **información operativa** (ventas del día, ticket medio, ventas por artículo), y esa información sirve para **decisiones**: **operativas** (reponer, asignar turnos) o **estratégicas** (qué hacer cuando bajan las ventas: ¿bajó la afluencia o lo que gasta cada cliente?).
+- Con el tiempo aparecen **tendencias** y **relaciones entre productos**, que permiten promociones y mejor ubicación.
 
 ### 2.3 Quién lo necesita
 
 - Compras (qué se vende y tendencias), ventas (ubicación según rotación), negociación con entidades financieras (flujos de efectivo y tarjetas), marketing (efectividad de promociones) y personal (turnos según afluencia). En síntesis: **todo el que toma decisiones**; las decisiones pueden ser **operativas o estratégicas**.
-- **Hospitales de Estados Unidos**: los analistas financieros dedican **80 %** del tiempo a juntar y normalizar datos en Excel y **20 %** a analizar. Debería ser al revés: el valor se aporta al decidir.
-- **IDC (International Data Corporation)**: la implementación es urgente en organizaciones con **estructura compleja** y **muchos clientes**; solo el **15 %** de los directivos confía en que sus informes llegan a las personas adecuadas en el momento adecuado.
 
 ### 2.4 Beneficios
 
@@ -415,16 +398,14 @@ Propiedades: **viva**, **segura**, **cíclica**, **pura**; conservativa respecto
 | **Intangibles** | Mejor atención y satisfacción del cliente, información más actualizada y precisa, mayor integración, ventaja competitiva |
 | **Estratégicos** | Ayudan a formular la estrategia: a qué clientes, mercados o productos dirigirse; decisiones más rápidas, informadas y basadas en hechos |
 
-### 2.5 Componentes básicos (ejemplo de la empresa de distribución)
-
-Caso: una empresa comercial ve que **aumentaron los gastos de distribución**. Junta en un *datawarehouse* (copia, para no afectar a los sistemas transaccionales) los **pedidos** (número, importe, líneas, artículos) y las **expediciones** (costo del transporte, bultos, peso, transportista). Descubre que hay pedidos **urgentes** con sobrecosto, agrega el **cliente** y la marca de urgencia, y suma información **externa** (tarifas de transportistas) para simular un cambio. Al final, hay que construir **modelos** que repitan el análisis en el tiempo y **lancen alertas**.
+### 2.5 Componentes básicos
 
 Componentes de todo proyecto de BI:
 
 1. **Problemática empresarial** a responder.
 2. **Equipo** (o persona) que hace el análisis.
-3. **Información interna** de los sistemas (pedidos, expediciones).
-4. **Información externa** (tarifas del transportista).
+3. **Información interna** de los sistemas de la organización.
+4. **Información externa** a la organización (mercado, proveedores, tarifas).
 5. Una **base de datos**: el *datawarehouse*.
 6. Una **aplicación de BI** para trabajar, analizar y visualizar.
 
@@ -435,33 +416,26 @@ Componentes de todo proyecto de BI:
 - **ROI simple = valor para el negocio / costo del proyecto**. El costo es fácil de medir; el valor es lo difícil.
 - **Pasos de Bill Whittemore**: 1) definir el problema u oportunidad y objetivos **específicos, medibles, alcanzables, adecuados y con plazo**; 2) recoger requerimientos; 3) construir el proyecto; 4) identificar y cuantificar beneficios; 5) establecer el punto de partida de costos e ingresos; 6) calcular el **TCO** (*Total Cost of Ownership*, costo total de propiedad: *hardware*, *software*, consultoría, personal, lanzamiento, mantenimiento y formación); 7) calcular el **ROI = NPV / inversión inicial × 100**; 8) hacer seguimiento y corregir.
 - **NPV** (*Net Present Value*, valor actual neto) = suma de los flujos de caja (CF, *Cash Flow*) de cada año descontados a la tasa r, menos la inversión inicial.
-- **Ejemplo del supermercado**: objetivo, una línea más por ticket en el 25 % de los tickets (150.000 de 600.000). Margen esperado del primer año 52.920 €; luego 75.000 € y 90.000 €. Inversión 40.000 €, mantenimiento 15.000 € por año, tasa 15 % → **NPV 87.656 €, ROI 219 %**. El seguimiento mes a mes mostró desvíos en marzo y abril, que obligan a analizar por segmentos. Se necesitan **KPI** para evaluar de forma continua.
-- **Estudios**: IDC 1996 → ROI medio a 3 años **401 %**, *payback* (período de recuperación) **2,3 años**, más del 90 % supera 40 %. IDC 2002 → ROI de 17 % a 2.000 %; 49 % recupera en menos de un año. **Paul Westerman** (Wal-Mart): "el estudio del ROI no es una opción, es una necesidad"; estos proyectos nunca terminan.
-- **Cómo se aprobaban** los proyectos de *datawarehousing* (Hugh Watson): prototipo 42,9 %, propuesta formal de costos 39 %, encargo de directivos 37,1 %.
 
 ### 2.7 Modelización del negocio
 
 - "Aquello que no se mide, no se puede gestionar". Primero se define **qué** medir y **cómo**: el **modelo de negocio** y sus métricas.
 - **Modelo de negocio**: simplificación de la realidad que permite **documentar, probar y desarrollar teorías** sobre cómo funciona el negocio y **experimentar** cómo afectan los cambios al resultado. Debe estar **vivo** como el negocio.
-- **Ejemplo de la empresa de paquetería**: ¿es rentable tener camiones propios? (comparar sus costos con lo que costaría subcontratar: ingresos "ficticios"); ¿qué rutas son rentables?; ¿qué rutas potenciar? → las de **baja ocupación del camión**. El resultado depende del **precio** y de la **ocupación**.
-- **Silos de información**: departamentos entre los que no fluye la información (por falta de integración o por razones políticas). Lo mejor para un departamento no siempre es lo mejor para la organización (atención al cliente entrega todo a tiempo y subutiliza los camiones).
-- **Ejemplo Wal-Mart**: informe de ventas por tienda de un distrito (superficie, ventas de este año y del anterior, ventas por metro cuadrado, cantidad de ventas, venta de gasolina) para comparar tiendas.
+- **Silos de información**: departamentos entre los que no fluye la información (por falta de integración o por razones políticas). Lo mejor para un departamento no siempre es lo mejor para la organización.
 - **Cómo se crea**: con metodologías como **contabilidad analítica o de costos, EFQM** (*European Foundation for Quality Management*), **Six Sigma, análisis de procesos, modelos financieros, análisis de ratios**; identificando áreas críticas, factores que influyen en el resultado y la estructura organizativa.
 
 ### 2.8 Indicadores clave (KPI)
 
 - **KPI** (*Key Performance Indicators*, indicadores clave de desempeño): sirven para **evaluar si la organización alcanza sus objetivos** y medir su progreso.
 - Deben: **reflejar los objetivos**, ser **críticos para el éxito**, ser **cuantificables y comparables** y **permitir acciones correctivas**. Pocos, alineados entre departamentos, definidos con los responsables de cada área.
-- Cada KPI tiene **nombre, definición, forma de cálculo y objetivo**. Ejemplo: "Repetición de ventas a clientes" = ventas a clientes que ya lo eran el trimestre anterior / ventas totales; objetivo: **mejorar 3 % por trimestre desde el 48 %**.
-- Otro ejemplo: en venta telefónica, el porcentaje de llamadas atendidas antes de **20 segundos**.
-- Para un KPI de ventas hay que decidir: en dinero o unidades, en qué período se restan las devoluciones y qué objetivo fijar. Empresas del mismo sector pueden tener KPI distintos.
+- Cada KPI tiene **nombre, definición, forma de cálculo y objetivo**.
 
 ### 2.9 Modelo de datos
 
-- **Modelo relacional** (E. F. **Codd**, **1970**): tablas y relaciones. **PK** (*Primary Key*, clave primaria) identifica cada registro; **FK** (*Foreign Key*, clave externa) relaciona tablas. Se consulta con **SQL** (*Structured Query Language*; ver aviso 9). El **modelo entidad-relación** muestra las tablas y sus relaciones.
+- **Modelo relacional** (E. F. **Codd**, **1970**): tablas y relaciones. **PK** (*Primary Key*, clave primaria) identifica cada registro; **FK** (*Foreign Key*, clave externa) relaciona tablas. Se consulta con **SQL** (*Structured Query Language*; ver aviso 6). El **modelo entidad-relación** muestra las tablas y sus relaciones.
 - Primero se define el modelo de negocio; después, qué se quiere **medir (hechos)** y **cómo (dimensiones)**. Las dimensiones responden **qué, quién, por qué, dónde y cuándo**.
 - **Tabla de hechos** (*fact table*): lo que se mide (por ejemplo, el total del ticket) más las claves de las dimensiones. **Tablas de dimensiones**: el contexto para agrupar y filtrar (tiempo, centro, empleado, forma de pago). **Dimensiones degeneradas**: no necesitan tabla propia (número de ticket, identificador de caja).
-- **Dimensión tiempo**: la fecha se descompone en día de la semana, del mes, del año, mes, trimestre, año, vacaciones y fin de semana. Esos datos (y los feriados) **no están** en el sistema transaccional: hay que agregarlos. **Dimensión hora**: 4 franjas (9 a 11:59, 12 a 14:59, 15 a 17:59, 18 a 21).
+- **Dimensión tiempo**: la fecha se descompone en día de la semana, del mes, del año, mes, trimestre, año, vacaciones y fin de semana. Esos datos (y los feriados) **no están** en el sistema transaccional: hay que agregarlos.
 
 | | **Esquema estrella** | **Esquema copo de nieve** (*snowflake*) |
 |---|---|---|
@@ -475,16 +449,9 @@ Componentes de todo proyecto de BI:
 - **Granularidad**: nivel de detalle. Analizar **líneas** de ticket tiene **mayor** granularidad que analizar tickets. Cada nivel responde unas preguntas y no otras; **cada vez que se agrega, se pierde información**. Conviene construir al **máximo detalle** si el volumen lo permite.
 - **Jerarquías**: año → trimestre → mes → día; familia → subfamilia → artículo; zona → centro; categoría → empleado. Permiten agregar y desagregar.
 - **Multidimensionalidad**: analizar por **varias dimensiones a la vez** (ventas de un artículo por centro y por mes).
-- Si fabricante y artículo están en la misma dimensión no se pueden cruzar: van en dimensiones distintas. No se analiza forma de pago a nivel línea porque todo el ticket se paga igual.
+- Si fabricante y artículo están en la misma dimensión no se pueden cruzar: van en dimensiones distintas.
 - **Metadata o diccionario de datos**: describe atributos, origen, definiciones y transformaciones para que todos usen la **misma terminología**.
 - **Cada modelo de datos responde un número limitado de preguntas**, y cada modelo responde preguntas distintas.
-
-| Sector | Hechos | Dimensiones |
-|---|---|---|
-| Distribución | Unidades vendidas, importe | Tienda, código postal, producto, familia, día de la semana |
-| Telecomunicaciones | Duración de llamadas, cantidad media | Origen, destino |
-| Banca | Saldo medio | Cliente, cuenta, oficina, producto financiero |
-| Seguros | Importe de reclamaciones | Tipo de póliza, cliente |
 
 ### 2.10 Componentes de BI (capítulo 4 del libro)
 
@@ -495,13 +462,13 @@ Los componentes son: **fuentes de información → proceso ETL → *datawarehous
 - **Sistemas operacionales o transaccionales**: aplicaciones a medida, ERP, CRM (gestión de la relación con clientes), SCM (gestión de la cadena de suministro).
 - **Sistemas departamentales**: previsiones, presupuestos, hojas de cálculo.
 - **Fuentes externas**, a veces compradas (estudios de mercado, datos de población).
-- En grandes corporaciones se cargan en promedio **8 bases de datos** (hasta 50). La información puede ser estructurada, semiestructurada o **no estructurada** (correos, cartas, informes, videos).
+- La información puede ser estructurada, semiestructurada o **no estructurada** (correos, cartas, informes, videos).
 
 **Calidad de datos**
 
-- Si hay errores en el *datawarehouse* se **propagan por toda la organización** y llevan a decisiones erróneas; los usuarios **desprestigian** el proyecto. Gartner previó que más del 50 % de los proyectos de *datawarehouse* de 2007 tendrían aprobación limitada o fracaso por no cuidar la calidad.
+- Si hay errores en el *datawarehouse* se **propagan por toda la organización** y llevan a decisiones erróneas; los usuarios **desprestigian** el proyecto.
 - Los errores vienen de los **sistemas transaccionales**, del **proceso ETL** o del propio ***datawarehouse***. Conviene **corregirlos en el origen** (que el usuario elija valores en vez de escribirlos libremente), no solo en el ETL.
-- La calidad es un **problema de negocio, no solo de tecnología**. Encuesta de TDWI (2001): el **48 %** no tenía plan de calidad de datos; problemas más citados: tiempo extra para reconciliar (87 %) y pérdida de credibilidad (81 %).
+- La calidad es un **problema de negocio, no solo de tecnología**.
 - **7 características** de datos de calidad: **precisión, integridad, coherencia, totalidad, validez, disponibilidad y accesibilidad**.
 
 **Proceso ETL** (*Extract, Transform, Load*, extracción, transformación y carga)
@@ -589,22 +556,6 @@ Según Watson, **las dos son válidas** bien desarrolladas. También existen la 
 | Estrella frente a copo de nieve | Ver tabla 2.9 |
 | Granularidad y multidimensionalidad | Nivel de detalle (decide qué preguntas se responden) y análisis por varias dimensiones a la vez |
 
-### 2.12 Experiencias desarrolladas (TP7) 📁
-
-Consigna: identificar en cada caso el proyecto, el sector y cómo y para qué se aplicó BI. Casos del documento "experiencias BI_detalle" de la cátedra:
-
-| Empresa | Sector | Proyecto | Para qué se usó BI |
-|---|---|---|---|
-| **Cavas Castillo de Perelada** | Vinos y cavas | *Dashboard* de rentabilidad sobre un *datawarehouse* (Business Objects) | Pasar de crecer en facturación a crecer en **margen**; indicadores integrados para comercial y marketing |
-| **Embega** (Grupo Mondragón) | Embellecedores metálicos para electrodomésticos y automoción | Ventas y control de análisis financiero | Seguimiento **diario** de ventas, control comercial y calidad de servicio de los pedidos |
-| **Sage SP** | *Software* para pequeñas y medianas empresas | *Datawarehouse* corporativo y *reporting* para la alta dirección | Asegurar la **calidad de los datos** de clientes; CRM y campañas en una segunda fase |
-| **De Blas y Cía** | Transporte de pasajeros | Gestión del rendimiento corporativo: planificación, monitorización y análisis | Entender la operativa de **Tráfico y Taller** para mejorar el servicio y optimizar recursos |
-| **Grupo Cortefiel** (Cortefiel, Springfield, Milano, Women'secret) | Moda y distribución | *Datawarehouse* corporativo y CRM | Mejorar el acceso a la información, **análisis predictivo** (abandono y venta cruzada) y campañas por segmento para los clubes |
-| **Contifarma – Farmarosa** | Parafarmacia | Cuadro de mando y *reporting* | Reemplazar un análisis **artesanal** y lento de ventas de la red de tiendas |
-| **Loterías y Apuestas del Estado** | Entidad pública | Implantación de Microsoft Dynamics NAV | Adaptar la contabilidad a la normativa y modernizar la gestión y el *reporting* |
-| **Grupo Codorníu** | Bodegas (once) | Sistema de Información Corporativa sobre SAP | Una **única versión de la verdad**: Planificación y Finanzas obtenían distintos valores del mismo dato |
-
-
 ---
 
 ## 3. Minería de datos (Tema 9) 📁
@@ -649,7 +600,7 @@ Consigna: identificar en cada caso el proyecto, el sector y cómo y para qué se
 
 Diagrama: **BD → Selección → Datos objetivo → Preprocesado → Datos preprocesados → Transformación → Datos transformados → Minería de datos → Patrones → Interpretación / Evaluación → Conocimiento**.
 
-- **Por qué creció el análisis de datos** (tres factores): **potencia de las computadoras**, **ritmo de adquisición de datos** (la información almacenada se duplica cada **20 meses**; los satélites generan cerca de un petabyte por día) y **nuevos métodos** de aprendizaje.
+- **Por qué creció el análisis de datos** (tres factores): **potencia de las computadoras**, **ritmo de adquisición de datos** y **nuevos métodos** de aprendizaje.
 - **Aprendizaje automático frente a minería**: el aprendizaje automático usa un conjunto **chico y seleccionado**; la minería parte de una base **grande** generada para **otros propósitos**.
 
 ### 3.3 Fases del KDD según la lectura (6 estados)
@@ -706,8 +657,6 @@ Apunte de clase: la estadística toma **muestras** e infiere a la población; la
 2. **Correlación no es causalidad — Florida**: Florida tiene la edad promedio al fallecer más alta de Estados Unidos, pero no porque vivir allí alargue la vida: allí se jubilan y mudan los mayores (**efecto de selección**). La minería **genera hipótesis desde los datos** (es **explorativa, no explicativa**): hay que validarlas con datos nuevos. Además no puede ser experimental.
 3. **Tiempo, espacio y privacidad**: variables que cambian en el período, **granularidad del tiempo** (con datos mensuales no se predice por semana) y **privacidad** (combinar las bases del teléfono, el banco y el supermercado arma un perfil completo de una persona; el marco jurídico no acompañó).
 
-- Se estima que el **80 %** de los datos se puede **georreferenciar** y el **100 %** ubicar en el **tiempo**: los patrones interesantes son espaciales o temporales.
-
 ### 3.8 Tareas de la minería de datos
 
 | Tarea | Qué hace | Paradigma |
@@ -723,8 +672,8 @@ Apunte de clase: la estadística toma **muestras** e infiere a la población; la
 
 ### 3.9 Predictivo frente a descriptivo
 
-- **Predictivo (supervisado)**: predice una **etiqueta** conocida en datos históricos. Dos fases: **entrenamiento** (subconjunto con etiqueta) y **prueba** (el resto). Ejemplo: árbol de decisión "*Play Tennis*" (14 días con cielo, temperatura, humedad y viento); (soleado, caluroso, humedad alta, viento fuerte) → **No**.
-- **Descriptivo (no supervisado)**: descubre patrones en los datos actuales. Ejemplo: **K-means** sobre 15 empleados crea **3 grupos** (sin hijos y de alquiler con muchas bajas; sin hijos, con auto y muy sindicados; casados con hijos y propietarios).
+- **Predictivo (supervisado)**: predice una **etiqueta** conocida en datos históricos. Dos fases: **entrenamiento** (subconjunto con etiqueta) y **prueba** (el resto).
+- **Descriptivo (no supervisado)**: descubre patrones en los datos actuales.
 - **Taxonomía**: interpolación, predicción secuencial, aprendizaje supervisado, aprendizaje no supervisado y abducción. En lo supervisado: **clasificación** (clases disjuntas) frente a **categorización** (pueden solaparse); clase con dos valores = ***concept learning***; clase continua = **estimación**.
 - **Reglas de asociación**: **confianza** = casos que cumplen antecedente y consecuente / casos que cumplen el antecedente; **soporte** = casos (o porcentaje) donde se aplica la regla. Algoritmos tipo **Apriori** en dos fases: **A**, buscar conjuntos frecuentes (*large itemsets*) con soporte suficiente; **B**, partirlos en reglas y quedarse con las de confianza suficiente. También hay asociaciones entre jerarquías, **negativas** ("80 % de quienes compran pizza congelada no compra lentejas") y con valores continuos (se discretizan).
 - **Combinación de hipótesis**: ***boosting*** (el **mismo** algoritmo sobre distintas particiones) y ***voting*** (**distintos** algoritmos sobre todos los datos).
@@ -815,7 +764,7 @@ Apunte de clase: la estadística toma **muestras** e infiere a la población; la
 
 ---
 
-## 4. Big Data (Tema 10) 📁
+## 4. Big Data (Tema 10, entra en el final) 📁
 
 ### 4.1 Mapa conceptual
 
@@ -833,7 +782,7 @@ Apunte de clase: la estadística toma **muestras** e infiere a la población; la
 - **Big Analytics frente al BI tradicional**: el BI tradicional cargaba modelos tan lento que al terminar ya no servían; Analytics trabaja con los datos **en crudo, al nivel de granularidad más bajo**, con modelos más ágiles. El **Analytic Data Warehouse** **no reemplaza** al *data warehouse* actual: cada uno cubre necesidades distintas y conviven en un **modelo híbrido**. Aparece el perfil de **Data Science**.
 - **CEP, ejemplos de la guía**: un banco que analiza en tiempo real lo que pasa con las **tarjetas de crédito** en cajeros y comercios; **sensores de maquinaria** que envían una alerta antes de que aparezca un fallo.
 - **Implementación**: primero **conocer y cuantificar el valor** que puede dar al negocio (autoevaluación de límites, expectativas y restricciones); elegir la tecnología según las metas (para eventos en tiempo real, **CEP**; para análisis predictivo, bases con procesamiento **MPP**); perfiles de negocio que conozcan el sector (Data Scientist, Data Analyst); y herramientas según el tipo de análisis.
-- **Humanizando el Big Data**: el estudio *The Human Face of Big Data* muestra que está en la vida diaria (compras por internet, autos con sensores, historiales médicos digitalizados). **Privacidad**: en Google "no todo es gratis", el precio es la privacidad; las empresas deben equilibrar los datos que analizan con la **tolerancia** de sus clientes.
+- **Privacidad**: en Google "no todo es gratis", el precio es la privacidad; las empresas deben equilibrar los datos que analizan con la **tolerancia** de sus clientes.
 - **Implementación (mapa del TP)**: **medir el valor para el negocio**, **las metas determinan la tecnología** (no al revés) y perfiles de negocio con herramientas adecuadas.
 - **Genera** innovación y ventaja competitiva; **plantea** el desafío de **seguridad y privacidad**: equilibrio entre los datos analizados y lo que el cliente tolera.
 - Bases **MPP** (*Massively Parallel Processing*, procesamiento masivamente paralelo) para el análisis predictivo sobre todo el histórico.
@@ -917,8 +866,6 @@ Apunte de clase: la estadística toma **muestras** e infiere a la población; la
 1. **¿Por qué la minería de datos depende del *datawarehouse* de BI?** — Porque la minería necesita datos **consolidados, limpios e históricos**, desconectados de los sistemas transaccionales, y eso es lo que provee el **datawarehouse** cargado con **ETL**. La lectura de minería indica que el análisis es mucho más sencillo si la fuente es unificada, accesible y desconectada del trabajo transaccional. Por eso el *datawarehouse* es "el punto de partida" de la minería.
 2. **Compará OLAP, minería de datos y Big Data.** — **OLAP** navega de forma asistida por datos históricos agregados en varias dimensiones, **sin generar información nueva**. La **minería** descubre de forma **automática** patrones nuevos y predice. **Big Data** es el **contexto** de datos masivos, veloces y variados (incluso no estructurados) que exige infraestructura distribuida (**Hadoop**) y análisis en tiempo real (**CEP**, **Data Stream**).
 3. **¿Qué tienen en común la granularidad de un modelo estrella y el tercer reto de la minería?** — En los dos casos, el **nivel de detalle** decide qué preguntas se pueden responder. En BI, analizar tickets no permite analizar productos; en minería, con datos mensuales no se puede predecir por semana. **Cada vez que se agrega se pierde información**.
-4. **¿Cómo modelarías con una Red de Petri el acceso de dos cajeros a una única impresora de tickets?** — Dos ciclos (uno por cajero) con lugares "esperando" e "imprimiendo", y un **lugar "impresora libre" con una marca** (semáforo) que es entrada de las dos transiciones "empezar a imprimir" y salida de las dos "terminar". Es una **exclusión mutua**: las dos transiciones están en **conflicto** y la red es **viva y segura**. Las Redes de Petri no permiten fijar **prioridades** entre los cajeros.
-5. **Un supermercado ve que bajan sus ventas. ¿Cómo usaría BI, minería y Big Data?** — Con **BI** compara **cantidad de tickets** y **ticket medio** (KPI) para saber si el problema es la afluencia o el gasto por compra. Con **minería** busca **reglas de asociación** (cesta de la compra) o **segmenta** clientes con K-means. Con **Big Data** suma redes sociales, app y tarjeta de fidelidad para **personalizar** ofertas y **predecir** demanda, cuidando la **privacidad**.
 
 ### 5.5 Autopreguntas
 
@@ -929,8 +876,6 @@ Apunte de clase: la estadística toma **muestras** e infiere a la población; la
 - ¿Por qué M' = M + f(σ)·C no alcanza para asegurar que una secuencia se puede disparar?
 - ¿Cómo se reconoce en el grafo de marcados que una red es cíclica?
 - ¿Qué diferencia hay entre una red viva, parcialmente viva y no viva?
-- En el productor-consumidor con buffer de 3, ¿cuánto suman siempre "llenos" y "vacíos"?
-- ¿Qué cuatro decisiones toma un supermercado con la información operativa del ticket?
 - ¿Cuáles son los 6 componentes de un proyecto de BI?
 - ¿Qué es una dimensión degenerada? Dame dos ejemplos.
 - ¿Por qué el fabricante va en una dimensión distinta del artículo?
@@ -1044,6 +989,7 @@ Apunte de clase: la estadística toma **muestras** e infiere a la población; la
 - **Material del grupo**: TP6 a TP9 resueltos, guías de BI, caso CoffeeTime y su planilla, TP integrador de fútbol, apuntes de clase ("Redes Petri - Análisis y Diseño II", "Apuntes 14/9", "Ingeniería de datos") y el mapa conceptual de Big Data.
 - **Verificado por computadora**: matrices, árboles de alcanzabilidad, máquinas de testigos, secuencias y propiedades de los tres ejemplos resueltos de Redes de Petri.
 - **Recorte por alcance** (aclaración de la docente): se sacaron el TP6 de modelado (7 tareas y demás ejercicios), el caso CoffeeTime, el TP integrador de fútbol, la aplicación en comercio minorista y el caso de abandono de compra.
-- **Cotejo con la cátedra**: se quitaron las marcas ⚠️ de la forma matricial de Petri, de los componentes de BI y de toda la unidad de Big Data. Se agregaron historia, subclases, máquina de testigos y métodos de análisis de Petri; calidad de datos, subprocesos de ETL, Inmon y Kimball, ODS y operaciones OLAP; los casos de experiencias de BI; el mapeo oficial de KDD, SEMMA y CRISP-DM; y detalles de la guía de PowerData.
+- **Cotejo con la cátedra**: se quitaron las marcas ⚠️ de la forma matricial de Petri, de los componentes de BI y de toda la unidad de Big Data. Se agregaron historia, subclases, máquina de testigos y métodos de análisis de Petri; calidad de datos, subprocesos de ETL, Inmon y Kimball, ODS y operaciones OLAP; el mapeo oficial de KDD, SEMMA y CRISP-DM; y detalles de la guía de PowerData.
+- **Depuración (30/10)**: Big Data pasa al final. Se sacaron los ejemplos y casos puntuales (supermercado, paquetería, Wal-Mart, ROI del libro, K-means de empleados, Play Tennis, experiencias de BI) y los datos sueltos de estudios o encuestas (IDC, TDWI, Watson, Gartner 2005, hospitales). Se conservaron los ejemplos resueltos de Redes de Petri, porque esa práctica entra en el parcial.
 - **Descartado**: del apunte de Redes de Petri, "una red viva es cíclica". Del cuadro del TP8, la correspondencia entre preprocesado y preparación de los datos (ver 3.13). De la lectura de BI, los desarrollos "Standard Query Language" y "Object Data Base Connector".
 - **No disponible**: contenido de los videos de los temas 8 y 10.
