@@ -38,6 +38,7 @@ ICONOS = {
     "alert": '<path d="M12 3.5 2.8 19.5h18.4z"/><path d="M12 10v4.2M12 17.2v.1"/>',
     "arrow-up": '<path d="M12 19V5M6 11l6-6 6 6"/>',
     "filter": '<path d="M4 5h16l-6.5 7.5V19l-3 1.5v-8z"/>',
+    "play": '<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>',
     "list": '<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.1M4.5 12h.1M4.5 18h.1"/>',
 }
 
@@ -669,6 +670,7 @@ def armar_html(titulo, meta, cuerpo, toc):
   <div class="htop">
     <button class="hbtn" id="idxBtn" aria-expanded="false" aria-controls="side" title="Mostrar el índice">{ic("list")}<span class="lbl">Índice</span></button>
     <h1>Resumen del 2do parcial<small>Análisis y Diseño de Sistemas II, temas 6 a 10</small><small class="upd">Última actualización: {upd}</small></h1>
+    <a class="hbtn" href="repaso.html" title="Repasar en diapositivas">{ic("play")}<span class="lbl">Repaso</span></a>
     <a class="hbtn" href="index.html" title="Volver a la práctica">{ic("layers")}<span class="lbl">Práctica</span></a>
     <a class="hbtn" href="resumen.pdf" target="_blank" rel="noopener" title="Abrir el resumen en PDF">{ic("file-text")}<span class="lbl">PDF</span></a>
     <button class="hbtn" id="themeBtn" title="Cambiar entre tema claro y oscuro">{ic("contrast")}<span class="lbl">Tema</span></button>
