@@ -6,12 +6,10 @@ Docente: María Silvina Scarpin. Grupo: Figún, Morales, Haunau. Tecnicatura en 
 
 ## 1. Redes de Petri (Temas 6 y 7)
 
-> **En una frase:** una Red de Petri es un **modelo gráfico y matemático** que muestra cómo funciona un sistema en el que **pasan varias cosas a la vez**.
-
 ### 1.1 Qué son, de dónde vienen y para qué sirven
 
-- **Definición del resumen de cátedra**: las **redes de Petri (RdP)** son representaciones **gráficas** que permiten modelar **sistemas con flujo de información**, mostrando su **estructura** y su **comportamiento dinámico**. Permiten representar **procesos concurrentes** y hacer **modelamiento matemático** del sistema.
-- **Definición de la presentación**: además, se pueden ver como **generadores de lenguaje o autómatas formales** (teoría de grafos). Sirven para **diseñar, especificar y simular** sistemas de *hardware* o de *software*.
+> **¿Qué es? · Red de Petri.** Es un **modelo gráfico y matemático** formado por **lugares** (condiciones o estados), **transiciones** (eventos), **arcos** que los unen y **marcas** que indican qué condiciones se cumplen en cada momento. Sirve para representar y analizar sistemas donde **varias cosas pasan a la vez**: concurrencia, sincronización, conflictos y recursos compartidos.
+
 - **Historia**:
   - **1962**: **Carl Adam Petri** presenta su tesis doctoral *Kommunikation mit Automaten* ("Comunicación con autómatas") en **Alemania**. Es una teoría de comunicación entre componentes **asíncronos** (que no van al mismo ritmo). El proyecto **"Systemics"** aportó la teoría inicial, la notación y la representación.
   - **1970**: **Holt y Commoner** ("Events and Conditions") muestran cómo usarlas para modelar y analizar sistemas con componentes **concurrentes**.
@@ -70,7 +68,7 @@ El valor I(p, t) u O(t, p) es el **peso** del arco. Un arco sin etiqueta pesa 1.
 - **P ∩ T = ∅**: lugares y transiciones son conjuntos **disjuntos** (ningún nodo es las dos cosas).
 - **I** es la función de incidencia previa y **O** la de incidencia posterior.
 
-**Marcado**: función **M: P → ℕ** que dice cuántas marcas tiene cada lugar en un momento dado. Con n lugares se escribe como vector **M = (m1, …, mn)**, donde mi = M(pi). **El marcado es el estado de la red.**
+> **¿Qué es? · Marcado.** Es el **estado de la red** en un momento dado: **cuántas marcas tiene cada lugar**. Formalmente es una función **M: P → ℕ**; con n lugares se escribe como vector **M = (m1, …, mn)**, por ejemplo M = (1, 0, 0). El **marcado inicial M0** es el estado del que se parte.
 
 **Red marcada**: la red junto con su **marcado inicial M0**: **(RdP, M0)**.
 
@@ -85,6 +83,8 @@ El valor I(p, t) u O(t, p) es el **peso** del arco. Un arco sin etiqueta pesa 1.
 > **Ojo con la letra C.** En la lectura, C es la estructura de la red; en la representación matricial (1.8.3), **C es la matriz de incidencia**. En este resumen se usa **RdP** para la estructura y **C** solo para la matriz.
 
 ### 1.4 Ejecución y alcanzabilidad
+
+> **¿Qué es? · Transición habilitada.** Es una transición que **puede dispararse** porque **cada uno de sus lugares de entrada tiene al menos tantas marcas como el peso del arco** que los une. **Dispararla** es quitar esas marcas de las entradas y agregar marcas en las salidas: así la red pasa a un marcado nuevo.
 
 **Regla de disparo simple** (red ordinaria):
 
@@ -152,47 +152,54 @@ La presentación "Redes_de_petri" trabaja seis: **vivacidad, ciclicidad, limitac
 
 **Alcanzabilidad** — ¿se puede llegar a ese estado?
 
-- Es la **base para estudiar todas las propiedades dinámicas**.
-- Mn es alcanzable desde M0 si y solo si existe σ tal que **M0 [σ> Mn**.
+> **¿Qué es? · Alcanzabilidad.** Es la propiedad que dice si **un marcado se puede obtener desde M0** disparando alguna secuencia de transiciones. Es la base para estudiar todas las demás propiedades de comportamiento.
+
+- En símbolos: Mn es alcanzable desde M0 si y solo si existe σ tal que **M0 [σ> Mn**.
 
 **Vivacidad** — ¿algo se traba para siempre?
 
+> **¿Qué es? · Vivacidad.** Es la propiedad de una red en la que, desde cualquier marcado alcanzable, **cada transición puede volver a dispararse** en algún momento. Una red viva **nunca se bloquea** (no tiene *deadlock*).
+
 - Sirve para **caracterizar el bloqueo total o parcial** del sistema.
 - **Transición viva**: desde **cualquier** marcado alcanzable existe una secuencia de disparos que **la incluye**. En símbolos: para todo M ∈ R(M0) existe σ disparable desde M que contiene a t.
-- **Red viva**: **todas** sus transiciones son vivas. Entonces no hay, en el conjunto de alcanzabilidad, ningún marcado con **bloqueo total (*deadlock*)**.
 - La diapositiva distingue tres casos:
   - **Viva**: todas las transiciones son vivas.
   - **Parcialmente viva**: la red nunca se bloquea del todo (desde cualquier marcado alcanzable hay al menos una transición disparable), pero **al menos una transición no es viva**. Conserva la **posibilidad de evolución global**.
   - **No viva**: llega a un **marcado muerto** (ninguna transición habilitada): se **bloquea totalmente**. Ejemplo de la lectura: con la secuencia t1, t2, t1, t2 la red no se bloquea, pero con t1, t3, t4 queda **bloqueada**.
-- Versión de la lectura: un **marcado vivo** permite, sin importar qué descargas se hicieron antes, descargar cualquier transición con alguna secuencia adicional. Una red así **nunca se estanca**.
 
 **Ciclicidad** o **reversibilidad** — ¿siempre se puede volver al inicio?
 
-- La red tiene comportamiento **globalmente cíclico** si desde **cualquier marcado sucesor** de M0 existe una secuencia que **vuelve a M0**: para todo M ∈ R(M0) existe σ tal que **M [σ> M0**.
+> **¿Qué es? · Ciclicidad o reversibilidad.** Es la propiedad de una red que, desde **cualquier marcado alcanzable**, **puede volver al marcado inicial M0**. Es independiente de la vivacidad: una red puede ser viva y no cíclica.
+
+- En símbolos: para todo M ∈ R(M0) existe σ tal que **M [σ> M0**.
 - Garantiza que **no hay subconjuntos finales de estados**: grupos de marcados alcanzables entre sí desde los que ya no se puede volver a M0.
 - **Vivacidad y ciclicidad son independientes.** Ejemplo de la lectura: una red **pseudoviva** y **no reversible**, porque nunca vuelve a obtener el marcado inicial.
 
 **Acotamiento** o **limitación** — ¿algún lugar se llena sin tope?
 
+> **¿Qué es? · Acotamiento o limitación.** Es la propiedad de una red en la que **ningún lugar supera nunca una cantidad máxima k de marcas**, en ningún marcado alcanzable. Garantiza que la red tiene un **número finito de estados** y que se puede implementar con recursos finitos.
+
 - Un lugar p es **k-acotado** si **M(p) ≤ k** para todo M ∈ R(M0). La **cota del lugar** es el **menor** k que cumple eso.
 - La red es **k-acotada** (o **k-limitada**) si **todos** sus lugares son k-acotados. Es **acotada** si existe algún k. Ejemplo de la diapositiva: una red **3-limitada**.
 - Interés: **garantiza que los marcados alcanzables son finitos** (si cada lugar es una variable de estado, la red tiene un número finito de estados). En la práctica, una red k-limitada **se puede implementar con recursos finitos**.
 - Si la red genera más marcas de las que permite su cota, **el modelo está mal**.
-- Versión de la lectura: un **marcado acotado** es aquel en el que existe un entero n tal que ningún lugar recibe más de n elementos en ninguna secuencia de descargas.
 
 **Seguridad** — ¿cada lugar tiene a lo sumo una marca?
 
-- Red **segura** = **1-acotada** = **binaria**: cada lugar está marcado o no está marcado.
-- Versión de la lectura: un **marcado seguro** es un marcado acotado en el que ningún lugar recibe más de un elemento. Si cada lugar es un registro que guarda una palabra de memoria, un marcado inicial seguro garantiza que **no se excede la capacidad** de los registros.
+> **¿Qué es? · Seguridad.** Es el caso del acotamiento con **k = 1**: **ningún lugar tiene nunca más de una marca**, así que cada lugar está marcado o no (red binaria). No garantiza que la red no se bloquee.
+
 - Seguridad **no** es lo mismo que vivacidad: una red segura puede bloquearse.
 
 **Conservación** — ¿los recursos se mantienen?
 
-- La cantidad de **recursos disponibles no puede variar** durante la ejecución.
+> **¿Qué es? · Conservación.** Es la propiedad de una red en la que **la cantidad total de marcas (o su suma ponderada con un vector peso) no cambia** en ningún marcado alcanzable. Modela **recursos que no se crean ni se destruyen**.
+
 - **Conservación estricta**: la cantidad total de marcas es **la misma en todos los marcados alcanzables**. Es una condición **muy fuerte**.
 - Por eso se usa la **conservación respecto de un vector peso w**: la suma ponderada **Σ w(p) · M(p)** es constante en todos los marcados alcanzables. Ejemplo de la diapositiva: w = (1, 1, 1, 2, 2).
 
 **Conflictividad** — ¿hay transiciones que compiten?
+
+> **¿Qué es? · Conflicto.** Es la situación en la que **dos transiciones compiten por las mismas marcas**: las dos están habilitadas y **disparar una deshabilita a la otra**. Es **estructural** si un lugar tiene dos o más transiciones de salida, y **efectivo** si eso realmente ocurre en algún marcado alcanzable.
 
 - **Conflicto estructural**: un lugar tiene **más de una transición de salida**. Se ve en el dibujo.
 - **Conflicto efectivo** para M0: ti y tj lo están si se cumplen **las dos** condiciones:
@@ -201,6 +208,8 @@ La presentación "Redes_de_petri" trabaja seis: **vivacidad, ciclicidad, limitac
 - El conflicto efectivo depende del marcado: las dos transiciones están habilitadas a la vez y **compiten por la misma marca**. Todo conflicto efectivo es también estructural, pero no al revés.
 
 **Exclusión mutua** — ¿hay cosas que nunca ocurren juntas?
+
+> **¿Qué es? · Exclusión mutua.** Es la relación entre **dos lugares que nunca están marcados a la vez** (o entre transiciones en las que disparar una deshabilita a las demás). Modela el **acceso de a uno** a un recurso compartido, como una impresora.
 
 - Entre **transiciones**: un conjunto Te ⊆ T es mutuamente exclusivo si disparar cualquier ti ∈ Te **deshabilita a todas las demás** tj ∈ Te.
 - Entre **lugares**: dos lugares están en exclusión mutua para M0 si **nunca están marcados a la vez** en ningún marcado alcanzable.
@@ -244,7 +253,7 @@ Hay dos familias:
 
 #### 1.8.1 Árbol de alcanzabilidad
 
-> **En una frase:** es el **mapa de todos los marcados** a los que puede llegar la red desde M0.
+> **¿Qué es? · Árbol de alcanzabilidad.** Es un **árbol con todos los marcados a los que puede llegar la red desde M0**: cada nodo es un marcado y cada arco, la transición que se disparó. Sirve para analizar las propiedades de la red; para que sea finito se corta en los marcados muertos, duplicados o con ω.
 
 - Cada **nodo** es un marcado alcanzable. Cada **arco** lleva el nombre de la transición que se disparó para pasar de un marcado al otro.
 - **Cómo se construye**:
@@ -277,6 +286,8 @@ Hay dos familias:
 
 #### 1.8.2 Máquina de testigos
 
+> **¿Qué es? · Máquina de testigos.** Es una **versión compacta del árbol de alcanzabilidad** en forma de grafo: cada estado (óvalo) se escribe con **los nombres de los lugares que tienen marcas** y los marcados repetidos se juntan en un solo estado. Conviene cuando hay muchos lugares y pocas marcas.
+
 - Es una **modificación del árbol de alcanzabilidad** con una forma **más compacta**.
 - El **estado** se escribe con los **nombres de los lugares que tienen marcas**. Un lugar aparece **tantas veces como marcas tenga** (por ejemplo, dos marcas en p2 se escriben p2 p2).
 - Es un **grafo dirigido**: cada estado va en un **óvalo**, una sola vez, y los óvalos se unen con arcos que llevan el nombre de la transición.
@@ -289,6 +300,8 @@ Hay dos familias:
 | Conviene en | Redes chicas o con muchas marcas | Redes con muchos lugares y pocas marcas |
 
 #### 1.8.3 Representación matricial (ecuación de estado)
+
+> **¿Qué es? · Matriz de incidencia.** Es la **matriz C = C⁺ − C⁻** que resume la red en números: cada fila es una transición, cada columna un lugar, y cada celda dice **cuántas marcas gana (+) o pierde (−) ese lugar cuando se dispara esa transición**. Permite calcular marcados con la ecuación de estado M' = M + f(σ)·C.
 
 | Matriz | Qué guarda | En palabras simples |
 |---|---|---|
@@ -514,16 +527,13 @@ Es la segunda parte de la presentación "Redes_de_petri". Son modelos de **optim
 
 ## 2. Business Intelligence (Tema 8)
 
-> **En una frase:** BI es **usar los datos de la organización para tomar mejores decisiones**, de forma continua.
-
 ### 2.1 Definición
+
+> **¿Qué es? · Business Intelligence (BI).** Es un **proceso continuo e interactivo** para **explorar y analizar la información estructurada** de un área del negocio (normalmente guardada en un *datawarehouse*), descubrir **tendencias o patrones** y **comunicarlos para tomar decisiones y hacer cambios**. Abarca los procesos, herramientas y tecnologías que convierten **datos en información y conocimiento**. Es la definición de Gartner, la que el libro considera más ajustada.
 
 - **Business Intelligence** (BI) significa "inteligencia de negocio". Su objetivo es apoyar a la organización de forma **sostenible y continuada** para mejorar su **competitividad**, dándole la información que necesita para **tomar decisiones**.
 - El término lo acuñó y popularizó **Howard Dresner**, consultor de **Gartner**, como "término paraguas" para los conceptos y métodos que mejoran las decisiones usando información sobre lo que ya pasó (**hechos**).
 - Idea central: **datos → información → conocimiento**.
-- **Definición del resumen de cátedra**: BI es el **proceso interactivo para explorar y analizar información estructurada sobre un área**; abarca **procesos, herramientas y tecnologías** para convertir **datos en información** e **información en conocimiento y planes** que permitan dirigir eficazmente las actividades de la empresa. **Propósito**: dar la información necesaria para que las decisiones sean **más rápidas, precisas y fundamentadas**, y así mejorar la **competitividad** y la **gestión**.
-
-**Definición de Gartner** (la que el libro considera más ajustada): BI es un **proceso interactivo** para **explorar** y **analizar información estructurada** sobre un **área** (normalmente guardada en un ***datawarehouse***), para descubrir **tendencias o patrones**, derivar ideas y extraer conclusiones. Incluye **comunicar** los descubrimientos y **efectuar los cambios**. Las áreas pueden ser clientes, proveedores, productos, servicios y competidores.
 
 | Parte de la definición | Qué quiere decir |
 |---|---|
@@ -534,7 +544,7 @@ Es la segunda parte de la presentación "Redes_de_petri". Son modelos de **optim
 | Área de análisis | Todo proyecto de BI tiene un objeto concreto (clientes, productos) y un objetivo (bajar costos, subir ventas) |
 | Comunicar y efectuar cambios | Lo descubierto tiene que llegar a quien puede cambiar algo |
 
-- **Definición del TDWI** (The Data Warehousing Institute): término paraguas que abarca los procesos, las herramientas y las tecnologías para convertir **datos en información, información en conocimiento**, y planes para conducir el negocio. Tiene dos partes:
+- Según el TDWI (The Data Warehousing Institute), BI tiene dos partes:
   - ***Back end*** ("trastienda"): el *datawarehousing*.
   - ***Front end*** ("mostrador"): consultas, informes, análisis y visualización.
 
@@ -624,9 +634,9 @@ El ROI responde: **¿lo que se gana justifica lo que se gasta?**
 
 ### 2.8 Modelo de negocio
 
+> **¿Qué es? · Modelo de negocio.** Es una **simplificación de la realidad** que describe **cómo funciona un área del negocio y dónde se genera el resultado**. Sirve para definir **qué medir** y para **probar qué pasaría** si se cambia algo, antes de cambiarlo. Tiene que estar **vivo**, igual que el negocio.
+
 - **"Lo que no se mide, no se puede gestionar."** Por eso el primer paso es definir **qué** se va a medir y **cómo**: el **modelo de negocio** y sus métricas.
-- **Definición del resumen de cátedra**: el modelo de negocio es una **simplificación de la realidad** que sirve para **comprender qué está pasando** en un área del negocio. Permite **experimentar cómo afectarán los cambios** al resultado y **analizar dónde se genera el resultado**.
-- **Definición del libro**: permite **documentar, probar y desarrollar teorías** sobre cómo funciona el negocio. Tiene que estar **vivo**, igual que el negocio.
 - **Cómo se arma**:
   1. Definir qué se quiere medir y cómo.
   2. Documentar, probar y desarrollar teorías sobre cómo funciona el negocio.
@@ -635,7 +645,8 @@ El ROI responde: **¿lo que se gana justifica lo que se gasta?**
 
 ### 2.9 Indicadores clave (KPI)
 
-- **KPI** (*Key Performance Indicators*, indicadores clave de desempeño): sirven para **evaluar si la organización alcanza sus objetivos** y **medir su progreso hacia las metas**.
+> **¿Qué es? · KPI (indicador clave de desempeño).** Es una **medida cuantificable** que muestra **si la organización está alcanzando sus objetivos** y cuánto avanza hacia ellos. Cada KPI tiene nombre, definición, forma de cálculo y valor objetivo.
+
 - Según el resumen de cátedra, se definen **después** de que la organización analizó su **misión**, identificó a sus **grupos de poder** y definió sus **objetivos**.
 - **Un KPI tiene que**:
   1. **Reflejar los objetivos** del negocio.
@@ -669,7 +680,9 @@ El ROI responde: **¿lo que se gana justifica lo que se gasta?**
 | En contra | Ocupa más espacio | Es más complejo |
 
 - **Constelación de hechos** (o esquema **galaxia**): varias tablas de hechos que comparten dimensiones.
-- **Granularidad**: el **nivel de detalle** con que se guardan y analizan los datos. **Determina qué preguntas se pueden responder y cuáles no**, así que se decide con cuidado.
+
+> **¿Qué es? · Granularidad.** Es el **nivel de detalle** con que se guardan los datos (por ejemplo, cada línea del ticket o solo el total del ticket). Define **qué preguntas se pueden responder**: más granularidad es más detalle.
+
   - **Más granularidad = más detalle**: analizar **líneas** de ticket es más granular que analizar tickets.
   - **Cada vez que se agregan (suman) datos, se pierde información.**
   - Conviene construir el modelo con el **máximo detalle** que permita el volumen de datos.
@@ -696,7 +709,8 @@ El ROI responde: **¿lo que se gana justifica lo que se gasta?**
 
 ### 2.12 Proceso ETL
 
-- **ETL** (*Extract, Transform, Load*: extracción, transformación y carga) **recupera los datos de las fuentes y alimenta el *datawarehouse***.
+> **¿Qué es? · ETL (extracción, transformación y carga).** Es el **proceso que extrae los datos de las fuentes, los limpia y transforma, y los carga en el *datawarehouse***. Es la parte más larga de un proyecto de BI: entre el 60 % y el 80 % del tiempo.
+
 - Consume **entre el 60 % y el 80 %** del tiempo de un proyecto de BI. Por eso es **costoso** y requiere recursos, estrategia, habilidades especializadas y tecnología.
 - Tiene **5 subprocesos**:
 
@@ -719,11 +733,10 @@ El ROI responde: **¿lo que se gana justifica lo que se gasta?**
 
 ### 2.13 *Datawarehouse*, Data Mart y ODS
 
-***Datawarehouse*** (almacén de datos)
+> **¿Qué es? · Datawarehouse (almacén de datos).** Es una **base de datos centralizada**, separada de los sistemas transaccionales, que **integra la información de toda la organización** de forma consistente e **histórica** para analizarla y tomar decisiones. Toma datos de los sistemas transaccionales, departamentales y externos.
 
-- **Definición del resumen de cátedra**: base de datos **centralizada** que **integra la información estratégica** de toda la organización. Responde a la necesidad de tener información **consistente, integrada, histórica y preparada para ser analizada**. Toma datos de los sistemas **transaccionales, departamentales y externos** y los reúne en un entorno integrado.
 - Usar hojas de cálculo en su lugar trae errores, trabajo repetido, "entornos paralelos" y **distintas versiones de la misma realidad**.
-- **Hugh J. Watson**: "una colección de información creada para soportar las aplicaciones de toma de decisiones". ***Datawarehousing*** es el proceso completo: extraer, transformar y cargar los datos, y dar acceso a los usuarios.
+- ***Datawarehousing*** es el proceso completo: extraer, transformar y cargar los datos, y dar acceso a los usuarios.
 - **Bill Inmon — 4 características**:
   - **Orientado a un área** (a un problema de negocio).
   - **Integrado** (medidas, códigos y formatos comunes).
@@ -732,9 +745,8 @@ El ROI responde: **¿lo que se gana justifica lo que se gasta?**
 - **Ralph Kimball**: da acceso a la información, es consistente, se puede separar y combinar por cada medida, incluye las herramientas de consulta y es "el lugar donde publicamos la información".
 - Guarda los datos para **maximizar la flexibilidad, la facilidad de acceso y la administración**. Se actualiza en forma mensual, semanal o diaria. El concepto ***right time*** dice que cada situación de negocio necesita su propio plazo de actualización.
 
-**Data Mart**
+> **¿Qué es? · Data Mart.** Es un ***datawarehouse* más chico**, armado para **un departamento o grupo de usuarios** y pocas áreas (por ejemplo, ventas). Tiene menos datos, menos modelos y menos usuarios.
 
-- **Definición**: estructura pensada para responder rápido a las necesidades de una **comunidad de usuarios** (un departamento, un nivel de la organización o un grupo con objetivos comunes), sobre **pocas áreas** (por ejemplo, marketing y ventas). Es **más chico** que el *datawarehouse*: menos datos, menos modelos y menos usuarios.
 - Surgieron porque el *datawarehouse* corporativo era caro, lento de construir e inflexible.
 - **Dependiente**: se alimenta del *datawarehouse* corporativo.
 - **Independiente**: se alimenta directamente de las fuentes; puede mantener los **silos de información**.
@@ -749,16 +761,16 @@ El ROI responde: **¿lo que se gana justifica lo que se gasta?**
 
 Según Watson, **las dos son válidas** si se hacen bien. También existen las estrategias **híbrida** y **federada**.
 
-**Metadata y ODS**
+> **¿Qué es? · Metadata.** Son los **datos sobre los datos**: describen qué significa cada tabla y cada atributo, de dónde viene y cómo se transformó. Sirven para que toda la organización use **la misma terminología**.
 
-- **Metadata** o **diccionario de datos**: "información sobre la información": qué significa cada tabla y cada atributo, de dónde viene y cómo se transformó. Obliga a que toda la organización use **la misma terminología** (por ejemplo, "margen bruto" tiene que tener una sola definición).
-- **ODS** (*Operational Data Store*, almacén de datos operacional): reúne datos de varias fuentes para decisiones **operativas** (del día a día). Su información es **volátil**, se actualiza en **tiempo real** y cubre como máximo dos o tres meses. Suele alimentar al *datawarehouse*, que en cambio es no volátil e histórico.
+> **¿Qué es? · ODS (almacén de datos operacional).** Es un **almacén que reúne datos de varias fuentes para las decisiones del día a día**: se actualiza **en tiempo real** y guarda poco tiempo (dos o tres meses). A diferencia del *datawarehouse*, es volátil y no histórico, y suele alimentarlo.
 
 > **Ojo con "bodega de datos".** El video de la cátedra llama "bodegas de datos" a los Data Marts; el apunte de clase de minería usa "bodega de datos" para el *datawarehouse* (ver 3.18). Si aparece en el examen, aclarar a cuál se refiere.
 
 ### 2.14 OLAP
 
-- **OLAP** (*On-Line Analytical Processing*, procesamiento analítico en línea) es la tecnología **más usada** para analizar la información de un *datawarehouse*. Permite el **análisis multidimensional**: explorar los datos desde distintas perspectivas y **agregarlos en distintos niveles de detalle**, desde el resumen total hasta el máximo detalle.
+> **¿Qué es? · OLAP (procesamiento analítico en línea).** Es la **tecnología más usada para analizar el *datawarehouse* de forma multidimensional**: ver los datos desde varias dimensiones a la vez (producto, tiempo, zona) y pasar del total al detalle. Los datos se representan como **cubos**.
+
 - **FASMI**: resumen de las 12 reglas de Codd hecho por el OLAP Council. Es la sigla de *Fast Analysis of Shared Multidimensional Information* (análisis rápido de información multidimensional compartida):
   - ***Fast***: rápido.
   - ***Analysis***: maneja la lógica del negocio y el análisis estadístico.
@@ -850,15 +862,11 @@ El video también muestra para qué sirve BI: **mejorar la productividad**, crea
 
 ## 3. Minería de datos (Tema 9)
 
-> **En una frase:** la minería de datos es **buscar de forma automática patrones escondidos** en grandes cantidades de datos, para **apoyar las decisiones** y **predecir**.
-
 ### 3.1 Qué es la minería de datos
 
+> **¿Qué es? · Minería de datos.** Es el **proceso de buscar de forma automática patrones, relaciones y tendencias ocultas** en grandes volúmenes de datos, con técnicas estadísticas y de aprendizaje automático, para **apoyar decisiones y predecir**. Es una etapa del KDD.
+
 - **Datos**: registros de observaciones o hechos. **Información**: lo que se obtiene al encontrarles utilidad a los datos. **Conocimiento**: reglas sobre cómo una cosa afecta a otra. "El conocimiento es poder."
-- **Definición del resumen de cátedra**: la minería de datos es el **proceso de extracción de información y patrones de comportamiento que permanecen ocultos** en grandes cantidades de información. Descubre **relaciones, tendencias, desviaciones, comportamientos atípicos, patrones y trayectorias ocultas**, con el fin de **apoyar la toma de decisiones con más conocimiento**.
-- **Definición de la lectura** (Beatriz Beltrán Martínez): métodos y algoritmos para la **extracción automática** de información resumida que caracteriza **relaciones escondidas** en grandes volúmenes de datos, idealmente con capacidad **predictiva**. Reúne técnicas **estadísticas** y de **aprendizaje automático** (inteligencia artificial).
-- Otra definición de la lectura: **proceso analítico** para explorar grandes cantidades de datos con el objetivo de **detectar patrones consistentes o relaciones** entre variables y **aplicarlos a nuevos conjuntos de datos**.
-- **Apunte de clase**: es la extracción de información o patrones **no triviales, implícitos, previamente desconocidos y potencialmente útiles**, por medios automáticos, para ayudar a decidir. Según la clase, BI es más estático: saca conclusiones de los datos estructurados que ya se tienen.
 - **Origen del nombre**: una **montaña** (los datos de la empresa) con **diamantes** escondidos entre las piedras (el conocimiento valioso) que se encuentran haciendo "minería".
 - Trabaja con **datos estáticos**: datos ya recolectados, que no cambian mientras se analizan.
 - **No confundir con el monitoreo de datos**: el monitoreo trabaja con datos que cambian en **tiempo real** y **reconoce** patrones ya conocidos; la minería **descubre** patrones nuevos.
@@ -876,10 +884,10 @@ Las tres primeras etapas responden **"¿qué pasó?"**; la minería responde **"
 
 ### 3.3 Proceso KDD
 
-- **KDD** (*Knowledge Discovery in Databases*, descubrimiento de conocimiento en bases de datos): el término se usa desde **1989**.
-- **Definición del resumen de cátedra**: el KDD es el **proceso amplio de encontrar conocimiento en los datos**, con énfasis en la aplicación de "alto nivel" de los métodos de minería. Es **interactivo e iterativo**, con muchos pasos y decisiones del usuario. Debe estar **precedido** por la comprensión del dominio, el conocimiento previo y los objetivos del usuario, y **continuado** por la **consolidación** del conocimiento.
-- **Definición de descubrimiento de conocimiento**: extracción **no trivial** de información **implícita**, **previamente desconocida** y **potencialmente útil** a partir de un conjunto de datos.
-- **Definición formal de la lectura**: dado un conjunto de **hechos H**, un **lenguaje L** y una **medida de certidumbre C**, una **regularidad** (*pattern*) es una sentencia S en L que describe relaciones dentro de un subconjunto de H con certidumbre C, y que es **más simple que enumerar todos esos hechos**. Una regularidad **interesante y bastante cierta** según los criterios del usuario es **conocimiento**. Cuando se extrae de una base de datos, el proceso es KDD.
+> **¿Qué es? · KDD (descubrimiento de conocimiento en bases de datos).** Es el **proceso completo para extraer de los datos conocimiento no trivial, implícito, previamente desconocido y potencialmente útil**: desde entender el problema y preparar los datos, pasando por la minería, hasta interpretar y consolidar lo encontrado. Es **interactivo e iterativo**; la minería de datos es solo una de sus etapas.
+
+- La sigla viene de *Knowledge Discovery in Databases*; el término se usa desde **1989**.
+- **Regularidad y conocimiento** (lectura): dado un conjunto de **hechos H**, un **lenguaje L** y una **medida de certidumbre C**, una **regularidad** (*pattern*) es una sentencia S en L que describe relaciones dentro de un subconjunto de H con certidumbre C, y que es **más simple que enumerar todos esos hechos**. Una regularidad **interesante y bastante cierta** según los criterios del usuario es **conocimiento**. Cuando se extrae de una base de datos, el proceso es KDD.
 - **El descubrimiento** es una **inducción no supervisada** de conocimiento, con dos procesos: **buscar regularidades interesantes** en los datos y **formular leyes** que las describan.
 
 **Las cuatro ideas que distinguen al KDD**:
@@ -968,8 +976,9 @@ Para una respuesta completa: escribir las 7 del resumen de cátedra y aclarar qu
 
 ### 3.6 KDD, SEMMA y CRISP-DM
 
-- **CRISP-DM** (*Cross-Industry Standard Process for Data Mining*): lo creó un **consorcio de empresas** (DaimlerChrysler, SPSS y NCR). Busca un proceso **confiable y repetible**, que pueda seguir gente con pocos conocimientos de minería. Tiene **6 fases**, en un orden **no rígido**: **comprensión del negocio**, **comprensión de los datos**, **preparación de los datos**, **modelado**, **evaluación** e **implantación** (despliegue).
-- **SEMMA** (*Sample, Explore, Modify, Model, Assess*: muestrear, explorar, modificar, modelar, evaluar): lo creó el **SAS Institute**. Tiene **5 fases**; el muestreo es **opcional**.
+> **¿Qué es? · CRISP-DM.** Es una **metodología estándar para llevar adelante proyectos de minería de datos**, creada por un consorcio de empresas (DaimlerChrysler, SPSS y NCR). Busca un proceso **confiable y repetible**, que pueda seguir gente con pocos conocimientos de minería. Ordena el trabajo en **6 fases**, en un orden no rígido: comprensión del negocio, comprensión de los datos, preparación de los datos, modelado, evaluación e implantación. Es la más **orientada al negocio**.
+
+> **¿Qué es? · SEMMA.** Es una **metodología de minería de datos creada por el SAS Institute**, centrada en la parte técnica. Sus **5 fases** forman la sigla: ***Sample*** (muestrear), ***Explore*** (explorar), ***Modify*** (modificar), ***Model*** (modelar) y ***Assess*** (evaluar); el muestreo es opcional. Supone que los objetivos de negocio ya están definidos.
 
 | Eje | KDD | CRISP-DM | SEMMA |
 |---|---|---|---|
@@ -1219,11 +1228,10 @@ Para una solución completa suele hacer falta **combinar varios métodos**.
 
 ## 4. Big Data (Tema 10, entra en el final)
 
-> **En una frase:** Big Data es **la forma de manejar datos tan grandes, rápidos y variados** que los sistemas tradicionales no pueden procesarlos.
-
 ### 4.1 Conceptos
 
-- **Definición** (apunte de clase): ecosistema o paradigma para **capturar, almacenar y analizar** datos de **gran volumen, velocidad y variedad**, que superan lo que manejan los sistemas tradicionales. Es la base sobre la que se construyen el análisis y la estrategia.
+> **¿Qué es? · Big Data.** Es el **conjunto de tecnologías y prácticas para capturar, guardar y analizar datos de gran volumen, que llegan muy rápido y son muy variados** (las 3 V), que los sistemas tradicionales no pueden manejar. Busca anticipar qué va a pasar, lo más cerca posible del tiempo real.
+
 - **Las 3 V**:
   - **Volumen**: muchísimos datos.
   - **Velocidad**: llegan muy rápido.
@@ -1249,6 +1257,8 @@ Para una solución completa suele hacer falta **combinar varios métodos**.
   - **Detallada**: permite un análisis estadístico fino.
 
 ### 4.3 Hadoop
+
+> **¿Qué es? · Hadoop.** Es un ***software* de código abierto para guardar y procesar grandes volúmenes de datos repartiéndolos entre muchas computadoras comunes**, que trabajan como si fueran una sola.
 
 - **Origen**: **Google** no podía indexar la web tan rápido como hacía falta y aplicó **"divide y vencerás"**: muchas computadoras chicas, cada una procesa una parte, pero funcionan como una sola. En **2006** la comunidad de **código abierto** desarrolla Hadoop; después lo impulsa **Yahoo** y lo adoptan empresas como **Facebook**.
 - **Tiene dos partes**:
