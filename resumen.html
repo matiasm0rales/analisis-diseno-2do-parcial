@@ -65,6 +65,11 @@ li>ul,li>ol{margin:4px 0 6px}
 .warnline{display:flex;gap:12px;align-items:flex-start;background:var(--warn-soft);border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:var(--dp-radius-corner);padding:14px 18px;margin:18px 0 22px;font-size:15px}
 .warnline .i{margin-top:3px;color:var(--dp-color-ink)}
 .warnline p{margin:0}
+.def{background:var(--dp-color-panel);border:var(--dp-border-outline-width) solid var(--dp-color-outline);border-left:10px solid var(--c);border-radius:var(--dp-radius-corner);padding:14px 20px 6px;margin:18px 0 24px;box-shadow:4px 4px 0 var(--shadow-ink)}
+.def-h{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:0 0 8px}
+.def .side{font:700 var(--dp-typography-metadata)/1 var(--dp-typography-reading);background:var(--cs);border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.def-t{font:800 20px/1.2 var(--dp-typography-display);letter-spacing:-.01em}
+.def p{margin:0 0 10px}
 
 /* tablas */
 .tbl{overflow-x:auto;margin:14px 0 22px;background:var(--dp-color-panel);border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:14px;box-shadow:4px 4px 0 var(--c)}
@@ -189,7 +194,7 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 <header id="hdr">
   <div class="htop">
     <button class="hbtn" id="idxBtn" aria-expanded="false" aria-controls="side" title="Mostrar el índice"><svg class='i' aria-hidden='true'><use href='#i-list'/></svg><span class="lbl">Índice</span></button>
-    <h1>Resumen del 2do parcial<small>Análisis y Diseño de Sistemas II, temas 6 a 10</small><small class="upd">Última actualización: 03/11/2026, 14:05</small></h1>
+    <h1>Resumen del 2do parcial<small>Análisis y Diseño de Sistemas II, temas 6 a 10</small><small class="upd">Última actualización: 05/11/2026, 10:51</small></h1>
     <a class="hbtn" href="index.html" title="Volver a la práctica"><svg class='i' aria-hidden='true'><use href='#i-layers'/></svg><span class="lbl">Práctica</span></a>
     <a class="hbtn" href="resumen.pdf" target="_blank" rel="noopener" title="Abrir el resumen en PDF"><svg class='i' aria-hidden='true'><use href='#i-file-text'/></svg><span class="lbl">PDF</span></a>
     <button class="hbtn" id="themeBtn" title="Cambiar entre tema claro y oscuro"><svg class='i' aria-hidden='true'><use href='#i-contrast'/></svg><span class="lbl">Tema</span></button>
@@ -208,11 +213,9 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
   <main class="doc" id="main">
     <section class="intro"><div><h2>Resumen del 2do parcial</h2><p>Docente: María Silvina Scarpin. Grupo: Figún, Morales, Haunau. Tecnicatura en Análisis y Desarrollo de Software, Instituto de Profesorado Sedes Sapientiae.</p><p>Big Data (tema 10) queda como material para el final.</p><div class="temas"><a class="tag t-petri" href="#s-1">Redes de Petri</a><a class="tag t-bi" href="#s-2">Business Intelligence</a><a class="tag t-dm" href="#s-3">Minería de datos</a><a class="tag t-bd" href="#s-4">Big Data</a></div></div><div><svg class="net cover-net" viewBox="-40 0 460 300" aria-hidden="true"><defs><marker id="fl2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" class="punta"/></marker></defs><path class="arc" d="M96 45 C 190 45 190 150 262 150" marker-end="url(#fl2)"/><path class="arc" d="M96 115 C 190 115 190 150 262 150" marker-end="url(#fl2)"/><path class="arc" d="M96 185 C 190 185 190 150 262 150" marker-end="url(#fl2)"/><path class="arc" d="M96 255 C 190 255 190 150 262 150" marker-end="url(#fl2)"/><path class="arc" d="M282 150 L 336 150" marker-end="url(#fl2)"/><circle class="shd" cx="74" cy="49" r="24"/><circle class="pl" cx="70" cy="45" r="24" style="fill:var(--petri)"/><circle class="tok tok-l" cx="70" cy="45" r="6"/><text class="lab" x="34" y="51" text-anchor="end">Petri</text><circle class="shd" cx="74" cy="119" r="24"/><circle class="pl" cx="70" cy="115" r="24" style="fill:var(--bi)"/><circle class="tok tok-l" cx="70" cy="115" r="6"/><text class="lab" x="34" y="121" text-anchor="end">BI</text><circle class="shd" cx="74" cy="189" r="24"/><circle class="pl" cx="70" cy="185" r="24" style="fill:var(--dm)"/><circle class="tok tok-l" cx="70" cy="185" r="6"/><text class="lab" x="34" y="191" text-anchor="end">Minería</text><circle class="shd" cx="74" cy="259" r="24"/><circle class="pl" cx="70" cy="255" r="24" style="fill:var(--bd)"/><circle class="tok tok-l" cx="70" cy="255" r="6"/><text class="lab" x="34" y="261" text-anchor="end">Big Data</text><rect class="shd" x="267" y="112" width="16" height="80" rx="3"/><rect class="tr" x="264" y="109" width="16" height="80" rx="3"/><text class="lab" x="272" y="92" text-anchor="middle">Parcial</text><circle class="shd" cx="370" cy="154" r="26"/><circle class="pl" cx="366" cy="150" r="26"/><text class="lab" x="366" y="200" text-anchor="middle">Aprobado</text></svg></div></section>
     <section class="sec t-petri" id="s-1"><div class="sec-head"><span class="num">1</span><h2>Redes de Petri</h2><span class="tag">Temas 6 y 7</span></div>
-<div class="lead"><span class="side">En una frase</span><p>Una Red de Petri es un <strong>modelo gráfico y matemático</strong> que muestra cómo funciona un sistema en el que <strong>pasan varias cosas a la vez</strong>.</p></div>
 <h3 id="s-1-1"><span class="n">1.1</span>Qué son, de dónde vienen y para qué sirven</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Red de Petri</span></div><p>Es un <strong>modelo gráfico y matemático</strong> formado por <strong>lugares</strong> (condiciones o estados), <strong>transiciones</strong> (eventos), <strong>arcos</strong> que los unen y <strong>marcas</strong> que indican qué condiciones se cumplen en cada momento. Sirve para representar y analizar sistemas donde <strong>varias cosas pasan a la vez</strong>: concurrencia, sincronización, conflictos y recursos compartidos.</p></div>
 <ul>
-<li><strong>Definición del resumen de cátedra</strong>: las <strong>redes de Petri (RdP)</strong> son representaciones <strong>gráficas</strong> que permiten modelar <strong>sistemas con flujo de información</strong>, mostrando su <strong>estructura</strong> y su <strong>comportamiento dinámico</strong>. Permiten representar <strong>procesos concurrentes</strong> y hacer <strong>modelamiento matemático</strong> del sistema.</li>
-<li><strong>Definición de la presentación</strong>: además, se pueden ver como <strong>generadores de lenguaje o autómatas formales</strong> (teoría de grafos). Sirven para <strong>diseñar, especificar y simular</strong> sistemas de <em>hardware</em> o de <em>software</em>.</li>
 <li><strong>Historia</strong>:
 <ul>
 <li><strong>1962</strong>: <strong>Carl Adam Petri</strong> presenta su tesis doctoral <em>Kommunikation mit Automaten</em> (&quot;Comunicación con autómatas&quot;) en <strong>Alemania</strong>. Es una teoría de comunicación entre componentes <strong>asíncronos</strong> (que no van al mismo ritmo). El proyecto <strong>&quot;Systemics&quot;</strong> aportó la teoría inicial, la notación y la representación.</li>
@@ -331,7 +334,7 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 <li><strong>P ∩ T = ∅</strong>: lugares y transiciones son conjuntos <strong>disjuntos</strong> (ningún nodo es las dos cosas).</li>
 <li><strong>I</strong> es la función de incidencia previa y <strong>O</strong> la de incidencia posterior.</li>
 </ul>
-<p><strong>Marcado</strong>: función <strong>M: P → ℕ</strong> que dice cuántas marcas tiene cada lugar en un momento dado. Con n lugares se escribe como vector <strong>M = (m1, …, mn)</strong>, donde mi = M(pi). <strong>El marcado es el estado de la red.</strong></p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Marcado</span></div><p>Es el <strong>estado de la red</strong> en un momento dado: <strong>cuántas marcas tiene cada lugar</strong>. Formalmente es una función <strong>M: P → ℕ</strong>; con n lugares se escribe como vector <strong>M = (m1, …, mn)</strong>, por ejemplo M = (1, 0, 0). El <strong>marcado inicial M0</strong> es el estado del que se parte.</p></div>
 <p><strong>Red marcada</strong>: la red junto con su <strong>marcado inicial M0</strong>: <strong>(RdP, M0)</strong>.</p>
 <p><strong>Tipos de red según la incidencia</strong>:</p>
 <ul>
@@ -342,6 +345,7 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 <p><strong>Notación de la lectura (Jorge Castro Monge)</strong>: llama <strong>C = (P, T, I, O)</strong> a la estructura, <strong>μ</strong> al marcado y <strong>M = (C, μ)</strong> a la red marcada. Describe O como un mapeo de transiciones en <strong>bolsas de sitios</strong>. Además usa I(t) = lugares de entrada de t; O(t) = lugares de salida de t; I'(p) = transiciones que entran al lugar p; O'(p) = transiciones que salen de p; V(p, t) y V(t, p) = pesos de los arcos.</p>
 <div class="warnline"><svg class='i' aria-hidden='true'><use href='#i-alert'/></svg><div><p><strong>Ojo con la letra C.</strong> En la lectura, C es la estructura de la red; en la representación matricial (1.8.3), <strong>C es la matriz de incidencia</strong>. En este resumen se usa <strong>RdP</strong> para la estructura y <strong>C</strong> solo para la matriz.</p></div></div>
 <h3 id="s-1-4"><span class="n">1.4</span>Ejecución y alcanzabilidad</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Transición habilitada</span></div><p>Es una transición que <strong>puede dispararse</strong> porque <strong>cada uno de sus lugares de entrada tiene al menos tantas marcas como el peso del arco</strong> que los une. <strong>Dispararla</strong> es quitar esas marcas de las entradas y agregar marcas en las salidas: así la red pasa a un marcado nuevo.</p></div>
 <p><strong>Regla de disparo simple</strong> (red ordinaria):</p>
 <ol>
 <li>Una transición está <strong>habilitada</strong> si <strong>todos</strong> sus lugares de entrada tienen marca.</li>
@@ -468,15 +472,15 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 </table></div>
 <h4 id="propiedades-de-comportamiento">Propiedades de comportamiento</h4>
 <p><strong>Alcanzabilidad</strong> — ¿se puede llegar a ese estado?</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Alcanzabilidad</span></div><p>Es la propiedad que dice si <strong>un marcado se puede obtener desde M0</strong> disparando alguna secuencia de transiciones. Es la base para estudiar todas las demás propiedades de comportamiento.</p></div>
 <ul>
-<li>Es la <strong>base para estudiar todas las propiedades dinámicas</strong>.</li>
-<li>Mn es alcanzable desde M0 si y solo si existe σ tal que <strong>M0 [σ&gt; Mn</strong>.</li>
+<li>En símbolos: Mn es alcanzable desde M0 si y solo si existe σ tal que <strong>M0 [σ&gt; Mn</strong>.</li>
 </ul>
 <p><strong>Vivacidad</strong> — ¿algo se traba para siempre?</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Vivacidad</span></div><p>Es la propiedad de una red en la que, desde cualquier marcado alcanzable, <strong>cada transición puede volver a dispararse</strong> en algún momento. Una red viva <strong>nunca se bloquea</strong> (no tiene <em>deadlock</em>).</p></div>
 <ul>
 <li>Sirve para <strong>caracterizar el bloqueo total o parcial</strong> del sistema.</li>
 <li><strong>Transición viva</strong>: desde <strong>cualquier</strong> marcado alcanzable existe una secuencia de disparos que <strong>la incluye</strong>. En símbolos: para todo M ∈ R(M0) existe σ disparable desde M que contiene a t.</li>
-<li><strong>Red viva</strong>: <strong>todas</strong> sus transiciones son vivas. Entonces no hay, en el conjunto de alcanzabilidad, ningún marcado con <strong>bloqueo total (<em>deadlock</em>)</strong>.</li>
 <li>La diapositiva distingue tres casos:
 <ul>
 <li><strong>Viva</strong>: todas las transiciones son vivas.</li>
@@ -484,35 +488,35 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 <li><strong>No viva</strong>: llega a un <strong>marcado muerto</strong> (ninguna transición habilitada): se <strong>bloquea totalmente</strong>. Ejemplo de la lectura: con la secuencia t1, t2, t1, t2 la red no se bloquea, pero con t1, t3, t4 queda <strong>bloqueada</strong>.</li>
 </ul>
 </li>
-<li>Versión de la lectura: un <strong>marcado vivo</strong> permite, sin importar qué descargas se hicieron antes, descargar cualquier transición con alguna secuencia adicional. Una red así <strong>nunca se estanca</strong>.</li>
 </ul>
 <p><strong>Ciclicidad</strong> o <strong>reversibilidad</strong> — ¿siempre se puede volver al inicio?</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Ciclicidad o reversibilidad</span></div><p>Es la propiedad de una red que, desde <strong>cualquier marcado alcanzable</strong>, <strong>puede volver al marcado inicial M0</strong>. Es independiente de la vivacidad: una red puede ser viva y no cíclica.</p></div>
 <ul>
-<li>La red tiene comportamiento <strong>globalmente cíclico</strong> si desde <strong>cualquier marcado sucesor</strong> de M0 existe una secuencia que <strong>vuelve a M0</strong>: para todo M ∈ R(M0) existe σ tal que <strong>M [σ&gt; M0</strong>.</li>
+<li>En símbolos: para todo M ∈ R(M0) existe σ tal que <strong>M [σ&gt; M0</strong>.</li>
 <li>Garantiza que <strong>no hay subconjuntos finales de estados</strong>: grupos de marcados alcanzables entre sí desde los que ya no se puede volver a M0.</li>
 <li><strong>Vivacidad y ciclicidad son independientes.</strong> Ejemplo de la lectura: una red <strong>pseudoviva</strong> y <strong>no reversible</strong>, porque nunca vuelve a obtener el marcado inicial.</li>
 </ul>
 <p><strong>Acotamiento</strong> o <strong>limitación</strong> — ¿algún lugar se llena sin tope?</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Acotamiento o limitación</span></div><p>Es la propiedad de una red en la que <strong>ningún lugar supera nunca una cantidad máxima k de marcas</strong>, en ningún marcado alcanzable. Garantiza que la red tiene un <strong>número finito de estados</strong> y que se puede implementar con recursos finitos.</p></div>
 <ul>
 <li>Un lugar p es <strong>k-acotado</strong> si <strong>M(p) ≤ k</strong> para todo M ∈ R(M0). La <strong>cota del lugar</strong> es el <strong>menor</strong> k que cumple eso.</li>
 <li>La red es <strong>k-acotada</strong> (o <strong>k-limitada</strong>) si <strong>todos</strong> sus lugares son k-acotados. Es <strong>acotada</strong> si existe algún k. Ejemplo de la diapositiva: una red <strong>3-limitada</strong>.</li>
 <li>Interés: <strong>garantiza que los marcados alcanzables son finitos</strong> (si cada lugar es una variable de estado, la red tiene un número finito de estados). En la práctica, una red k-limitada <strong>se puede implementar con recursos finitos</strong>.</li>
 <li>Si la red genera más marcas de las que permite su cota, <strong>el modelo está mal</strong>.</li>
-<li>Versión de la lectura: un <strong>marcado acotado</strong> es aquel en el que existe un entero n tal que ningún lugar recibe más de n elementos en ninguna secuencia de descargas.</li>
 </ul>
 <p><strong>Seguridad</strong> — ¿cada lugar tiene a lo sumo una marca?</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Seguridad</span></div><p>Es el caso del acotamiento con <strong>k = 1</strong>: <strong>ningún lugar tiene nunca más de una marca</strong>, así que cada lugar está marcado o no (red binaria). No garantiza que la red no se bloquee.</p></div>
 <ul>
-<li>Red <strong>segura</strong> = <strong>1-acotada</strong> = <strong>binaria</strong>: cada lugar está marcado o no está marcado.</li>
-<li>Versión de la lectura: un <strong>marcado seguro</strong> es un marcado acotado en el que ningún lugar recibe más de un elemento. Si cada lugar es un registro que guarda una palabra de memoria, un marcado inicial seguro garantiza que <strong>no se excede la capacidad</strong> de los registros.</li>
 <li>Seguridad <strong>no</strong> es lo mismo que vivacidad: una red segura puede bloquearse.</li>
 </ul>
 <p><strong>Conservación</strong> — ¿los recursos se mantienen?</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Conservación</span></div><p>Es la propiedad de una red en la que <strong>la cantidad total de marcas (o su suma ponderada con un vector peso) no cambia</strong> en ningún marcado alcanzable. Modela <strong>recursos que no se crean ni se destruyen</strong>.</p></div>
 <ul>
-<li>La cantidad de <strong>recursos disponibles no puede variar</strong> durante la ejecución.</li>
 <li><strong>Conservación estricta</strong>: la cantidad total de marcas es <strong>la misma en todos los marcados alcanzables</strong>. Es una condición <strong>muy fuerte</strong>.</li>
 <li>Por eso se usa la <strong>conservación respecto de un vector peso w</strong>: la suma ponderada <strong>Σ w(p) · M(p)</strong> es constante en todos los marcados alcanzables. Ejemplo de la diapositiva: w = (1, 1, 1, 2, 2).</li>
 </ul>
 <p><strong>Conflictividad</strong> — ¿hay transiciones que compiten?</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Conflicto</span></div><p>Es la situación en la que <strong>dos transiciones compiten por las mismas marcas</strong>: las dos están habilitadas y <strong>disparar una deshabilita a la otra</strong>. Es <strong>estructural</strong> si un lugar tiene dos o más transiciones de salida, y <strong>efectivo</strong> si eso realmente ocurre en algún marcado alcanzable.</p></div>
 <ul>
 <li><strong>Conflicto estructural</strong>: un lugar tiene <strong>más de una transición de salida</strong>. Se ve en el dibujo.</li>
 <li><strong>Conflicto efectivo</strong> para M0: ti y tj lo están si se cumplen <strong>las dos</strong> condiciones:
@@ -524,6 +528,7 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 <li>El conflicto efectivo depende del marcado: las dos transiciones están habilitadas a la vez y <strong>compiten por la misma marca</strong>. Todo conflicto efectivo es también estructural, pero no al revés.</li>
 </ul>
 <p><strong>Exclusión mutua</strong> — ¿hay cosas que nunca ocurren juntas?</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Exclusión mutua</span></div><p>Es la relación entre <strong>dos lugares que nunca están marcados a la vez</strong> (o entre transiciones en las que disparar una deshabilita a las demás). Modela el <strong>acceso de a uno</strong> a un recurso compartido, como una impresora.</p></div>
 <ul>
 <li>Entre <strong>transiciones</strong>: un conjunto Te ⊆ T es mutuamente exclusivo si disparar cualquier ti ∈ Te <strong>deshabilita a todas las demás</strong> tj ∈ Te.</li>
 <li>Entre <strong>lugares</strong>: dos lugares están en exclusión mutua para M0 si <strong>nunca están marcados a la vez</strong> en ningún marcado alcanzable.</li>
@@ -632,7 +637,7 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 <li>Los basados en <strong>ecuaciones matriciales</strong> o <strong>de estado</strong>.</li>
 </ol>
 <h4 id="s-1-8-1"><span class="n">1.8.1</span>Árbol de alcanzabilidad</h4>
-<div class="lead"><span class="side">En una frase</span><p>Es el <strong>mapa de todos los marcados</strong> a los que puede llegar la red desde M0.</p></div>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Árbol de alcanzabilidad</span></div><p>Es un <strong>árbol con todos los marcados a los que puede llegar la red desde M0</strong>: cada nodo es un marcado y cada arco, la transición que se disparó. Sirve para analizar las propiedades de la red; para que sea finito se corta en los marcados muertos, duplicados o con ω.</p></div>
 <ul>
 <li>Cada <strong>nodo</strong> es un marcado alcanzable. Cada <strong>arco</strong> lleva el nombre de la transición que se disparó para pasar de un marcado al otro.</li>
 <li><strong>Cómo se construye</strong>:
@@ -709,6 +714,7 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 </tbody>
 </table></div>
 <h4 id="s-1-8-2"><span class="n">1.8.2</span>Máquina de testigos</h4>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Máquina de testigos</span></div><p>Es una <strong>versión compacta del árbol de alcanzabilidad</strong> en forma de grafo: cada estado (óvalo) se escribe con <strong>los nombres de los lugares que tienen marcas</strong> y los marcados repetidos se juntan en un solo estado. Conviene cuando hay muchos lugares y pocas marcas.</p></div>
 <ul>
 <li>Es una <strong>modificación del árbol de alcanzabilidad</strong> con una forma <strong>más compacta</strong>.</li>
 <li>El <strong>estado</strong> se escribe con los <strong>nombres de los lugares que tienen marcas</strong>. Un lugar aparece <strong>tantas veces como marcas tenga</strong> (por ejemplo, dos marcas en p2 se escriben p2 p2).</li>
@@ -742,6 +748,7 @@ nav.toc .vacio{padding:10px 8px;color:var(--muted);font-size:14px}
 </tbody>
 </table></div>
 <h4 id="s-1-8-3"><span class="n">1.8.3</span>Representación matricial (ecuación de estado)</h4>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Matriz de incidencia</span></div><p>Es la <strong>matriz C = C⁺ − C⁻</strong> que resume la red en números: cada fila es una transición, cada columna un lugar, y cada celda dice <strong>cuántas marcas gana (+) o pierde (−) ese lugar cuando se dispara esa transición</strong>. Permite calcular marcados con la ecuación de estado M' = M + f(σ)·C.</p></div>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -1211,15 +1218,13 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 <li>Nombres de los algoritmos (no aparecen en las diapositivas): el método de la ruta más corta es el de <strong>Dijkstra</strong> y el del árbol de expansión mínima es el de <strong>Prim</strong>.</li>
 </ul>
 </section><section class="sec t-bi" id="s-2"><div class="sec-head"><span class="num">2</span><h2>Business Intelligence</h2><span class="tag">Tema 8</span></div>
-<div class="lead"><span class="side">En una frase</span><p>BI es <strong>usar los datos de la organización para tomar mejores decisiones</strong>, de forma continua.</p></div>
 <h3 id="s-2-1"><span class="n">2.1</span>Definición</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Business Intelligence (BI)</span></div><p>Es un <strong>proceso continuo e interactivo</strong> para <strong>explorar y analizar la información estructurada</strong> de un área del negocio (normalmente guardada en un <em>datawarehouse</em>), descubrir <strong>tendencias o patrones</strong> y <strong>comunicarlos para tomar decisiones y hacer cambios</strong>. Abarca los procesos, herramientas y tecnologías que convierten <strong>datos en información y conocimiento</strong>. Es la definición de Gartner, la que el libro considera más ajustada.</p></div>
 <ul>
 <li><strong>Business Intelligence</strong> (BI) significa &quot;inteligencia de negocio&quot;. Su objetivo es apoyar a la organización de forma <strong>sostenible y continuada</strong> para mejorar su <strong>competitividad</strong>, dándole la información que necesita para <strong>tomar decisiones</strong>.</li>
 <li>El término lo acuñó y popularizó <strong>Howard Dresner</strong>, consultor de <strong>Gartner</strong>, como &quot;término paraguas&quot; para los conceptos y métodos que mejoran las decisiones usando información sobre lo que ya pasó (<strong>hechos</strong>).</li>
 <li>Idea central: <strong>datos → información → conocimiento</strong>.</li>
-<li><strong>Definición del resumen de cátedra</strong>: BI es el <strong>proceso interactivo para explorar y analizar información estructurada sobre un área</strong>; abarca <strong>procesos, herramientas y tecnologías</strong> para convertir <strong>datos en información</strong> e <strong>información en conocimiento y planes</strong> que permitan dirigir eficazmente las actividades de la empresa. <strong>Propósito</strong>: dar la información necesaria para que las decisiones sean <strong>más rápidas, precisas y fundamentadas</strong>, y así mejorar la <strong>competitividad</strong> y la <strong>gestión</strong>.</li>
 </ul>
-<p><strong>Definición de Gartner</strong> (la que el libro considera más ajustada): BI es un <strong>proceso interactivo</strong> para <strong>explorar</strong> y <strong>analizar información estructurada</strong> sobre un <strong>área</strong> (normalmente guardada en un <em><strong>datawarehouse</strong></em>), para descubrir <strong>tendencias o patrones</strong>, derivar ideas y extraer conclusiones. Incluye <strong>comunicar</strong> los descubrimientos y <strong>efectuar los cambios</strong>. Las áreas pueden ser clientes, proveedores, productos, servicios y competidores.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -1255,7 +1260,7 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 </tbody>
 </table></div>
 <ul>
-<li><strong>Definición del TDWI</strong> (The Data Warehousing Institute): término paraguas que abarca los procesos, las herramientas y las tecnologías para convertir <strong>datos en información, información en conocimiento</strong>, y planes para conducir el negocio. Tiene dos partes:
+<li>Según el TDWI (The Data Warehousing Institute), BI tiene dos partes:
 <ul>
 <li><em><strong>Back end</strong></em> (&quot;trastienda&quot;): el <em>datawarehousing</em>.</li>
 <li><em><strong>Front end</strong></em> (&quot;mostrador&quot;): consultas, informes, análisis y visualización.</li>
@@ -1431,10 +1436,9 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 <li><strong>NPV</strong> (<em>Net Present Value</em>, valor actual neto): la suma de los flujos de caja (CF, <em>Cash Flow</em>) de cada año, descontados a la tasa r, menos la inversión inicial: <strong>NPV = −inversión inicial + Σ CFt / (1 + r)^t</strong>.</li>
 </ul>
 <h3 id="s-2-8"><span class="n">2.8</span>Modelo de negocio</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Modelo de negocio</span></div><p>Es una <strong>simplificación de la realidad</strong> que describe <strong>cómo funciona un área del negocio y dónde se genera el resultado</strong>. Sirve para definir <strong>qué medir</strong> y para <strong>probar qué pasaría</strong> si se cambia algo, antes de cambiarlo. Tiene que estar <strong>vivo</strong>, igual que el negocio.</p></div>
 <ul>
 <li><strong>&quot;Lo que no se mide, no se puede gestionar.&quot;</strong> Por eso el primer paso es definir <strong>qué</strong> se va a medir y <strong>cómo</strong>: el <strong>modelo de negocio</strong> y sus métricas.</li>
-<li><strong>Definición del resumen de cátedra</strong>: el modelo de negocio es una <strong>simplificación de la realidad</strong> que sirve para <strong>comprender qué está pasando</strong> en un área del negocio. Permite <strong>experimentar cómo afectarán los cambios</strong> al resultado y <strong>analizar dónde se genera el resultado</strong>.</li>
-<li><strong>Definición del libro</strong>: permite <strong>documentar, probar y desarrollar teorías</strong> sobre cómo funciona el negocio. Tiene que estar <strong>vivo</strong>, igual que el negocio.</li>
 <li><strong>Cómo se arma</strong>:
 <ol>
 <li>Definir qué se quiere medir y cómo.</li>
@@ -1445,8 +1449,8 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 <li><strong>Silos de información</strong>: departamentos entre los que no circula la información necesaria para gestionar o analizar. Se deben a la <strong>falta de integración</strong> de los sistemas o a <strong>razones políticas</strong> internas. Lo mejor para un departamento no siempre es lo mejor para la organización.</li>
 </ul>
 <h3 id="s-2-9"><span class="n">2.9</span>Indicadores clave (KPI)</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">KPI (indicador clave de desempeño)</span></div><p>Es una <strong>medida cuantificable</strong> que muestra <strong>si la organización está alcanzando sus objetivos</strong> y cuánto avanza hacia ellos. Cada KPI tiene nombre, definición, forma de cálculo y valor objetivo.</p></div>
 <ul>
-<li><strong>KPI</strong> (<em>Key Performance Indicators</em>, indicadores clave de desempeño): sirven para <strong>evaluar si la organización alcanza sus objetivos</strong> y <strong>medir su progreso hacia las metas</strong>.</li>
 <li>Según el resumen de cátedra, se definen <strong>después</strong> de que la organización analizó su <strong>misión</strong>, identificó a sus <strong>grupos de poder</strong> y definió sus <strong>objetivos</strong>.</li>
 <li><strong>Un KPI tiene que</strong>:
 <ol>
@@ -1515,13 +1519,12 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 </table></div>
 <ul>
 <li><strong>Constelación de hechos</strong> (o esquema <strong>galaxia</strong>): varias tablas de hechos que comparten dimensiones.</li>
-<li><strong>Granularidad</strong>: el <strong>nivel de detalle</strong> con que se guardan y analizan los datos. <strong>Determina qué preguntas se pueden responder y cuáles no</strong>, así que se decide con cuidado.
+</ul>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Granularidad</span></div><p>Es el <strong>nivel de detalle</strong> con que se guardan los datos (por ejemplo, cada línea del ticket o solo el total del ticket). Define <strong>qué preguntas se pueden responder</strong>: más granularidad es más detalle.</p></div>
 <ul>
 <li><strong>Más granularidad = más detalle</strong>: analizar <strong>líneas</strong> de ticket es más granular que analizar tickets.</li>
 <li><strong>Cada vez que se agregan (suman) datos, se pierde información.</strong></li>
 <li>Conviene construir el modelo con el <strong>máximo detalle</strong> que permita el volumen de datos.</li>
-</ul>
-</li>
 <li><strong>Jerarquías</strong>: año → trimestre → mes → día; familia → subfamilia → artículo; zona → centro. Permiten agregar (subir de nivel) y desagregar (bajar).</li>
 <li><strong>Multidimensionalidad</strong>: analizar la información <strong>por varias dimensiones a la vez</strong> (por ejemplo, ventas de un artículo por centro y por mes). Permite mirar desde distintas perspectivas y períodos y descubrir relaciones y tendencias.</li>
 <li>Si dos atributos que se quieren cruzar (por ejemplo, fabricante y artículo) están en la misma dimensión, no se pueden cruzar: tienen que ir en dimensiones distintas.</li>
@@ -1543,8 +1546,8 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 <li><strong>7 características</strong> de los datos de calidad: <strong>precisión, integridad, coherencia, totalidad, validez, disponibilidad y accesibilidad</strong>.</li>
 </ul>
 <h3 id="s-2-12"><span class="n">2.12</span>Proceso ETL</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">ETL (extracción, transformación y carga)</span></div><p>Es el <strong>proceso que extrae los datos de las fuentes, los limpia y transforma, y los carga en el <em>datawarehouse</em></strong>. Es la parte más larga de un proyecto de BI: entre el 60 % y el 80 % del tiempo.</p></div>
 <ul>
-<li><strong>ETL</strong> (<em>Extract, Transform, Load</em>: extracción, transformación y carga) <strong>recupera los datos de las fuentes y alimenta el <em>datawarehouse</em></strong>.</li>
 <li>Consume <strong>entre el 60 % y el 80 %</strong> del tiempo de un proyecto de BI. Por eso es <strong>costoso</strong> y requiere recursos, estrategia, habilidades especializadas y tecnología.</li>
 <li>Tiene <strong>5 subprocesos</strong>:</li>
 </ul>
@@ -1592,11 +1595,10 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 </li>
 </ul>
 <h3 id="s-2-13"><span class="n">2.13</span>Datawarehouse, Data Mart y ODS</h3>
-<p><em><strong>Datawarehouse</strong></em> (almacén de datos)</p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Datawarehouse (almacén de datos)</span></div><p>Es una <strong>base de datos centralizada</strong>, separada de los sistemas transaccionales, que <strong>integra la información de toda la organización</strong> de forma consistente e <strong>histórica</strong> para analizarla y tomar decisiones. Toma datos de los sistemas transaccionales, departamentales y externos.</p></div>
 <ul>
-<li><strong>Definición del resumen de cátedra</strong>: base de datos <strong>centralizada</strong> que <strong>integra la información estratégica</strong> de toda la organización. Responde a la necesidad de tener información <strong>consistente, integrada, histórica y preparada para ser analizada</strong>. Toma datos de los sistemas <strong>transaccionales, departamentales y externos</strong> y los reúne en un entorno integrado.</li>
 <li>Usar hojas de cálculo en su lugar trae errores, trabajo repetido, &quot;entornos paralelos&quot; y <strong>distintas versiones de la misma realidad</strong>.</li>
-<li><strong>Hugh J. Watson</strong>: &quot;una colección de información creada para soportar las aplicaciones de toma de decisiones&quot;. <em><strong>Datawarehousing</strong></em> es el proceso completo: extraer, transformar y cargar los datos, y dar acceso a los usuarios.</li>
+<li><em><strong>Datawarehousing</strong></em> es el proceso completo: extraer, transformar y cargar los datos, y dar acceso a los usuarios.</li>
 <li><strong>Bill Inmon — 4 características</strong>:
 <ul>
 <li><strong>Orientado a un área</strong> (a un problema de negocio).</li>
@@ -1608,9 +1610,8 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 <li><strong>Ralph Kimball</strong>: da acceso a la información, es consistente, se puede separar y combinar por cada medida, incluye las herramientas de consulta y es &quot;el lugar donde publicamos la información&quot;.</li>
 <li>Guarda los datos para <strong>maximizar la flexibilidad, la facilidad de acceso y la administración</strong>. Se actualiza en forma mensual, semanal o diaria. El concepto <em><strong>right time</strong></em> dice que cada situación de negocio necesita su propio plazo de actualización.</li>
 </ul>
-<p><strong>Data Mart</strong></p>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Data Mart</span></div><p>Es un <strong><em>datawarehouse</em> más chico</strong>, armado para <strong>un departamento o grupo de usuarios</strong> y pocas áreas (por ejemplo, ventas). Tiene menos datos, menos modelos y menos usuarios.</p></div>
 <ul>
-<li><strong>Definición</strong>: estructura pensada para responder rápido a las necesidades de una <strong>comunidad de usuarios</strong> (un departamento, un nivel de la organización o un grupo con objetivos comunes), sobre <strong>pocas áreas</strong> (por ejemplo, marketing y ventas). Es <strong>más chico</strong> que el <em>datawarehouse</em>: menos datos, menos modelos y menos usuarios.</li>
 <li>Surgieron porque el <em>datawarehouse</em> corporativo era caro, lento de construir e inflexible.</li>
 <li><strong>Dependiente</strong>: se alimenta del <em>datawarehouse</em> corporativo.</li>
 <li><strong>Independiente</strong>: se alimenta directamente de las fuentes; puede mantener los <strong>silos de información</strong>.</li>
@@ -1643,15 +1644,12 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 </tbody>
 </table></div>
 <p>Según Watson, <strong>las dos son válidas</strong> si se hacen bien. También existen las estrategias <strong>híbrida</strong> y <strong>federada</strong>.</p>
-<p><strong>Metadata y ODS</strong></p>
-<ul>
-<li><strong>Metadata</strong> o <strong>diccionario de datos</strong>: &quot;información sobre la información&quot;: qué significa cada tabla y cada atributo, de dónde viene y cómo se transformó. Obliga a que toda la organización use <strong>la misma terminología</strong> (por ejemplo, &quot;margen bruto&quot; tiene que tener una sola definición).</li>
-<li><strong>ODS</strong> (<em>Operational Data Store</em>, almacén de datos operacional): reúne datos de varias fuentes para decisiones <strong>operativas</strong> (del día a día). Su información es <strong>volátil</strong>, se actualiza en <strong>tiempo real</strong> y cubre como máximo dos o tres meses. Suele alimentar al <em>datawarehouse</em>, que en cambio es no volátil e histórico.</li>
-</ul>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Metadata</span></div><p>Son los <strong>datos sobre los datos</strong>: describen qué significa cada tabla y cada atributo, de dónde viene y cómo se transformó. Sirven para que toda la organización use <strong>la misma terminología</strong>.</p></div>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">ODS (almacén de datos operacional)</span></div><p>Es un <strong>almacén que reúne datos de varias fuentes para las decisiones del día a día</strong>: se actualiza <strong>en tiempo real</strong> y guarda poco tiempo (dos o tres meses). A diferencia del <em>datawarehouse</em>, es volátil y no histórico, y suele alimentarlo.</p></div>
 <div class="warnline"><svg class='i' aria-hidden='true'><use href='#i-alert'/></svg><div><p><strong>Ojo con &quot;bodega de datos&quot;.</strong> El video de la cátedra llama &quot;bodegas de datos&quot; a los Data Marts; el apunte de clase de minería usa &quot;bodega de datos&quot; para el <em>datawarehouse</em> (ver 3.18). Si aparece en el examen, aclarar a cuál se refiere.</p></div></div>
 <h3 id="s-2-14"><span class="n">2.14</span>OLAP</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">OLAP (procesamiento analítico en línea)</span></div><p>Es la <strong>tecnología más usada para analizar el <em>datawarehouse</em> de forma multidimensional</strong>: ver los datos desde varias dimensiones a la vez (producto, tiempo, zona) y pasar del total al detalle. Los datos se representan como <strong>cubos</strong>.</p></div>
 <ul>
-<li><strong>OLAP</strong> (<em>On-Line Analytical Processing</em>, procesamiento analítico en línea) es la tecnología <strong>más usada</strong> para analizar la información de un <em>datawarehouse</em>. Permite el <strong>análisis multidimensional</strong>: explorar los datos desde distintas perspectivas y <strong>agregarlos en distintos niveles de detalle</strong>, desde el resumen total hasta el máximo detalle.</li>
 <li><strong>FASMI</strong>: resumen de las 12 reglas de Codd hecho por el OLAP Council. Es la sigla de <em>Fast Analysis of Shared Multidimensional Information</em> (análisis rápido de información multidimensional compartida):
 <ul>
 <li><em><strong>Fast</strong></em>: rápido.</li>
@@ -1872,14 +1870,10 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 </tbody>
 </table></div>
 </section><section class="sec t-dm" id="s-3"><div class="sec-head"><span class="num">3</span><h2>Minería de datos</h2><span class="tag">Tema 9</span></div>
-<div class="lead"><span class="side">En una frase</span><p>La minería de datos es <strong>buscar de forma automática patrones escondidos</strong> en grandes cantidades de datos, para <strong>apoyar las decisiones</strong> y <strong>predecir</strong>.</p></div>
 <h3 id="s-3-1"><span class="n">3.1</span>Qué es la minería de datos</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Minería de datos</span></div><p>Es el <strong>proceso de buscar de forma automática patrones, relaciones y tendencias ocultas</strong> en grandes volúmenes de datos, con técnicas estadísticas y de aprendizaje automático, para <strong>apoyar decisiones y predecir</strong>. Es una etapa del KDD.</p></div>
 <ul>
 <li><strong>Datos</strong>: registros de observaciones o hechos. <strong>Información</strong>: lo que se obtiene al encontrarles utilidad a los datos. <strong>Conocimiento</strong>: reglas sobre cómo una cosa afecta a otra. &quot;El conocimiento es poder.&quot;</li>
-<li><strong>Definición del resumen de cátedra</strong>: la minería de datos es el <strong>proceso de extracción de información y patrones de comportamiento que permanecen ocultos</strong> en grandes cantidades de información. Descubre <strong>relaciones, tendencias, desviaciones, comportamientos atípicos, patrones y trayectorias ocultas</strong>, con el fin de <strong>apoyar la toma de decisiones con más conocimiento</strong>.</li>
-<li><strong>Definición de la lectura</strong> (Beatriz Beltrán Martínez): métodos y algoritmos para la <strong>extracción automática</strong> de información resumida que caracteriza <strong>relaciones escondidas</strong> en grandes volúmenes de datos, idealmente con capacidad <strong>predictiva</strong>. Reúne técnicas <strong>estadísticas</strong> y de <strong>aprendizaje automático</strong> (inteligencia artificial).</li>
-<li>Otra definición de la lectura: <strong>proceso analítico</strong> para explorar grandes cantidades de datos con el objetivo de <strong>detectar patrones consistentes o relaciones</strong> entre variables y <strong>aplicarlos a nuevos conjuntos de datos</strong>.</li>
-<li><strong>Apunte de clase</strong>: es la extracción de información o patrones <strong>no triviales, implícitos, previamente desconocidos y potencialmente útiles</strong>, por medios automáticos, para ayudar a decidir. Según la clase, BI es más estático: saca conclusiones de los datos estructurados que ya se tienen.</li>
 <li><strong>Origen del nombre</strong>: una <strong>montaña</strong> (los datos de la empresa) con <strong>diamantes</strong> escondidos entre las piedras (el conocimiento valioso) que se encuentran haciendo &quot;minería&quot;.</li>
 <li>Trabaja con <strong>datos estáticos</strong>: datos ya recolectados, que no cambian mientras se analizan.</li>
 <li><strong>No confundir con el monitoreo de datos</strong>: el monitoreo trabaja con datos que cambian en <strong>tiempo real</strong> y <strong>reconoce</strong> patrones ya conocidos; la minería <strong>descubre</strong> patrones nuevos.</li>
@@ -1923,11 +1917,10 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 </table></div>
 <p>Las tres primeras etapas responden <strong>&quot;¿qué pasó?&quot;</strong>; la minería responde <strong>&quot;¿qué va a pasar?&quot;</strong>. La minería está en el nivel más alto de esta evolución. Fue el <em>datawarehouse</em>, a fines de los años 80, el que resolvió la integración de los datos e impulsó la minería.</p>
 <h3 id="s-3-3"><span class="n">3.3</span>Proceso KDD</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">KDD (descubrimiento de conocimiento en bases de datos)</span></div><p>Es el <strong>proceso completo para extraer de los datos conocimiento no trivial, implícito, previamente desconocido y potencialmente útil</strong>: desde entender el problema y preparar los datos, pasando por la minería, hasta interpretar y consolidar lo encontrado. Es <strong>interactivo e iterativo</strong>; la minería de datos es solo una de sus etapas.</p></div>
 <ul>
-<li><strong>KDD</strong> (<em>Knowledge Discovery in Databases</em>, descubrimiento de conocimiento en bases de datos): el término se usa desde <strong>1989</strong>.</li>
-<li><strong>Definición del resumen de cátedra</strong>: el KDD es el <strong>proceso amplio de encontrar conocimiento en los datos</strong>, con énfasis en la aplicación de &quot;alto nivel&quot; de los métodos de minería. Es <strong>interactivo e iterativo</strong>, con muchos pasos y decisiones del usuario. Debe estar <strong>precedido</strong> por la comprensión del dominio, el conocimiento previo y los objetivos del usuario, y <strong>continuado</strong> por la <strong>consolidación</strong> del conocimiento.</li>
-<li><strong>Definición de descubrimiento de conocimiento</strong>: extracción <strong>no trivial</strong> de información <strong>implícita</strong>, <strong>previamente desconocida</strong> y <strong>potencialmente útil</strong> a partir de un conjunto de datos.</li>
-<li><strong>Definición formal de la lectura</strong>: dado un conjunto de <strong>hechos H</strong>, un <strong>lenguaje L</strong> y una <strong>medida de certidumbre C</strong>, una <strong>regularidad</strong> (<em>pattern</em>) es una sentencia S en L que describe relaciones dentro de un subconjunto de H con certidumbre C, y que es <strong>más simple que enumerar todos esos hechos</strong>. Una regularidad <strong>interesante y bastante cierta</strong> según los criterios del usuario es <strong>conocimiento</strong>. Cuando se extrae de una base de datos, el proceso es KDD.</li>
+<li>La sigla viene de <em>Knowledge Discovery in Databases</em>; el término se usa desde <strong>1989</strong>.</li>
+<li><strong>Regularidad y conocimiento</strong> (lectura): dado un conjunto de <strong>hechos H</strong>, un <strong>lenguaje L</strong> y una <strong>medida de certidumbre C</strong>, una <strong>regularidad</strong> (<em>pattern</em>) es una sentencia S en L que describe relaciones dentro de un subconjunto de H con certidumbre C, y que es <strong>más simple que enumerar todos esos hechos</strong>. Una regularidad <strong>interesante y bastante cierta</strong> según los criterios del usuario es <strong>conocimiento</strong>. Cuando se extrae de una base de datos, el proceso es KDD.</li>
 <li><strong>El descubrimiento</strong> es una <strong>inducción no supervisada</strong> de conocimiento, con dos procesos: <strong>buscar regularidades interesantes</strong> en los datos y <strong>formular leyes</strong> que las describan.</li>
 </ul>
 <p><strong>Las cuatro ideas que distinguen al KDD</strong>:</p>
@@ -2130,10 +2123,8 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 <li><strong>Actualización y monitorización</strong>: un modelo válido deja de serlo si cambia el contexto; hay que revalidarlo con datos nuevos.</li>
 </ol>
 <h3 id="s-3-6"><span class="n">3.6</span>KDD, SEMMA y CRISP-DM</h3>
-<ul>
-<li><strong>CRISP-DM</strong> (<em>Cross-Industry Standard Process for Data Mining</em>): lo creó un <strong>consorcio de empresas</strong> (DaimlerChrysler, SPSS y NCR). Busca un proceso <strong>confiable y repetible</strong>, que pueda seguir gente con pocos conocimientos de minería. Tiene <strong>6 fases</strong>, en un orden <strong>no rígido</strong>: <strong>comprensión del negocio</strong>, <strong>comprensión de los datos</strong>, <strong>preparación de los datos</strong>, <strong>modelado</strong>, <strong>evaluación</strong> e <strong>implantación</strong> (despliegue).</li>
-<li><strong>SEMMA</strong> (<em>Sample, Explore, Modify, Model, Assess</em>: muestrear, explorar, modificar, modelar, evaluar): lo creó el <strong>SAS Institute</strong>. Tiene <strong>5 fases</strong>; el muestreo es <strong>opcional</strong>.</li>
-</ul>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">CRISP-DM</span></div><p>Es una <strong>metodología estándar para llevar adelante proyectos de minería de datos</strong>, creada por un consorcio de empresas (DaimlerChrysler, SPSS y NCR). Busca un proceso <strong>confiable y repetible</strong>, que pueda seguir gente con pocos conocimientos de minería. Ordena el trabajo en <strong>6 fases</strong>, en un orden no rígido: comprensión del negocio, comprensión de los datos, preparación de los datos, modelado, evaluación e implantación. Es la más <strong>orientada al negocio</strong>.</p></div>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">SEMMA</span></div><p>Es una <strong>metodología de minería de datos creada por el SAS Institute</strong>, centrada en la parte técnica. Sus <strong>5 fases</strong> forman la sigla: <em><strong>Sample</strong></em> (muestrear), <em><strong>Explore</strong></em> (explorar), <em><strong>Modify</strong></em> (modificar), <em><strong>Model</strong></em> (modelar) y <em><strong>Assess</strong></em> (evaluar); el muestreo es opcional. Supone que los objetivos de negocio ya están definidos.</p></div>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -2709,10 +2700,9 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 </tbody>
 </table></div>
 </section><section class="sec t-bd" id="s-4"><div class="sec-head"><span class="num">4</span><h2>Big Data</h2><span class="tag">Tema 10 · entra en el final</span></div>
-<div class="lead"><span class="side">En una frase</span><p>Big Data es <strong>la forma de manejar datos tan grandes, rápidos y variados</strong> que los sistemas tradicionales no pueden procesarlos.</p></div>
 <h3 id="s-4-1"><span class="n">4.1</span>Conceptos</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Big Data</span></div><p>Es el <strong>conjunto de tecnologías y prácticas para capturar, guardar y analizar datos de gran volumen, que llegan muy rápido y son muy variados</strong> (las 3 V), que los sistemas tradicionales no pueden manejar. Busca anticipar qué va a pasar, lo más cerca posible del tiempo real.</p></div>
 <ul>
-<li><strong>Definición</strong> (apunte de clase): ecosistema o paradigma para <strong>capturar, almacenar y analizar</strong> datos de <strong>gran volumen, velocidad y variedad</strong>, que superan lo que manejan los sistemas tradicionales. Es la base sobre la que se construyen el análisis y la estrategia.</li>
 <li><strong>Las 3 V</strong>:
 <ul>
 <li><strong>Volumen</strong>: muchísimos datos.</li>
@@ -2750,6 +2740,7 @@ t1: a1, s → b1 · t2: b1 → a1, s · t3: a2, s → b2 · t4: b2 → a2, s.</p
 </li>
 </ul>
 <h3 id="s-4-3"><span class="n">4.3</span>Hadoop</h3>
+<div class="def"><div class="def-h"><span class="side">¿Qué es?</span><span class="def-t">Hadoop</span></div><p>Es un <strong><em>software</em> de código abierto para guardar y procesar grandes volúmenes de datos repartiéndolos entre muchas computadoras comunes</strong>, que trabajan como si fueran una sola.</p></div>
 <ul>
 <li><strong>Origen</strong>: <strong>Google</strong> no podía indexar la web tan rápido como hacía falta y aplicó <strong>&quot;divide y vencerás&quot;</strong>: muchas computadoras chicas, cada una procesa una parte, pero funcionan como una sola. En <strong>2006</strong> la comunidad de <strong>código abierto</strong> desarrolla Hadoop; después lo impulsa <strong>Yahoo</strong> y lo adoptan empresas como <strong>Facebook</strong>.</li>
 <li><strong>Tiene dos partes</strong>:

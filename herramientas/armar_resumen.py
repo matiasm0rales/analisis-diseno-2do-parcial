@@ -242,6 +242,11 @@ def convertir(md_texto):
     def cita(m):
         dentro = m.group(1)
         txt = texto_plano(dentro)
+        md_def = re.match(r"\s*<p><strong>¿Qué es\? · (.*?)\.</strong>\s*", dentro, flags=re.S)
+        if md_def:
+            resto = dentro[md_def.end():]
+            return (f'<div class="def"><div class="def-h"><span class="side">¿Qué es?</span>'
+                    f'<span class="def-t">{md_def.group(1)}</span></div><p>{resto}</div>')
         if txt.startswith("En una frase"):
             dentro = re.sub(r"<strong>En una frase:</strong>\s*", "", dentro, count=1)
             dentro = re.sub(r"^((?:\s|<[^>]+>)*)(\w)", lambda x: x.group(1) + x.group(2).upper(), dentro, count=1)
@@ -372,6 +377,11 @@ li>ul,li>ol{margin:4px 0 6px}
 .warnline{display:flex;gap:12px;align-items:flex-start;background:var(--warn-soft);border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:var(--dp-radius-corner);padding:14px 18px;margin:18px 0 22px;font-size:15px}
 .warnline .i{margin-top:3px;color:var(--dp-color-ink)}
 .warnline p{margin:0}
+.def{background:var(--dp-color-panel);border:var(--dp-border-outline-width) solid var(--dp-color-outline);border-left:10px solid var(--c);border-radius:var(--dp-radius-corner);padding:14px 20px 6px;margin:18px 0 24px;box-shadow:4px 4px 0 var(--shadow-ink)}
+.def-h{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:0 0 8px}
+.def .side{font:700 var(--dp-typography-metadata)/1 var(--dp-typography-reading);background:var(--cs);border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.def-t{font:800 20px/1.2 var(--dp-typography-display);letter-spacing:-.01em}
+.def p{margin:0 0 10px}
 
 /* tablas */
 .tbl{overflow-x:auto;margin:14px 0 22px;background:var(--dp-color-panel);border:var(--dp-border-detail-width) solid var(--dp-color-outline);border-radius:14px;box-shadow:4px 4px 0 var(--c)}
@@ -536,7 +546,8 @@ p,li{orphans:3;widows:3}
 .tbl{overflow:visible;box-shadow:3px 3px 0 var(--c)}
 table{font-size:9.2pt}
 th,td{padding:5px 8px}
-tr,.netfig,pre.tree,.warnline,.ej{break-inside:avoid}
+tr,.netfig,pre.tree,.warnline,.ej,.def{break-inside:avoid}
+.def{box-shadow:none}
 thead{display:table-header-group}
 pre.tree{font-size:8.8pt;box-shadow:3px 3px 0 var(--c)}
 .netfig{box-shadow:3px 3px 0 var(--c)}
